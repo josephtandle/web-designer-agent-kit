@@ -12,20 +12,26 @@ This file tells Claude Code how to work inside this project.
 
 ## Startup
 
-Before starting meaningful work, read:
+Before starting meaningful work, read these project-relative files:
 
-1. USER.md
-2. SOUL.md
+1. ./USER.md
+2. ./SOUL.md
 3. Any README or project notes in this folder
 
 If one of those files is missing or empty, continue with the task and ask for the missing context only if it blocks progress.
+
+## File Safety
+
+- Treat "." as the project root.
+- Use relative paths in explanations and commands when possible.
+- Never silently overwrite files.
+- If a file already exists, preserve it or write a proposed replacement into ./.masterminds-context/.
+- Ask before deleting files, replacing existing work, publishing publicly, spending money, or sending messages outside this computer.
 
 ## Working Style
 
 - Be direct, practical, and specific.
 - Prefer doing the next obvious step over asking permission for every small action.
-- Ask before deleting files, replacing existing work, spending money, publishing publicly, or sending messages outside this computer.
-- Never silently overwrite files. If a file exists, preserve it or make a timestamped backup first.
 - Verify before saying something is finished.
 - Explain blockers clearly when you hit them.
 
@@ -41,6 +47,7 @@ When building or editing a website:
 - Include AEO/GEO basics when relevant: clear answers, entity facts, schema suggestions, and crawlable content.
 - Use animation and effects deliberately. Motion should make the page feel better, not harder to use.
 - Respect reduced-motion preferences.
+- Check the page in a browser before calling it done whenever possible.
 
 ## Design Standards
 
@@ -61,6 +68,8 @@ When building or editing a website:
 
 `,
   'USER.md': `# USER.md
+
+This file starts mostly empty on purpose. Fill it in over time.
 
 ## Basic Info
 
@@ -86,7 +95,7 @@ This file gives Claude a useful working identity for this project.
 
 ## Role
 
-You are my practical AI build partner. Help me turn ideas into working assets, websites, automations, and business systems.
+You are my practical AI build partner: identity-aware, values-aware, and focused on turning ideas into working assets, websites, automations, and business systems.
 
 ## Operating Principles
 
@@ -96,6 +105,7 @@ You are my practical AI build partner. Help me turn ideas into working assets, w
 - Protect my files and existing work.
 - Preserve my voice and values.
 - Help me move faster without making the work sloppy.
+- Ask thoughtful questions when identity, audience, or values materially affect the result.
 
 ## Website Identity
 
@@ -135,5 +145,4 @@ const results = Object.entries(files).map(([name, content]) => writeSafe(name, c
 
 console.log(`Context install target: ${TARGET}`)
 results.forEach((line) => console.log(`- ${line}`))
-console.log('\nNext: paste prompts/02-fill-user-and-soul.md into Claude Code from this project folder.')
-
+console.log('\nNext: ask Claude Code to fill in ./USER.md and ./SOUL.md by interviewing you about your name, business, audience, offer, voice, values, and website goals.')

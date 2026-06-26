@@ -39,9 +39,9 @@ The default Web Designer stack installs 22 skills:
 
 It also installs the `web-designer` Claude agent into `~/.claude/agents`.
 
-## Install The Agent Kit
+## Install From Your Website Project
 
-Paste this into Claude Code from any folder:
+Paste this into Claude Code from the website project folder. It uses `.` as the project root on Mac and Windows.
 
 ```text
 Install Joe Che's Web Designer Agent Kit.
@@ -52,33 +52,41 @@ Rules:
 - Do not overwrite any existing files.
 - If a target file or skill already exists, leave it alone and report that it was skipped.
 - If you need to replace something, ask me first.
-- After installing, run the health check and summarize what was installed, skipped, or failed.
+- Use relative project paths. Treat "." as the website project root.
+- Clone the repo into ./.masterminds-web-designer-agent-kit.
+- After installing, run the health check against --project=. and summarize what was installed, skipped, or failed.
 
 Steps:
 1. Make sure git and node are available.
-2. Clone the kit if it is not already on my computer:
-   git clone https://github.com/josephtandle/web-designer-agent-kit.git
-3. Enter the repo:
-   cd web-designer-agent-kit
-4. Run:
-   node scripts/install-web-designer-kit.mjs
-5. Then tell me the exact command to start using the Web Designer agent.
+2. Clone the kit into this project if it is not already here:
+   git clone https://github.com/josephtandle/web-designer-agent-kit .masterminds-web-designer-agent-kit
+3. Install context files:
+   Mac: node .masterminds-web-designer-agent-kit/scripts/install-context.mjs --target=.
+   Windows: node .\.masterminds-web-designer-agent-kit\scripts\install-context.mjs --target=.
+4. Install the agent and skills:
+   Mac: node .masterminds-web-designer-agent-kit/scripts/install-web-designer-kit.mjs
+   Windows: node .\.masterminds-web-designer-agent-kit\scripts\install-web-designer-kit.mjs
+5. Run the health check:
+   Mac: node .masterminds-web-designer-agent-kit/scripts/health-check.mjs --project=.
+   Windows: node .\.masterminds-web-designer-agent-kit\scripts\health-check.mjs --project=.
 ```
 
-Manual command:
+Manual Mac commands:
 
 ```bash
-git clone https://github.com/josephtandle/web-designer-agent-kit.git
-cd web-designer-agent-kit
-node scripts/install-web-designer-kit.mjs
+git clone https://github.com/josephtandle/web-designer-agent-kit .masterminds-web-designer-agent-kit
+node .masterminds-web-designer-agent-kit/scripts/install-context.mjs --target=.
+node .masterminds-web-designer-agent-kit/scripts/install-web-designer-kit.mjs
+node .masterminds-web-designer-agent-kit/scripts/health-check.mjs --project=.
 ```
 
-## Install Project Context Files
+Manual Windows PowerShell commands:
 
-Run this from the website project folder where you want `CLAUDE.md`, `USER.md`, and `SOUL.md`:
-
-```bash
-node ../web-designer-agent-kit/scripts/install-context.mjs
+```powershell
+git clone https://github.com/josephtandle/web-designer-agent-kit .masterminds-web-designer-agent-kit
+node .\.masterminds-web-designer-agent-kit\scripts\install-context.mjs --target=.
+node .\.masterminds-web-designer-agent-kit\scripts\install-web-designer-kit.mjs
+node .\.masterminds-web-designer-agent-kit\scripts\health-check.mjs --project=.
 ```
 
 If any of those files already exist, the installer leaves them untouched and writes proposed replacements to `.masterminds-context/`.
@@ -94,7 +102,7 @@ After the agent kit and context files are installed, paste the prompt in `prompt
 ## Health Check
 
 ```bash
-node scripts/health-check.mjs
+node .masterminds-web-designer-agent-kit/scripts/health-check.mjs --project=.
 ```
 
 The health check verifies:
@@ -103,4 +111,3 @@ The health check verifies:
 - Web Designer agent file exists
 - curated skills are installed or skipped
 - context files exist in the current project
-

@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 import { existsSync } from 'node:fs'
 import { homedir } from 'node:os'
-import { join } from 'node:path'
+import { join, resolve } from 'node:path'
 
 const home = homedir()
 const skills = join(home, '.claude', 'skills')
 const agents = join(home, '.claude', 'agents')
+const project = resolve(process.argv.find((arg) => arg.startsWith('--project='))?.slice('--project='.length) || process.cwd())
 
 const expectedSkills = [
   'masterminds-web-designer',
@@ -45,7 +46,7 @@ for (const skill of expectedSkills) {
 }
 
 console.log(`\nInstalled skills: ${installed}/${expectedSkills.length}`)
-console.log(`${existsSync('CLAUDE.md') ? 'OK' : 'MISSING'} project CLAUDE.md`)
-console.log(`${existsSync('USER.md') ? 'OK' : 'MISSING'} project USER.md`)
-console.log(`${existsSync('SOUL.md') ? 'OK' : 'MISSING'} project SOUL.md`)
-
+console.log(`Project context target: ${project}`)
+console.log(`${existsSync(join(project, 'CLAUDE.md')) ? 'OK' : 'MISSING'} project CLAUDE.md`)
+console.log(`${existsSync(join(project, 'USER.md')) ? 'OK' : 'MISSING'} project USER.md`)
+console.log(`${existsSync(join(project, 'SOUL.md')) ? 'OK' : 'MISSING'} project SOUL.md`)

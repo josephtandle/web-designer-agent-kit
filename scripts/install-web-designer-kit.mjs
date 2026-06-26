@@ -181,9 +181,13 @@ function main() {
   failed.forEach((item) => console.log(`  ! ${item}`))
   console.log('\nNext:')
   console.log('  1. Restart Claude Code so it reloads skills.')
-  console.log('  2. In your website folder, run the context installer from this repo.')
-  console.log('     Example if the kit is next to your website folder: node ../web-designer-agent-kit/scripts/install-context.mjs')
-  console.log('  3. Ask: Use the Web Designer agent to build my first website.')
+  console.log('  2. From your website project folder, run the context installer with a relative path.')
+  console.log('     Mac: node .masterminds-web-designer-agent-kit/scripts/install-context.mjs --target=.')
+  console.log('     Windows: node .\\.masterminds-web-designer-agent-kit\\scripts\\install-context.mjs --target=.')
+  console.log('  3. Health check from your website project folder:')
+  console.log('     Mac: node .masterminds-web-designer-agent-kit/scripts/health-check.mjs --project=.')
+  console.log('     Windows: node .\\.masterminds-web-designer-agent-kit\\scripts\\health-check.mjs --project=.')
+  console.log('  4. Ask: Use the Web Designer agent to build my first website.')
 }
 
 main()
