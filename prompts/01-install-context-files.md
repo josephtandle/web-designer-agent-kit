@@ -1,44 +1,42 @@
-# Prompt 1: Install CLAUDE.md, USER.md, and SOUL.md
+# Prompt 1: Install CLAUDE.md, USER.md, and SOUL.md Only
 
 Paste this into Claude Code from the website project folder.
 
 ```text
-Create my Mastermind starter context files in this website project.
+Install only my Mastermind starter context files for this website project.
 
-You are working inside my current project folder. Treat "." as the project root on both Mac and Windows.
+You are working inside my current website project folder. Treat "." as the project root on both Mac and Windows.
 
-Create these files only if they do not already exist:
-- ./CLAUDE.md
-- ./USER.md
-- ./SOUL.md
+Goal:
+- Install ./CLAUDE.md
+- Install ./USER.md
+- Install ./SOUL.md
+
+Use Joe Che's public Web Designer Agent Kit only for the context-file installer. Do not install the Web Designer agent yet. Do not install skills yet.
 
 Rules:
 - Do not overwrite existing files.
 - If ./CLAUDE.md, ./USER.md, or ./SOUL.md already exists, leave it untouched.
 - If a file exists, write your proposed replacement to ./.masterminds-context/ instead.
-- Use only relative project paths in your commands and explanations.
-- Keep USER.md basic and mostly empty.
-- Keep SOUL.md relevant to a Mastermind participant building websites, assets, and business systems. Follow the spirit of UNI/Ooni: practical, identity-aware, values-aware, and focused on building real things.
-- CLAUDE.md should be excellent: clear startup rules, no-overwrite rules, verification standards, web design standards, agent/skill usage, and instructions to read USER.md and SOUL.md.
+- Use relative project paths in commands and explanations.
+- CLAUDE.md should include Joe's Ultimate CLAUDE.md ideas: read before writing, verify before done, protect files, no secrets, simple task routing, autonomy with clear stop points, and web design standards.
+- SOUL.md should follow the relevant UNI/Ooni spirit: genuinely useful, resourceful before asking, privacy-aware, values-aware, identity-aware, continuity through files, and focused on helping me build real assets.
+- USER.md should be useful but easy to fill in: basic info, business, audience, offer, voice, website goals, services, proof, visual references, and contact links.
 
-CLAUDE.md must tell Claude Code:
-- Read ./USER.md and ./SOUL.md before meaningful work.
-- Use the Web Designer agent for website work.
-- Protect existing files.
-- Verify before saying something is finished.
-- Build websites with strong design, mobile responsiveness, accessibility, SEO, AEO/GEO basics, and tasteful motion.
-- Keep responses direct, practical, and specific.
+Run the correct commands for my system:
 
-If the Web Designer Agent Kit is already cloned in this project, use:
 Mac:
+git clone https://github.com/josephtandle/web-designer-agent-kit .masterminds-web-designer-agent-kit
 node .masterminds-web-designer-agent-kit/scripts/install-context.mjs --target=.
 
 Windows PowerShell:
+git clone https://github.com/josephtandle/web-designer-agent-kit .masterminds-web-designer-agent-kit
 node .\.masterminds-web-designer-agent-kit\scripts\install-context.mjs --target=.
 
 After installing, show me:
 - created files
 - skipped files
 - proposed replacement files
-- the next command I should run
+- a short explanation of what each file does
+- the next step
 ```
