@@ -16,6 +16,21 @@ export function generateEventSite({ name, headline, email }) {
   const ctaLink = safeEmail ? `mailto:${safeEmail}` : '#register';
   const ctaText = safeEmail ? `Register via ${safeEmail}` : 'Reserve Seat';
 
+  const ldData = {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": name,
+    "description": headline
+  };
+  const jsonLdScript = JSON.stringify(ldData, null, 2).replace(/</g, '\\u003c');
+
+  const decorativeMotifSvg = `<svg class="poster-motif-svg" width="100%" height="80" viewBox="0 0 600 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <rect x="10" y="20" width="120" height="40" rx="20" fill="#E11D48" opacity="0.8"/>
+    <circle cx="200" cy="40" r="25" fill="#D97706" opacity="0.8"/>
+    <path d="M 280 15 L 340 65 L 220 65 Z" fill="#F43F5E" opacity="0.7"/>
+    <rect x="380" y="25" width="200" height="30" rx="6" fill="#F59E0B" opacity="0.6"/>
+  </svg>`;
+
   const indexHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,14 +43,7 @@ export function generateEventSite({ name, headline, email }) {
   <meta property="og:type" content="website">
   <link rel="stylesheet" href="styles.css">
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Event",
-    "name": "${safeName}",
-    "description": "${safeHeadline}",
-    "eventStatus": "https://schema.org/EventScheduled",
-    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode"
-  }
+${jsonLdScript}
   </script>
 </head>
 <body>
@@ -43,7 +51,7 @@ export function generateEventSite({ name, headline, email }) {
 
   <header class="site-header">
     <div class="container header-inner">
-      <a href="#" class="brand-logo">${safeName}</a>
+      <a href="#main-content" class="brand-logo">${safeName}</a>
       <nav class="site-nav" aria-label="Main Navigation">
         <a href="#program">Program</a>
         <a href="#location">Location</a>
@@ -54,18 +62,27 @@ export function generateEventSite({ name, headline, email }) {
   </header>
 
   <main id="main-content">
+    <div class="draft-banner">
+      <div class="container">
+        <span>Draft Event Announcement — Unconfirmed Details &amp; Draft Tiers</span>
+      </div>
+    </div>
+
     <section class="hero-section">
       <div class="container">
+        <div class="poster-header-motif">
+          ${decorativeMotifSvg}
+        </div>
         <div class="event-meta-badge">
-          <span class="meta-item">Date: Schedule Draft / TBD</span>
+          <span class="meta-item">Date: Draft Schedule / TBD</span>
           <span class="meta-divider">•</span>
-          <span class="meta-item">Venue: Main Hall / Online Stream</span>
+          <span class="meta-item">Venue: Main Hall / Stream (TBD)</span>
         </div>
         <h1 class="hero-title">${safeHeadline}</h1>
         <p class="hero-description">An immersive gathering bringing together founders, practitioners, and leaders for intensive workshops and strategic exchange.</p>
         <div class="hero-actions">
           <a href="${ctaLink}" class="btn btn-primary">${ctaText}</a>
-          <a href="#program" class="btn btn-secondary">View Agenda</a>
+          <a href="#program" class="btn btn-secondary">View Agenda (Draft)</a>
         </div>
       </div>
     </section>
@@ -73,7 +90,7 @@ export function generateEventSite({ name, headline, email }) {
     <section id="program" class="program-section">
       <div class="container">
         <div class="section-header">
-          <h2>Program Schedule (Draft)</h2>
+          <h2>Program Schedule (Draft Proposal)</h2>
           <p>Structured sessions designed for actionable takeaways and peer collaboration.</p>
         </div>
         <div class="timeline">
@@ -127,7 +144,7 @@ export function generateEventSite({ name, headline, email }) {
           </div>
           <div class="logistics-item">
             <h3>Format</h3>
-            <p>Hybrid (In-person &amp; Interactive Virtual Stream)</p>
+            <p>Draft Proposal (Hybrid / In-person &amp; Virtual)</p>
           </div>
         </div>
       </div>
@@ -199,15 +216,15 @@ export function generateEventSite({ name, headline, email }) {
 </html>`;
 
   const stylesCss = `:root {
-  --bg-main: #181325;
-  --bg-surface: #251F35;
-  --bg-card: #2D2540;
-  --text-main: #FCF4EB;
-  --text-muted: #D1C4E9;
+  --bg-main: #1C1917;
+  --bg-surface: #292524;
+  --bg-card: #322D29;
+  --text-main: #FAFAF9;
+  --text-muted: #D6D3D1;
   --accent-primary: #E11D48;
   --accent-hover: #BE123C;
   --accent-secondary: #D97706;
-  --border-color: #3D3356;
+  --border-color: #44403C;
   --font-sans: -apple-system, BlinkMacSystemFont, "Plus Jakarta Sans", "Segoe UI", Roboto, sans-serif;
   --max-width: 1140px;
 }
@@ -248,6 +265,16 @@ body {
 
 .skip-link:focus {
   top: 1rem;
+}
+
+.draft-banner {
+  background-color: var(--bg-surface);
+  border-bottom: 1px dashed var(--border-color);
+  padding: 0.5rem 0;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent-secondary);
 }
 
 .container {
@@ -298,7 +325,7 @@ a:focus-visible, button:focus-visible {
 
 /* Site Header */
 .site-header {
-  background-color: rgba(24, 19, 37, 0.95);
+  background-color: rgba(28, 25, 23, 0.95);
   border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
@@ -384,6 +411,16 @@ a:focus-visible, button:focus-visible {
   min-height: 50px;
 }
 
+.poster-header-motif {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.poster-motif-svg {
+  max-width: 450px;
+}
+
 /* Event Meta Badge */
 .event-meta-badge {
   display: inline-flex;
@@ -405,7 +442,7 @@ a:focus-visible, button:focus-visible {
 
 /* Hero Section */
 .hero-section {
-  padding: 6rem 0 5rem 0;
+  padding: 4rem 0 4rem 0;
   text-align: center;
   max-width: 850px;
   margin: 0 auto;
@@ -635,9 +672,9 @@ a:focus-visible, button:focus-visible {
 }
 `;
 
-  const briefMd = `# Design Brief: ${safeName}
+  const briefMd = `# Design Brief: ${safeName} (Draft)
 
-**Style Archetype:** Event / Workshop / Experience (Vibrant Energy & Direct Focus)
+**Style Archetype:** Event / Workshop / Experience (Warm Ochre & Pink Poster Typography)
 **Event Name:** ${safeName}
 **Headline / Theme:** ${safeHeadline}
 **Organizer Contact:** ${safeEmail || 'Not specified (using section fallback anchor)'}
@@ -646,14 +683,14 @@ a:focus-visible, button:focus-visible {
 
 ## Visual Direction Parameters
 
-- **Palette:** Midnight violet background (\`#181325\`), translucent surface (\`#251F35\`), card purple (\`#2D2540\`), milk primary text (\`#FCF4EB\`), vibrant pink accent (\`#E11D48\`), ochre secondary accent (\`#D97706\`).
-- **Typography:** Expressive poster sans typography scale, high impact title, clean agenda layout.
+- **Palette:** Warm charcoal background (\`#1C1917\`), surface warm stone (\`#292524\`), card stone (\`#322D29\`), vibrant pink accent (\`#E11D48\`), warm ochre secondary accent (\`#D97706\`).
+- **Typography:** Warm ochre/pink poster typography, decorative original SVG motif, clear agenda layout.
 - **Layout:** Centered event hero with date/venue badges, vertical program timeline, honest venue logistics status block, transparent pass tiers.
 - **Accessibility:** Minimum 4.5:1 text contrast ratio, 44x44px touch targets, skip link, visible focus states, prefers-reduced-motion CSS support.
 - **CTA Routing:** ${safeEmail ? `Verified mailto link to ${safeEmail}` : 'Working #register section anchor fallback.'}
 `;
 
-  const readmeMd = `# ${safeName} : Event Starter Site
+  const readmeMd = `# ${safeName} : Event Starter Site (Draft)
 
 This event starter site was generated using the zero-dependency CLI starter tool (\`scripts/create-site.mjs\`).
 

@@ -16,11 +16,20 @@ export function generatePortfolioSite({ name, headline, email }) {
   const ctaLink = safeEmail ? `mailto:${safeEmail}` : '#contact';
   const ctaText = safeEmail ? `Inquire: ${safeEmail}` : 'Start A Project';
 
-  const svgAbstract1 = `<svg class="project-artwork" width="100%" height="240" viewBox="0 0 400 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Abstract Art Illustration Placeholder: Prism Vector Study">
+  const ldData = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": name,
+    "jobTitle": headline
+  };
+  const jsonLdScript = JSON.stringify(ldData, null, 2).replace(/</g, '\\u003c');
+
+  const svgAbstract1 = `<svg class="project-artwork" width="100%" height="240" viewBox="0 0 400 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Example Abstract Illustration Placeholder 01: Vector Study">
     <rect width="400" height="240" fill="#181824"/>
     <circle cx="120" cy="120" r="70" fill="url(#grad1)" opacity="0.8"/>
     <polygon points="220,40 340,200 160,180" fill="url(#grad2)" opacity="0.6"/>
     <path d="M50 200 Q 200 50 350 200" stroke="#38BDF8" stroke-width="3" fill="none"/>
+    <text x="40" y="225" fill="#64748B" font-size="11" font-family="monospace">EXAMPLE ABSTRACT ILLUSTRATION PLACEHOLDER 01</text>
     <defs>
       <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
         <stop offset="0%" stop-color="#38BDF8"/>
@@ -33,20 +42,20 @@ export function generatePortfolioSite({ name, headline, email }) {
     </defs>
   </svg>`;
 
-  const svgAbstract2 = `<svg class="project-artwork" width="100%" height="240" viewBox="0 0 400 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Abstract Art Illustration Placeholder: Dynamic Grid Architecture">
+  const svgAbstract2 = `<svg class="project-artwork" width="100%" height="240" viewBox="0 0 400 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Example Abstract Illustration Placeholder 02: Dynamic Grid Architecture">
     <rect width="400" height="240" fill="#14141E"/>
     <rect x="40" y="40" width="140" height="160" stroke="#A855F7" stroke-width="2" rx="8" fill="#1F1F30"/>
     <circle cx="280" cy="120" r="60" stroke="#38BDF8" stroke-width="2" stroke-dasharray="8 6"/>
     <line x1="40" y1="200" x2="340" y2="40" stroke="#EC4899" stroke-width="2"/>
-    <text x="50" y="225" fill="#64748B" font-size="11" font-family="monospace">ABSTRACT ILLUSTRATION PLACEHOLDER 02</text>
+    <text x="40" y="225" fill="#64748B" font-size="11" font-family="monospace">EXAMPLE ABSTRACT ILLUSTRATION PLACEHOLDER 02</text>
   </svg>`;
 
-  const svgAbstract3 = `<svg class="project-artwork" width="100%" height="240" viewBox="0 0 400 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Abstract Art Illustration Placeholder: Fluid System Canvas">
+  const svgAbstract3 = `<svg class="project-artwork" width="100%" height="240" viewBox="0 0 400 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Example Abstract Illustration Placeholder 03: Fluid Canvas">
     <rect width="400" height="240" fill="#1A1829"/>
     <path d="M 40 120 C 120 40, 240 200, 360 120" stroke="#38BDF8" stroke-width="4" fill="none"/>
     <path d="M 40 160 C 160 80, 280 220, 360 80" stroke="#A855F7" stroke-width="2" stroke-dasharray="4 4" fill="none"/>
     <circle cx="200" cy="120" r="16" fill="#F43F5E"/>
-    <text x="40" y="225" fill="#64748B" font-size="11" font-family="monospace">ABSTRACT ILLUSTRATION PLACEHOLDER 03</text>
+    <text x="40" y="225" fill="#64748B" font-size="11" font-family="monospace">EXAMPLE ABSTRACT ILLUSTRATION PLACEHOLDER 03</text>
   </svg>`;
 
   const indexHtml = `<!DOCTYPE html>
@@ -61,12 +70,7 @@ export function generatePortfolioSite({ name, headline, email }) {
   <meta property="og:type" content="website">
   <link rel="stylesheet" href="styles.css">
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "${safeName}",
-    "jobTitle": "${safeHeadline}"
-  }
+${jsonLdScript}
   </script>
 </head>
 <body>
@@ -74,7 +78,7 @@ export function generatePortfolioSite({ name, headline, email }) {
 
   <header class="site-header">
     <div class="container header-inner">
-      <a href="#" class="brand-logo">${safeName}</a>
+      <a href="#main-content" class="brand-logo">${safeName}</a>
       <nav class="site-nav" aria-label="Main Navigation">
         <a href="#work">Selected Work</a>
         <a href="#about">About</a>
@@ -84,11 +88,17 @@ export function generatePortfolioSite({ name, headline, email }) {
   </header>
 
   <main id="main-content">
+    <div class="draft-banner">
+      <div class="container">
+        <span>Draft Preview — Starter Example Content</span>
+      </div>
+    </div>
+
     <section class="hero-section">
       <div class="container">
         <span class="hero-tag">Creative Studio &amp; Portfolio</span>
         <h1 class="hero-title">${safeHeadline}</h1>
-        <p class="hero-subtitle">Art-directed digital experiences, editorial systems, and creative technology.</p>
+        <p class="hero-subtitle">Digital experiences, editorial systems, and creative technology.</p>
         <div class="hero-actions">
           <a href="${ctaLink}" class="btn btn-primary">${ctaText}</a>
           <a href="#work" class="btn btn-secondary">View Showcase</a>
@@ -99,7 +109,7 @@ export function generatePortfolioSite({ name, headline, email }) {
     <section id="work" class="work-section">
       <div class="container">
         <div class="section-header">
-          <h2>Selected Work</h2>
+          <h2>Selected Work (Example Showcase)</h2>
           <p>Explorations in digital composition, systems architecture, and visual identity.</p>
         </div>
         <div class="gallery-grid">
@@ -108,7 +118,7 @@ export function generatePortfolioSite({ name, headline, email }) {
               ${svgAbstract1}
             </div>
             <div class="card-meta">
-              <span class="category">Brand Identity &amp; Digital</span>
+              <span class="category">Brand Identity &amp; Digital (Example)</span>
               <h3>Prism Systems Showcase</h3>
               <p>An exploration of light refraction, modern color theory, and vector dynamics built for interactive platforms.</p>
               <div class="tags">
@@ -123,7 +133,7 @@ export function generatePortfolioSite({ name, headline, email }) {
               ${svgAbstract2}
             </div>
             <div class="card-meta">
-              <span class="category">Interactive Architecture</span>
+              <span class="category">Interactive Architecture (Example)</span>
               <h3>Dynamic Grid Protocol</h3>
               <p>Asymmetric grid layout exploration emphasizing structural negative space and geometric typography.</p>
               <div class="tags">
@@ -138,7 +148,7 @@ export function generatePortfolioSite({ name, headline, email }) {
               ${svgAbstract3}
             </div>
             <div class="card-meta">
-              <span class="category">Motion &amp; Canvas</span>
+              <span class="category">Motion &amp; Canvas (Example)</span>
               <h3>Fluid Canvas Experiment</h3>
               <p>Minimalist generative canvas curves illustrating fluid state transitions and user feedback loops.</p>
               <div class="tags">
@@ -155,7 +165,7 @@ export function generatePortfolioSite({ name, headline, email }) {
       <div class="container about-grid">
         <div class="about-bio">
           <h2>Creative Approach</h2>
-          <p>I build clean, high-impact digital experiences that strip away visual noise and focus on fundamental typography, deliberate layout, and brand story.</p>
+          <p>Building high-impact digital experiences that strip away visual noise and focus on fundamental typography, deliberate layout, and brand story.</p>
           <p>Every project is crafted with strict performance standards, accessible interactions, and zero unnecessary dependencies.</p>
         </div>
         <div class="capabilities-card">
@@ -255,6 +265,16 @@ body {
   top: 1rem;
 }
 
+.draft-banner {
+  background-color: var(--bg-surface);
+  border-bottom: 1px dashed var(--border-color);
+  padding: 0.5rem 0;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent-primary);
+}
+
 .container {
   max-width: var(--max-width);
   margin: 0 auto;
@@ -271,9 +291,7 @@ h1.hero-title {
   font-weight: 800;
   line-height: 1.1;
   margin-bottom: 1.5rem;
-  background: linear-gradient(135deg, #FFFFFF 0%, #94A3B8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #F5F5F7;
 }
 
 h2 {
@@ -306,8 +324,7 @@ a:focus-visible, button:focus-visible {
 
 /* Site Header */
 .site-header {
-  background-color: rgba(13, 13, 17, 0.9);
-  backdrop-filter: blur(8px);
+  background-color: rgba(13, 13, 17, 0.95);
   border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
@@ -545,7 +562,7 @@ a:focus-visible, button:focus-visible {
 }
 
 .inquiry-box {
-  background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-card) 100%);
+  background: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 4rem 2rem;
@@ -626,9 +643,9 @@ a:focus-visible, button:focus-visible {
 }
 `;
 
-  const briefMd = `# Design Brief: ${safeName}
+  const briefMd = `# Design Brief: ${safeName} (Draft)
 
-**Style Archetype:** Portfolio / Creative Showcase (Editorial Minimalist Studio)
+**Style Archetype:** Portfolio / Creative Showcase (Editorial Studio)
 **Creator Name:** ${safeName}
 **Headline / Specialty:** ${safeHeadline}
 **Inquiry Email:** ${safeEmail || 'Not specified (using section fallback anchor)'}
@@ -638,13 +655,13 @@ a:focus-visible, button:focus-visible {
 ## Visual Direction Parameters
 
 - **Palette:** Deep obsidian background (\`#0D0D11\`), surface dark gray (\`#181820\`), high-contrast text (\`#F5F5F7\`), sky blue accent (\`#38BDF8\`), purple accent (\`#A855F7\`).
-- **Typography:** Modern geometric typography scale, oversized high-impact headlines, clean neutral body text.
-- **Layout:** Full editorial hero, 3-card asymmetric gallery featuring bundled original abstract SVG artworks honestly labelled as illustration placeholders, capabilities list, direct project inquiry card.
+- **Typography:** Oversized solid typography (no gradient text), clean neutral body text.
+- **Layout:** Full editorial hero, asymmetric gallery featuring original bundled abstract SVG artworks visibly labelled as example placeholders, capabilities list, direct inquiry card.
 - **Accessibility:** High-contrast text on dark background, 44x44px touch targets, skip link, visible focus states, prefers-reduced-motion CSS support.
 - **CTA Routing:** ${safeEmail ? `Verified mailto link to ${safeEmail}` : 'Working #contact section anchor fallback.'}
 `;
 
-  const readmeMd = `# ${safeName} : Portfolio Starter Site
+  const readmeMd = `# ${safeName} : Portfolio Starter Site (Draft)
 
 This portfolio starter site was generated using the zero-dependency CLI starter tool (\`scripts/create-site.mjs\`).
 

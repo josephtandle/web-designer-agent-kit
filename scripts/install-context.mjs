@@ -1,9 +1,54 @@
 #!/usr/bin/env node
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, writeFileSync, lstatSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 
-const TARGET = resolve(process.argv.find((arg) => arg.startsWith('--target='))?.slice('--target='.length) || process.cwd())
+const args = process.argv.slice(2)
+let targetArg = null
+let help = false
+
+const allowedFlags = new Set(['help', 'h'])
+
+for (const arg of args) {
+  if (arg === '-h' || arg === '--help') {
+    help = true
+  } else if (arg.startsWith('--target=')) {
+    targetArg = arg.slice('--target='.length)
+  } else if (arg.startsWith('--')) {
+    const key = arg.slice(2)
+    if (!allowedFlags.has(key)) {
+      console.error(`Error: Unknown option '--${key}'.`)
+      process.exit(1)
+    }
+  } else if (arg.startsWith('-')) {
+    console.error(`Error: Unknown option '${arg}'.`)
+    process.exit(1)
+  } else {
+    console.error(`Error: Unknown argument '${arg}'.`)
+    process.exit(1)
+  }
+}
+
+if (help) {
+  console.log(`
+Masterminds Context Files Installer
+
+Usage:
+  node scripts/install-context.mjs [--target=<directory>]
+
+Options:
+  --target=<path>  Target website project directory (default: current working directory)
+  --help, -h       Show help message
+`)
+  process.exit(0)
+}
+
+const TARGET = resolve(targetArg || process.cwd())
 const STAGING = join(TARGET, '.masterminds-context')
+
+if (existsSync(TARGET) && lstatSync(TARGET).isSymbolicLink()) {
+  console.error(`Error: Target directory '${TARGET}' is a symbolic link. Symlinks are refused for safety.`)
+  process.exit(1)
+}
 
 const files = {
   'CLAUDE.md': `# CLAUDE.md
@@ -184,13 +229,31 @@ When important preferences, positioning, or business details emerge, suggest add
 
 function writeSafe(name, content) {
   const target = join(TARGET, name)
+  if (existsSync(target) && lstatSync(target).isSymbolicLink()) {
+    console.error(`Error: Target file '${target}' is a symbolic link. Refusing write.`)
+    process.exit(1)
+  }
+
   if (!existsSync(target)) {
     writeFileSync(target, content)
     return `created ${name}`
   }
+
   mkdirSync(STAGING, { recursive: true })
-  writeFileSync(join(STAGING, name), content)
-  return `kept existing ${name}; wrote proposed version to .masterminds-context/${name}`
+  const baseProposal = join(STAGING, name)
+  if (!existsSync(baseProposal)) {
+    writeFileSync(baseProposal, content)
+    return `kept existing ${name}; wrote proposed version to .masterminds-context/${name}`
+  }
+
+  let counter = 1
+  let candidate = join(STAGING, `${name}.${counter}`)
+  while (existsSync(candidate)) {
+    counter++
+    candidate = join(STAGING, `${name}.${counter}`)
+  }
+  writeFileSync(candidate, content)
+  return `kept existing ${name} and existing proposal; wrote candidate to .masterminds-context/${name}.${counter}`
 }
 
 mkdirSync(TARGET, { recursive: true })

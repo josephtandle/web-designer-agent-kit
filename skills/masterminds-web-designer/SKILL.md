@@ -18,7 +18,7 @@ Use this skill when building a new website or updating an existing site for Mast
    - What primary action or CTA should visitors take?
 5. Present at most 3 visual directions based on site archetype (Service, Portfolio, or Event) with a recommended option. If the participant delegates the choice, select the recommended direction for their business archetype rather than defaulting to Direction 1.
 6. Save design choices to `.masterminds-context/design-decisions.json` without overwriting original context files.
-7. Build or update the website using clean, responsive HTML/CSS/JS or the CLI starter tool (`node scripts/create-site.mjs`).
+7. Build or update the website. Discover kit starter CLI tools (`node scripts/create-site.mjs`) as an optional accelerator for new builds, but never require them when absent to preserve the participant's existing tech stack.
 
 ## References & Skill Routing
 
@@ -31,7 +31,7 @@ Skill Routing:
 
 ## Participant Support
 
-- **Beginners:** Deliver a complete, working single-page site using CLI starters (`node scripts/create-site.mjs`) or custom HTML/CSS, with clear instructions to preview (`node scripts/preview.mjs --dir=. --port=3000`).
+- **Beginners:** Deliver a complete, working single-page site using CLI starters (`node scripts/create-site.mjs`) when available or custom HTML/CSS, with clear instructions to preview (`node scripts/preview.mjs --dir=. --port=3000`).
 - **Existing Sites:** Inspect current structure before making changes. Keep existing content intact and place new assets or designs safely alongside existing files.
 
 ## Non-Negotiable Standards

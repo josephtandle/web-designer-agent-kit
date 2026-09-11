@@ -7,43 +7,36 @@ Install Joe Che's Web Designer Agent Kit.
 
 You are working inside my current website project folder. Treat "." as the project root on both Mac and Windows.
 
-Install only the Web Designer agent and the 22 curated web design skills. My ./CLAUDE.md, ./USER.md, and ./SOUL.md files were installed in the previous step, so do not replace them.
+Install the Web Designer agent and the 2 core local web design skills offline without git calls. (Optional 20 remote skills can be cloned with --extras if requested). My ./CLAUDE.md, ./USER.md, and ./SOUL.md files were installed in the previous step, so do not replace them.
 
 Rules:
 - Detect whether I am on Mac, Windows PowerShell, or Windows Command Prompt.
 - Use the matching terminal commands.
-- Do not overwrite any existing files.
-- If a target skill or agent already exists, leave it alone and report it as skipped.
-- If git, node, or npm is missing, stop and tell me exactly what to install.
-- If one external skill repo fails, continue installing the rest and report the failure clearly.
+- Do not overwrite any existing files by default.
+- Use --upgrade to safely update previously managed unmodified files while preserving customized installs with reviewable .candidate files.
+- If node is missing, stop and tell me exactly what to install.
 - Use relative project paths for this project.
 - Use the existing ./.masterminds-web-designer-agent-kit folder if it already exists.
-- Clone the kit into ./.masterminds-web-designer-agent-kit.
 - After installing, run the health check with --project=.
 
 Steps:
 1. Check:
-   git --version
    node --version
-   npm --version
-2. If the repo is not already in this project, clone it:
-   git clone https://github.com/josephtandle/web-designer-agent-kit .masterminds-web-designer-agent-kit
-3. Install the agent and skills:
+2. Install the offline core agent and skills:
    Mac:
    node .masterminds-web-designer-agent-kit/scripts/install-web-designer-kit.mjs
 
    Windows PowerShell:
    node .\.masterminds-web-designer-agent-kit\scripts\install-web-designer-kit.mjs
-4. Run the health check:
+3. Run the health check:
    Mac:
    node .masterminds-web-designer-agent-kit/scripts/health-check.mjs --project=.
 
    Windows PowerShell:
    node .\.masterminds-web-designer-agent-kit\scripts\health-check.mjs --project=.
-5. Tell me:
-   - installed skills
+4. Tell me:
+   - installed core skills
    - skipped skills
-   - failed skills
    - whether the Web Designer agent is ready
    - whether ./CLAUDE.md, ./USER.md, and ./SOUL.md are present
    - the next prompt to paste

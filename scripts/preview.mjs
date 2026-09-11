@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const MIME_TYPES = {
+const ALLOWED_MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8',
@@ -21,9 +21,7 @@ const MIME_TYPES = {
   '.webp': 'image/webp',
   '.ico': 'image/x-icon',
   '.woff': 'font/woff',
-  '.woff2': 'font/woff2',
-  '.json': 'application/json; charset=utf-8',
-  '.md': 'text/markdown; charset=utf-8'
+  '.woff2': 'font/woff2'
 };
 
 function printUsage() {
@@ -40,9 +38,9 @@ Options:
 
 Security:
   - Binds strictly to 127.0.0.1 (loopback interface ONLY)
-  - Path traversal protected
+  - Path traversal protected via path.relative boundary check
   - Symlink escapes forbidden
-  - Public asset whitelist enforced (dotfiles and private files refused)
+  - Public asset whitelist enforced (HTML/CSS/JS/images/fonts only; dotfiles/markdown/json refused)
 `);
 }
 
@@ -50,6 +48,7 @@ function parseArgs(args) {
   let dir = '.';
   let port = 3000;
   let help = false;
+  const allowedFlags = new Set(['dir', 'port', 'd', 'p', 'help', 'h']);
 
   for (let i = 0; i < args.length; i++) {
     const arg = args[i];
@@ -69,13 +68,12 @@ function parseArgs(args) {
       printUsage();
       process.exit(1);
     } else {
-      // Positional argument for dir if provided
       dir = arg;
     }
   }
 
-  if (isNaN(port) || port < 1 || port > 65535) {
-    console.error(`Error: Invalid port number '${port}'. Must be between 1 and 65535.`);
+  if (!Number.isInteger(port) || port < 1 || port > 65535) {
+    console.error(`Error: Invalid port number '${port}'. Must be an integer between 1 and 65535.`);
     process.exit(1);
   }
 
@@ -99,7 +97,6 @@ function serveStaticServer(rootDir, port) {
   }
 
   const server = http.createServer((req, res) => {
-    // Only GET and HEAD supported
     if (req.method !== 'GET' && req.method !== 'HEAD') {
       res.writeHead(405, { 'Content-Type': 'text/plain; charset=utf-8' });
       res.end('405 Method Not Allowed');
@@ -108,24 +105,27 @@ function serveStaticServer(rootDir, port) {
 
     try {
       const parsedUrl = new URL(req.url, `http://127.0.0.1:${port}`);
-      let decodedPath = decodeURIComponent(parsedUrl.pathname);
-      const normalizedPath = path.normalize(decodedPath);
+      const rawPathname = parsedUrl.pathname;
 
-      // Dotfile check: refuse any segments starting with '.'
-      const segments = normalizedPath.split(path.sep).filter(Boolean);
-      for (const seg of segments) {
-        if (seg.startsWith('.')) {
+      // Reject hidden or dotfile segments BEFORE normalization
+      const rawSegments = rawPathname.split('/').filter(Boolean);
+      for (const seg of rawSegments) {
+        const decodedSeg = decodeURIComponent(seg);
+        if (decodedSeg.startsWith('.') || decodedSeg.includes('..')) {
           res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8' });
           res.end('403 Forbidden: Access to hidden or dotfiles is private.');
           return;
         }
       }
 
+      const decodedPath = decodeURIComponent(rawPathname);
+      const normalizedPath = path.normalize(decodedPath);
       let filePath = path.join(rootDirPath, normalizedPath);
 
-      // Path traversal safety check
+      // Path relative containment safety check
       const resolvedFilePath = path.resolve(filePath);
-      if (!resolvedFilePath.startsWith(rootDirPath)) {
+      const relFromRoot = path.relative(rootDirPath, resolvedFilePath);
+      if (relFromRoot.startsWith('..') || path.isAbsolute(relFromRoot)) {
         res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8' });
         res.end('403 Forbidden: Path traversal detected.');
         return;
@@ -137,11 +137,11 @@ function serveStaticServer(rootDir, port) {
         return;
       }
 
-      // If directory, try index.html
       let stat = fs.statSync(filePath);
+      let targetFilePath = filePath;
       if (stat.isDirectory()) {
-        filePath = path.join(filePath, 'index.html');
-        if (!fs.existsSync(filePath)) {
+        targetFilePath = path.join(filePath, 'index.html');
+        if (!fs.existsSync(targetFilePath)) {
           res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
           res.end('404 Not Found: Directory index.html missing.');
           return;
@@ -149,23 +149,24 @@ function serveStaticServer(rootDir, port) {
       }
 
       // Check for symbolic link
-      const lstat = fs.lstatSync(filePath);
+      const lstat = fs.lstatSync(targetFilePath);
       if (lstat.isSymbolicLink()) {
         res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8' });
         res.end('403 Forbidden: Symbolic links are refused.');
         return;
       }
 
-      // Check realpath to prevent symlink escapes
-      const realFilePath = fs.realpathSync(filePath);
-      if (!realFilePath.startsWith(realRootDirPath)) {
+      // Check realpath boundary using path.relative (fixes prefix bug)
+      const realFilePath = fs.realpathSync(targetFilePath);
+      const relFromRealRoot = path.relative(realRootDirPath, realFilePath);
+      if (relFromRealRoot.startsWith('..') || path.isAbsolute(relFromRealRoot)) {
         res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8' });
         res.end('403 Forbidden: File escapes document root.');
         return;
       }
 
-      const ext = path.extname(filePath).toLowerCase();
-      const mimeType = MIME_TYPES[ext];
+      const ext = path.extname(targetFilePath).toLowerCase();
+      const mimeType = ALLOWED_MIME_TYPES[ext];
 
       if (!mimeType) {
         res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8' });
@@ -173,7 +174,7 @@ function serveStaticServer(rootDir, port) {
         return;
       }
 
-      const fileStat = fs.statSync(filePath);
+      const fileStat = fs.statSync(targetFilePath);
       res.writeHead(200, {
         'Content-Type': mimeType,
         'Content-Length': fileStat.size,
@@ -186,7 +187,7 @@ function serveStaticServer(rootDir, port) {
         return;
       }
 
-      const stream = fs.createReadStream(filePath);
+      const stream = fs.createReadStream(targetFilePath);
       stream.pipe(res);
       stream.on('error', (err) => {
         if (!res.headersSent) {
@@ -207,7 +208,7 @@ function serveStaticServer(rootDir, port) {
 Preview server running at http://127.0.0.1:${port}/
 Serving directory: ${realRootDirPath}
 Binding interface: 127.0.0.1 ONLY
-Safety mode: Path-traversal blocked, dotfiles hidden, symlinks refused.
+Safety mode: Path-traversal blocked via path.relative, dotfiles hidden, symlinks refused.
 
 Press Ctrl+C to stop the server.
 `);

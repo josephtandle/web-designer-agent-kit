@@ -12,5 +12,6 @@ Instructions:
 - Confirm all CTA buttons have working destinations or mailto fallbacks.
 - Ensure no placeholder text or unverified claims remain.
 - Save final launch configuration summary to .masterminds-context/launch-checklist.json.
+- Explicitly state local preview status (preview only, not published) and report any unverified QA checks if live browser rendering was not executed.
 - Provide exact steps to deploy to Vercel, Netlify, or GitHub Pages.
 ```

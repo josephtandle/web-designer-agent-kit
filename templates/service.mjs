@@ -16,6 +16,14 @@ export function generateServiceSite({ name, headline, email }) {
   const ctaLink = safeEmail ? `mailto:${safeEmail}` : '#contact';
   const ctaText = safeEmail ? `Email ${safeName}` : 'Get In Touch';
 
+  const ldData = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": name,
+    "description": headline
+  };
+  const jsonLdScript = JSON.stringify(ldData, null, 2).replace(/</g, '\\u003c');
+
   const indexHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,12 +36,7 @@ export function generateServiceSite({ name, headline, email }) {
   <meta property="og:type" content="website">
   <link rel="stylesheet" href="styles.css">
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "name": "${safeName}",
-    "description": "${safeHeadline}"
-  }
+${jsonLdScript}
   </script>
 </head>
 <body>
@@ -41,7 +44,7 @@ export function generateServiceSite({ name, headline, email }) {
 
   <header class="site-header">
     <div class="container header-inner">
-      <a href="#" class="brand-logo">${safeName}</a>
+      <a href="#main-content" class="brand-logo">${safeName}</a>
       <nav class="site-nav" aria-label="Main Navigation">
         <a href="#services">Services</a>
         <a href="#process">Process</a>
@@ -52,25 +55,31 @@ export function generateServiceSite({ name, headline, email }) {
   </header>
 
   <main id="main-content">
+    <div class="draft-banner">
+      <div class="container">
+        <span>Draft Preview — Starter Example Content</span>
+      </div>
+    </div>
+
     <section class="hero-section">
       <div class="container hero-split">
         <div class="hero-content">
           <span class="badge">Professional Advisory &amp; Services</span>
           <h1>${safeHeadline}</h1>
-          <p class="hero-subtext">Dedicated strategy, guidance, and execution tailored to your specific goals. High impact, clear communication, and proven methodology.</p>
+          <p class="hero-subtext">Dedicated strategy, guidance, and execution tailored to your specific goals. Clear communication and structured methodology.</p>
           <div class="hero-actions">
             <a href="${ctaLink}" class="btn btn-primary">${ctaText}</a>
             <a href="#services" class="btn btn-secondary">Explore Services</a>
           </div>
         </div>
         <div class="hero-card">
-          <div class="card-badge">Value Summary</div>
-          <h3>Direct Impact &amp; Clarity</h3>
+          <div class="card-badge">Service Overview</div>
+          <h3>Structured Working Model</h3>
           <ul class="check-list">
             <li>Tailored strategy sessions</li>
-            <li>Direct 1-on-1 advisor access</li>
-            <li>Transparent milestones and pricing</li>
-            <li>Measurable business outcomes</li>
+            <li>Direct project alignment</li>
+            <li>Transparent milestones</li>
+            <li>Clear evaluation criteria</li>
           </ul>
         </div>
       </div>
@@ -148,14 +157,14 @@ export function generateServiceSite({ name, headline, email }) {
       <div class="container about-grid">
         <div class="about-text">
           <h2>About ${safeName}</h2>
-          <p>Founded on principles of clarity, direct communication, and real-world results. We partner with business owners and leaders to eliminate operational noise and focus on what matters.</p>
-          <p>Every engagement is customized to your requirements without fluff or bloated frameworks.</p>
+          <p>Founded on principles of clarity, direct communication, and practical results. We partner with leaders to eliminate operational noise and focus on key priorities.</p>
+          <p>Every engagement is customized to your requirements without fluff or unnecessary overhead.</p>
         </div>
         <div class="about-quote">
           <blockquote>
             "Clarity precedes momentum. When strategy is clear, execution follows naturally."
           </blockquote>
-          <cite>: ${safeName}</cite>
+          <cite>Working Philosophy (Draft Example)</cite>
         </div>
       </div>
     </section>
@@ -244,6 +253,16 @@ body {
 
 .skip-link:focus {
   top: 1rem;
+}
+
+.draft-banner {
+  background-color: var(--bg-surface);
+  border-bottom: 1px dashed var(--border-color);
+  padding: 0.5rem 0;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent-secondary);
 }
 
 .container {
@@ -642,7 +661,7 @@ cite {
 }
 `;
 
-  const briefMd = `# Design Brief: ${safeName}
+  const briefMd = `# Design Brief: ${safeName} (Draft)
 
 **Style Archetype:** Service Business (Warm Professional Clarity)
 **Business Name:** ${safeName}
@@ -660,7 +679,7 @@ cite {
 - **CTA Routing:** ${safeEmail ? `Verified mailto link to ${safeEmail}` : 'Working #contact section anchor fallback.'}
 `;
 
-  const readmeMd = `# ${safeName} : Service Starter Site
+  const readmeMd = `# ${safeName} : Service Starter Site (Draft)
 
 This starter site was generated using the zero-dependency CLI starter tool (\`scripts/create-site.mjs\`).
 
@@ -680,7 +699,7 @@ Alternatively, open \`index.html\` directly in any web browser.
 
 - **HTML Content:** Edit \`index.html\` to update your text, service details, and bio.
 - **Styling:** Edit \`styles.css\` to adjust colors, fonts, and spacing.
-- **Project Brief:** Refer to \`brief.md\` for the visual direction parameters and accessibility standards.
+- **Project Brief:** Refer to \`brief.md\` for visual direction specifications.
 `;
 
   return { indexHtml, stylesCss, briefMd, readmeMd };

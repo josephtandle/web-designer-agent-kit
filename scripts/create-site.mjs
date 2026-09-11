@@ -16,15 +16,15 @@ function printUsage() {
 Masterminds Web Designer : Site Starter CLI (Zero-Dependency)
 
 Usage:
-  node scripts/create-site.mjs --target=<NEW_DIR> --style=<style> --name=<name> --headline=<headline> [--email=<email>]
+  node scripts/create-site.mjs --target=<NEW_DIR> --style=<style> [--name=<name>] [--headline=<headline>] [--email=<email>]
 
 Required Options:
   --target=<path>      Directory path for the new site
   --style=<type>       Site style: service | portfolio | event
-  --name=<name>        Business or project owner name
-  --headline=<headline> Main title or value proposition
 
 Optional Options:
+  --name=<name>        Business or project owner name (default: "Sample Studio")
+  --headline=<headline> Main title or value proposition (default: "A useful new perspective")
   --email=<email>      Valid contact email address for CTAs
   --help, -h           Show this help message
 
@@ -56,13 +56,14 @@ function parseArgs(args) {
 
       if (!allowedFlags.has(key)) {
         console.error(`Error: Unknown option '--${key}'.`);
-        printUsage();
         process.exit(1);
       }
       options[key] = val;
     } else if (arg.startsWith('-')) {
       console.error(`Error: Unknown option '${arg}'.`);
-      printUsage();
+      process.exit(1);
+    } else {
+      console.error(`Error: Unknown positional argument '${arg}'.`);
       process.exit(1);
     }
   }
@@ -71,29 +72,23 @@ function parseArgs(args) {
 }
 
 function validateEmail(email) {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!email) return true;
+  // Reject email containing control characters, query/fragment delimiters ?, # or space
+  if (/[\x00-\x1F\x7F\s?#]/.test(email)) return false;
+  const emailRegex = /^[^\s@?#]+@[^\s@?#]+\.[^\s@?#]+$/;
   return emailRegex.test(email);
 }
 
 function checkSymlinkSafety(targetPath) {
   const resolvedTarget = path.resolve(targetPath);
-
-  // Check if target itself or any existing parent directory is a symbolic link
-  let current = resolvedTarget;
-  while (current !== path.parse(current).root) {
-    if (fs.existsSync(current)) {
-      const lstat = fs.lstatSync(current);
-      if (lstat.isSymbolicLink()) {
-        console.error(`Error: Path '${current}' is a symbolic link. Symlink targets are refused for safety.`);
-        process.exit(1);
-      }
-      const real = fs.realpathSync(current);
-      if (real !== current) {
-        console.error(`Error: Path '${current}' resolves through symbolic link '${real}'. Symlinks are refused for safety.`);
-        process.exit(1);
-      }
+  try {
+    const lstat = fs.lstatSync(resolvedTarget);
+    if (lstat.isSymbolicLink()) {
+      console.error(`Error: Target path '${resolvedTarget}' is a symbolic link. Symlink targets are refused for safety.`);
+      process.exit(1);
     }
-    current = path.dirname(current);
+  } catch (e) {
+    // Target directory does not exist yet - safety check passed
   }
 }
 
@@ -106,23 +101,23 @@ function main() {
     process.exit(0);
   }
 
-  const { target, style, name, headline, email } = options;
+  let { target, style, name, headline, email } = options;
 
-  // Check required options
-  if (!target || !style || !name || !headline) {
-    console.error('Error: Missing required options (--target, --style, --name, --headline are required).');
+  if (!target || !style) {
+    console.error('Error: Missing required options (--target and --style are required).');
     printUsage();
     process.exit(1);
   }
 
-  // Validate style
+  if (!name) name = 'Sample Studio';
+  if (!headline) headline = 'A useful new perspective';
+
   const validStyles = ['service', 'portfolio', 'event'];
   if (!validStyles.includes(style.toLowerCase())) {
     console.error(`Error: Invalid style '${style}'. Allowed styles are: service, portfolio, event.`);
     process.exit(1);
   }
 
-  // Validate email if provided
   if (email && !validateEmail(email)) {
     console.error(`Error: Invalid email address '${email}'. Please provide a valid email address.`);
     process.exit(1);
@@ -131,7 +126,6 @@ function main() {
   const targetPath = path.resolve(target);
   checkSymlinkSafety(targetPath);
 
-  // Check target directory existence and non-emptiness
   if (fs.existsSync(targetPath)) {
     const lstat = fs.lstatSync(targetPath);
     if (!lstat.isDirectory()) {
@@ -167,6 +161,14 @@ function main() {
   fs.writeFileSync(path.join(targetPath, 'brief.md'), siteOutput.briefMd, 'utf8');
   fs.writeFileSync(path.join(targetPath, 'README.md'), siteOutput.readmeMd, 'utf8');
 
+  // Copy self-contained preview script into target project
+  const scriptsDir = path.join(targetPath, 'scripts');
+  fs.mkdirSync(scriptsDir, { recursive: true });
+  const previewSource = path.join(__dirname, 'preview.mjs');
+  if (fs.existsSync(previewSource)) {
+    fs.copyFileSync(previewSource, path.join(scriptsDir, 'preview.mjs'));
+  }
+
   console.log(`
 Site generated successfully!
   Location: ${targetPath}
@@ -174,7 +176,7 @@ Site generated successfully!
   Name: ${name}
 
 To preview your new site locally, run:
-  node scripts/preview.mjs --dir="${targetPath}" --port=3000
+  node scripts/preview.mjs --dir=. --port=3000
 `);
 }
 
