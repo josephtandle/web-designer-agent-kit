@@ -1,12 +1,13 @@
 {
   "name": "web-designer-agent-kit",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "private": false,
   "type": "module",
   "scripts": {
+    "create:site": "node scripts/create-site.mjs",
+    "preview": "node scripts/preview.mjs",
     "install:kit": "node scripts/install-web-designer-kit.mjs",
     "install:context": "node scripts/install-context.mjs",
     "health": "node scripts/health-check.mjs"
   }
 }
-

@@ -1,26 +1,26 @@
-# Web Designer Agent Kit 2.0.0
+# Web Designer Agent Kit 3.0.0
 
-Install Joe Che's starter context files, Web Designer agent, and curated web design skill stack for Mastermind and All Sorted participants.
+Install Joe Che's starter context files, Web Designer agent, portable zero-dependency site starter CLI, static preview server, and curated web design skill stack for Mastermind and All Sorted participants.
 
-## Quick Start: Short First-Build Prompt
+## Quick Start: Build & Preview a Site
 
-If your context files are already installed, paste this prompt into your AI assistant from your website project folder:
+Generate a portable, zero-dependency site starter in seconds:
 
-```text
-Use the Web Designer agent and Masterminds Web Designer skill stack to build my website.
-Read CLAUDE.md, USER.md, and SOUL.md if present.
-Load skills/masterminds-web-designer/references/design-directions.md.
-Ask at most 3 questions if vital info is missing.
-Offer at most 3 visual directions with a recommendation and default option.
-Build a responsive, accessible website with working CTA links and honest details.
-Save decisions to .masterminds-context/design-decisions.json and show me how to preview it locally.
+```bash
+# Generate a Service business site starter
+npm run create:site -- --target=my-service-site --style=service --name="Apex Advisory" --headline="Strategic Leadership Solutions" --email="contact@example.com"
+
+# Preview locally on 127.0.0.1
+npm run preview -- --dir=my-service-site --port=3000
 ```
+
+Available styles: `service`, `portfolio`, `event`.
 
 ---
 
 ## What Gets Installed
 
-The default installer populates the Web Designer agent into `~/.claude/agents` and installs 22 curated web design skills:
+The installer populates the Web Designer agent into `~/.claude/agents` and installs 22 curated web design skills:
 
 1. Masterminds Web Designer
 2. Frontend Design fallback
@@ -81,20 +81,6 @@ git clone https://github.com/josephtandle/web-designer-agent-kit .masterminds-we
 node .\.masterminds-web-designer-agent-kit\scripts\install-context.mjs --target=.
 ```
 
-Manual Mac commands:
-
-```bash
-git clone https://github.com/josephtandle/web-designer-agent-kit .masterminds-web-designer-agent-kit
-node .masterminds-web-designer-agent-kit/scripts/install-context.mjs --target=.
-```
-
-Manual Windows PowerShell commands:
-
-```powershell
-git clone https://github.com/josephtandle/web-designer-agent-kit .masterminds-web-designer-agent-kit
-node .\.masterminds-web-designer-agent-kit\scripts\install-context.mjs --target=.
-```
-
 ---
 
 ### Step 2: Install Web Designer Agent and Skills
@@ -113,7 +99,7 @@ Rules:
 - If a target file or skill already exists, leave it alone and report skipped.
 - Use relative project paths. Treat "." as the website project root.
 - Clone the kit into ./.masterminds-web-designer-agent-kit.
-- After installing, run health check against --project=. and summarize output.
+- After installing, run health check: node .masterminds-web-designer-agent-kit/scripts/health-check.mjs --project=.
 
 Steps:
 1. Make sure git and node are available.
@@ -127,27 +113,25 @@ Steps:
    Windows: node .\.masterminds-web-designer-agent-kit\scripts\health-check.mjs --project=.
 ```
 
-Manual Mac commands:
-
-```bash
-git clone https://github.com/josephtandle/web-designer-agent-kit .masterminds-web-designer-agent-kit
-node .masterminds-web-designer-agent-kit/scripts/install-web-designer-kit.mjs
-node .masterminds-web-designer-agent-kit/scripts/health-check.mjs --project=.
-```
-
-Manual Windows PowerShell commands:
-
-```powershell
-git clone https://github.com/josephtandle/web-designer-agent-kit .masterminds-web-designer-agent-kit
-node .\.masterminds-web-designer-agent-kit\scripts\install-web-designer-kit.mjs
-node .\.masterminds-web-designer-agent-kit\scripts\health-check.mjs --project=.
-```
-
 ---
 
-### Step 3: Fill In Profile Details
+### Step 3: Create & Preview Site Starters
 
-After context files are installed, paste the prompt in `prompts/02-fill-user-and-soul.md` into your AI assistant. It will update `USER.md` and `SOUL.md`.
+Use the zero-dependency CLI starter tool to generate responsive, accessible sites:
+
+```bash
+# Service Business (Warm Editorial Cream & Forest Green)
+node scripts/create-site.mjs --target=my-service-site --style=service --name="Apex Advisory" --headline="Strategic Leadership Solutions" --email="contact@example.com"
+
+# Creative Portfolio Showcase (Dark Obsidian & Asymmetric Abstract Art)
+node scripts/create-site.mjs --target=my-portfolio-site --style=portfolio --name="Tandle Design" --headline="Editorial Web Architecture" --email="studio@example.com"
+
+# Event / Workshop Experience (Midnight Violet & Vibrant Magenta/Ochre)
+node scripts/create-site.mjs --target=my-event-site --style=event --name="Mastermind Summit" --headline="Founder Intensive 2026" --email="summit@example.com"
+
+# Preview any generated site locally (Bound strictly to 127.0.0.1)
+node scripts/preview.mjs --dir=my-service-site --port=3000
+```
 
 ---
 
@@ -161,13 +145,17 @@ After context files are installed, paste the prompt in `prompts/02-fill-user-and
 
 ## Health Check and Command Compatibility
 
-Run the health check at any time to verify installation status:
+Run the health check using project relative script path:
 
 ```bash
-npm run health -- --project=.
+node .masterminds-web-designer-agent-kit/scripts/health-check.mjs --project=.
 ```
 
+Note: Complete offline health check parity is scheduled for completion in Round 3 release.
+
 Available package scripts:
+- `npm run create:site` (generates zero-dependency site starter)
+- `npm run preview` (starts local static server on 127.0.0.1)
 - `npm run install:kit` (installs agent and 22 curated skills)
 - `npm run install:context` (installs `CLAUDE.md`, `USER.md`, and `SOUL.md`)
-- `npm run health` (verifies agent, skills, and context files)
+- `npm run health` (runs local health check script)
