@@ -1,148 +1,136 @@
 # Web Designer Agent Kit 4.0.0
 
-Install Joe Che's starter context files, Web Designer agent, portable zero-dependency site starter CLI, static preview server, and web design skill stack for Mastermind and All Sorted participants.
+Install Joe Che's starter context files, Web Designer agent, and original local design toolkit for Mastermind and All Sorted participants.
 
----
+## Quick start: one pasteable AI request
 
-## Quick Start: Pasteable AI Brief
+Install Node.js 24 or newer, then download this kit once by cloning it or downloading a repository archive and extracting it into a local kit directory. Confirm that the extracted directory contains `scripts/`, `skills/`, and `agents/`. Internet access is required only for that initial download. The bundled scripts and UI tools then work locally, although a cloud-hosted AI model may still use a network.
 
-Paste this into your AI assistant to generate a website in seconds:
+Open a terminal in the website project you want to build. Keep that project separate from the kit checkout. Then paste this request into your AI assistant:
 
 ```text
-Use the Web Designer agent to build my website.
+Use the Web Designer Agent Kit from my local .masterminds-web-designer-agent-kit folder to build a working website in this current website project. First verify Node.js 24 or newer, discover and record the absolute kit root and website project root, install the context files and core agent without overwriting existing files, build editable HTML/CSS/JS, clean the visible copy, verify desktop and mobile in a local preview, and report anything not observed. Do not publish.
+
 Business Name: Apex Advisory
 Style Archetype: Service (or Portfolio, or Event)
-Headline: Strategic Leadership Solutions
+Headline: Make the next decision clearer
 Primary CTA: Email contact@example.com
 ```
 
-Or generate a starter site using the optional CLI:
+Available starter styles are `service`, `portfolio`, and `event`.
+
+## Download and local setup
+
+If the intended kit folder already exists, reuse it. Do not clone over an existing file or unrelated directory. If you downloaded an archive, extract it and assign the kit-root variable to that directory instead of running `git clone`.
+
+### macOS or Linux Bash
+
+Run these commands from the participant's website project:
 
 ```bash
-# Generate a Service business site starter
-npm run create:site -- --target=my-service-site --style=service --name="Apex Advisory" --headline="Strategic Leadership Solutions" --email="contact@example.com"
+node --version
+PROJECT_ROOT="$PWD"
+KIT_ROOT="$PROJECT_ROOT/.masterminds-web-designer-agent-kit"
 
-# Preview locally on 127.0.0.1
-npm run preview -- --dir=my-service-site --port=3000
+if [ -d "$KIT_ROOT/.git" ]; then
+  echo "Using existing kit checkout: $KIT_ROOT"
+elif [ -e "$KIT_ROOT" ]; then
+  echo "KIT_ROOT exists but is not the expected git checkout. Set KIT_ROOT to the extracted kit or choose another directory."
+  exit 1
+else
+  git clone https://github.com/josephtandle/web-designer-agent-kit.git "$KIT_ROOT"
+fi
+
+node "$KIT_ROOT/scripts/install-context.mjs" "--target=$PROJECT_ROOT"
+node "$KIT_ROOT/scripts/install-web-designer-kit.mjs"
+node "$KIT_ROOT/scripts/health-check.mjs" "--project=$PROJECT_ROOT"
+node "$KIT_ROOT/scripts/create-site.mjs" "--target=$PROJECT_ROOT/my-service-site" "--style=service" "--name=Apex Advisory" "--headline=Make the next decision clearer" "--email=contact@example.com"
+node "$KIT_ROOT/scripts/preview.mjs" "--dir=$PROJECT_ROOT/my-service-site" "--port=3000"
 ```
 
-Available site styles: `service`, `portfolio`, `event`.
+### Windows PowerShell
 
----
+Run these commands from the participant's website project:
 
-## What Gets Installed
+```powershell
+node --version
+$PROJECT_ROOT = (Get-Location).Path
+$KIT_ROOT = Join-Path $PROJECT_ROOT '.masterminds-web-designer-agent-kit'
 
-By default, the offline installer populates the Web Designer agent (`agents/web-designer.md`) and 2 core local web design skills into `~/.claude` (or custom `--claude-dir`):
+if (Test-Path (Join-Path $KIT_ROOT '.git')) {
+  Write-Host "Using existing kit checkout: $KIT_ROOT"
+} elseif (Test-Path $KIT_ROOT) {
+  throw 'KIT_ROOT exists but is not the expected git checkout. Set KIT_ROOT to the extracted kit or choose another directory.'
+} else {
+  git clone https://github.com/josephtandle/web-designer-agent-kit.git $KIT_ROOT
+}
 
-1. **Masterminds Web Designer** (`skills/masterminds-web-designer`)
-2. **Frontend Design** (`skills/frontend-design`)
-
-### Optional Remote Skills (`--extras`)
-
-Participants can optionally pass `--extras` to clone 20 additional remote web design skills via git:
-Impeccable, GSAP Core, GSAP Timeline, GSAP ScrollTrigger, GSAP Performance, Modern Web Design, Three.js WebGL, React Three Fiber, Motion/Framer, Lightweight 3D Effects, Web3D Integration Patterns, Scroll Reveal Libraries, Animated Component Libraries, Anime.js, Barba.js, GEO Content Optimizer, Meta Tags Optimizer, Schema Markup Generator, Technical SEO Checker, Content Quality Auditor.
-
----
-
-## Installation Steps
-
-### Step 1: Install Starter Context Files Only
-
-Paste this into your AI assistant from your website project folder (`.` represents project root):
-
-```text
-Install only my Mastermind starter context files for this website project.
-
-You are working inside my current website project folder. Treat "." as the project root on both Mac and Windows.
-
-Goal:
-- Install ./CLAUDE.md
-- Install ./USER.md
-- Install ./SOUL.md
-
-Use Joe Che's public Web Designer Agent Kit only for the context-file installer. Do not install the Web Designer agent yet. Do not install skills yet.
-
-Rules:
-- Do not overwrite existing files.
-- If ./CLAUDE.md, ./USER.md, or ./SOUL.md already exists, leave it untouched.
-- If a file exists, write the proposed replacement to ./.masterminds-context/ instead.
-- Use relative project paths in commands and explanations.
-
-Commands:
-Mac:
-git clone https://github.com/josephtandle/web-designer-agent-kit .masterminds-web-designer-agent-kit
-node .masterminds-web-designer-agent-kit/scripts/install-context.mjs --target=.
-
-Windows PowerShell:
-git clone https://github.com/josephtandle/web-designer-agent-kit .masterminds-web-designer-agent-kit
-node .\.masterminds-web-designer-agent-kit\scripts\install-context.mjs --target=.
+node (Join-Path $KIT_ROOT 'scripts/install-context.mjs') "--target=$PROJECT_ROOT"
+node (Join-Path $KIT_ROOT 'scripts/install-web-designer-kit.mjs')
+node (Join-Path $KIT_ROOT 'scripts/health-check.mjs') "--project=$PROJECT_ROOT"
+node (Join-Path $KIT_ROOT 'scripts/create-site.mjs') "--target=$PROJECT_ROOT\my-service-site" "--style=service" "--name=Apex Advisory" "--headline=Make the next decision clearer" "--email=contact@example.com"
+node (Join-Path $KIT_ROOT 'scripts/preview.mjs') "--dir=$PROJECT_ROOT\my-service-site" "--port=3000"
 ```
 
----
+Every path flag is passed as one quoted `--key=value` argument so paths containing spaces remain intact. These commands do not assume the website project contains `scripts/`.
 
-### Step 2: Install Web Designer Agent and Skills
+## Bundled core tools and skills
 
-Paste this into your AI assistant after `CLAUDE.md`, `USER.md`, and `SOUL.md` exist:
+Once downloaded, the local tools and generation, installation, preview, and copy-review scripts need no additional network access. URL capture is optional network work. Playwright is optional and installed separately only when that capture route is chosen.
 
-```text
-Install Joe Che's Web Designer Agent Kit.
+- **Masterminds Web Designer:** `skills/masterminds-web-designer`
+- **Frontend Design:** `skills/frontend-design`
+- **Palette Studio:** `skills/masterminds-web-designer/tools/palette-studio.html`, with 12 distinct palettes, paired light/dark themes, and a 10-token export contract including `border` and `onAccent`
+- **Component Lab:** `skills/masterminds-web-designer/tools/component-lab.html`, with 12 distinct layouts, 4 button treatments, 16 geometric line icons, and 3 optional effects
+- **Reference Compare:** `skills/masterminds-web-designer/tools/reference-compare.html`, with side-by-side, overlay, and difference views aligned to a common coordinate origin and scale
+- **Layout Atlas:** `skills/masterminds-web-designer/references/layout-atlas.md`
+- **Search Readiness:** `skills/masterminds-web-designer/references/search-readiness.md`, with built-in SEO and GEO guidance plus honest local-versus-live reporting
 
-Install the Web Designer agent and the 2 core local web design skills offline without requiring remote git access. My ./CLAUDE.md, ./USER.md, and ./SOUL.md files were installed in the previous step, so do not replace them.
+The GitHub design research catalog at `docs/github-design-research.md` is research-only in the default workflow. It does not fetch, install, clone, or vendor external repositories.
 
-Rules:
-- Detect whether I am on Mac, Windows PowerShell, or Windows Command Prompt.
-- Use matching terminal commands.
-- Default install preserves existing files.
-- Use --upgrade to safely update previously managed files whose hashes match prior manifest, writing .candidate files for modified files.
-- Use relative project paths. Treat "." as the website project root.
-- After installing, run health check: node .masterminds-web-designer-agent-kit/scripts/health-check.mjs --project=.
+## Safe installation behavior
 
-Steps:
-1. Make sure node is available.
-2. Install agent and core skills:
-   Mac: node .masterminds-web-designer-agent-kit/scripts/install-web-designer-kit.mjs
-   Windows: node .\.masterminds-web-designer-agent-kit\scripts\install-web-designer-kit.mjs
-3. Run health check:
-   Mac: node .masterminds-web-designer-agent-kit/scripts/health-check.mjs --project=.
-   Windows: node .\.masterminds-web-designer-agent-kit\scripts\health-check.mjs --project=.
-```
+The context installer creates `CLAUDE.md`, `USER.md`, and `SOUL.md`. Existing files are left untouched and proposed versions are written below `.masterminds-context/`.
 
----
+The core installer preserves existing files by default. Use `--upgrade` only to update previously managed files: unchanged managed files are updated, while customized files receive reviewable `.candidate` versions. Do not use replacement options unless the participant explicitly requests them.
 
-### Step 3: Create & Preview Site Starters
+The platform commands above establish `KIT_ROOT` once as the absolute kit checkout and `PROJECT_ROOT` once as the absolute website project. Every later script call must use the script below `KIT_ROOT` and an explicit absolute project path.
 
-Use the zero-dependency CLI starter tool to generate responsive, accessible sites:
+## Reference build workflow
+
+Example Bash commands follow. PowerShell users should call each script with `node (Join-Path $KIT_ROOT 'scripts/<name>.mjs')` and use the same quoted `--key=value` arguments.
 
 ```bash
-# Service Business (Warm Editorial Cream & Forest Green)
-node scripts/create-site.mjs --target=my-service-site --style=service --name="Apex Advisory" --headline="Strategic Leadership Solutions" --email="contact@example.com"
-
-# Creative Portfolio Showcase (Dark Obsidian & Solid Typography)
-node scripts/create-site.mjs --target=my-portfolio-site --style=portfolio --name="Tandle Design" --headline="Editorial Web Architecture" --email="studio@example.com"
-
-# Event / Workshop Experience (Midnight Violet & Ochre/Pink Poster Typography)
-node scripts/create-site.mjs --target=my-event-site --style=event --name="Mastermind Summit" --headline="Founder Intensive 2026" --email="summit@example.com"
-
-# Preview any generated site locally (Bound strictly to 127.0.0.1)
-node scripts/preview.mjs --dir=my-service-site --port=3000
+node "$KIT_ROOT/scripts/reference-project.mjs" "--target=$PROJECT_ROOT/my-reference" "--url=https://example.com" "--mode=match"
+node "$KIT_ROOT/scripts/capture-reference.mjs" "https://example.com" "--target=$PROJECT_ROOT/my-reference/captures-01"
 ```
 
----
+Before review or preview, have the AI create `$PROJECT_ROOT/my-reference/candidate/index.html` with editable CSS and JavaScript. Keep the candidate separate from the captured reference evidence. Then run:
 
-## Build-Review-Repair Routine & Verification
+```bash
+node "$KIT_ROOT/scripts/copy-check.mjs" "--file=$PROJECT_ROOT/my-reference/candidate/index.html"
+node "$KIT_ROOT/scripts/seo-check.mjs" "--file=$PROJECT_ROOT/my-reference/candidate/index.html" --json
+node "$KIT_ROOT/scripts/preview.mjs" "--dir=$PROJECT_ROOT/my-reference/candidate" "--port=3000"
+```
 
-When updating or building websites with the kit, follow this empirical verification routine:
+The SEO audit is read-only and runs from the established `KIT_ROOT` against an explicit file below `PROJECT_ROOT`; it does not assume the website project contains `scripts/`. In PowerShell, run the equivalent command:
 
-1. **Intake & Brief Verification:** Check `.masterminds-context/brief.json` for participant preferences.
-2. **Local Build & File Inspection:** Ensure generated `index.html` and `styles.css` are valid, semantic, and non-empty.
-3. **Accessibility Audit:** Verify 4.5:1 text contrast minimum, 44x44px touch targets, skip to content links, and `:focus-visible` styles.
-4. **Security & Route Verification:** Ensure preview server runs locally bound to `127.0.0.1` and path traversal / dotfiles are blocked.
-5. **Empirical Test Suite:** Run `npm test` (`node --test tests/*.test.mjs`) to verify installation and site creation suite.
+```powershell
+node (Join-Path $KIT_ROOT 'scripts/seo-check.mjs') "--file=$PROJECT_ROOT\my-reference\candidate\index.html" --json
+```
 
-Available package scripts:
-- `npm run create:site` (generates zero-dependency site starter)
-- `npm run preview` (starts local static server on 127.0.0.1)
-- `npm run install:kit` (installs agent and core local skills)
-- `npm run install:context` (installs `CLAUDE.md`, `USER.md`, and `SOUL.md`)
-- `npm run health` (runs local health check script)
-- `npm test` (runs test suite with Node standard test runner)
+Add `"--url=<verified-public-URL>"` only when that public URL has been verified. For a local-only audit, report `live_http: not_checked`, `robots: not_checked`, `indexing: not_checked`, and `ai_citations: not_checked`.
+
+URL fetch text is not visual evidence. Follow `skills/masterminds-web-designer/references/reference-layout.md`: create an observed-versus-inferred reference map, build actual editable HTML/CSS in a separate candidate directory, capture the candidate at the same known viewport, DPR, and screenshot state as the reference, compare it locally, list discrepancies, fix the build, and repeat desktop and mobile passes until no blocking mismatches remain. A user-provided image's pixel dimensions are not automatically a CSS viewport. Record unknowns and test responsive behavior instead of claiming false pixel accuracy.
+
+## Build, review, repair, and verify
+
+1. Read the participant context and confirm facts, offer, audience, and intended CTA.
+2. Build editable, functioning, original HTML/CSS/JS. An image may be evidence or an asset, never the page implementation.
+3. Run Speak Human cleanup before visual QA. Show before/after examples and verify that names, dates, prices, claims, qualifiers, quotations, legal meaning, citations, links, and SEO meaning remain intact.
+4. Verify semantic navigation, one H1, crawlable text, unique title and description, responsive layouts, 4.5:1 body-text contrast, 44x44px touch targets, skip navigation, focus states, and reduced-motion behavior.
+5. Treat a form as connected only after verifying a real endpoint and receiving user-confirmed send intent. Otherwise label it clearly as an unconnected local demo. Links navigate; they do not pretend to submit.
+6. Report local preview separately from publication or deployment. Never claim a browser check that was not observed.
+7. Record final assembled machine-readable acceptance evidence in `docs/verification.json`. Until that file exists and is current, do not infer every check passes.
+
+See `docs/acceptance.md` for the concise acceptance rubric and `docs/three-upgrade-loops.md` for the feature-intention record.

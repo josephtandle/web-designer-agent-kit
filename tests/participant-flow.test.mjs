@@ -8,7 +8,7 @@ import { spawnSync } from 'node:child_process'
 
 const root = fileURLToPath(new URL('../', import.meta.url))
 const temp = () => mkdtempSync(join(tmpdir(), 'web-designer-check-'))
-const run = (script, args = []) => spawnSync(process.execPath, [resolve(root, 'scripts', script), ...(script === 'create-site.mjs' ? ['--name=Sample Studio', '--headline=A useful new perspective'] : []), ...args], { encoding: 'utf8', timeout: 15000 })
+const run = (script, args = []) => spawnSync(process.execPath, [resolve(root, 'scripts', script), ...(script === 'create-site.mjs' ? ['--name=Sample Studio', '--headline=A useful new perspective'].filter(flag => !args.some(arg => arg.split('=')[0] === flag.split('=')[0])) : []), ...args], { encoding: 'utf8', timeout: 15000 })
 
 for (const style of ['service', 'portfolio', 'event']) {
   test(`${style}: a short brief produces an offline editable site`, () => {
@@ -39,7 +39,7 @@ test('starter rerun preserves participant edits and unrelated files', () => {
 test('unsafe contact and unknown options are rejected before writing', () => {
   for (const option of ['--email=javascript:alert(1)', '--style=bogus', '--mystery=yes']) {
     const target = join(temp(), 'site')
-    const result = run('create-site.mjs', [`--target=${target}`, option])
+    const result = run('create-site.mjs', [`--target=${target}`, ...(option.startsWith('--style=') ? [] : ['--style=service']), option])
     assert.notEqual(result.status, 0)
     assert.equal(existsSync(join(target, 'index.html')), false)
   }
@@ -68,3 +68,13 @@ test('health must fail for an empty install and missing project context', () => 
   const result = run('health-check.mjs', [`--claude-dir=${join(base, 'claude')}`, `--project=${join(base, 'project')}`])
   assert.notEqual(result.status, 0, 'Missing installation must not be reported as healthy')
 })
+
+
+test('bare value flags fail before creating a site',()=>{
+ for(const flag of ['--name','--headline','--target']) {
+ const base=temp();const target=join(base,'site');const args=flag==='--target'?[flag,'--style=service']:[`--target=${target}`,'--style=service',flag];
+ const result=spawnSync(process.execPath,[resolve(root,'scripts/create-site.mjs'),...args],{cwd:base,encoding:'utf8',timeout:15000});assert.notEqual(result.status,0);assert.equal(existsSync(join(base,'true')),false);assert.equal(existsSync(target),false);
+ }
+});
+
+test("starter refuses symlink ancestors before writing",()=>{const base=temp();const real=join(base,"real");mkdirSync(real);symlinkSync(real,join(base,"alias"),"dir");const result=run("create-site.mjs",["--target="+join(base,"alias","site"),"--style=service"]);assert.notEqual(result.status,0);assert.equal(existsSync(join(real,"site")),false)});

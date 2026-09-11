@@ -16,11 +16,15 @@ When starting a project or update:
 
 ---
 
-## Skill Routing & Specialty Capabilities
+## Built-in Specialty Capabilities
 
-- **UI Composition & Craft:** Route to `frontend-design` or `impeccable` for layout polish, color harmony, and micro-spacing.
-- **Motion & Micro-Interactions:** Route to `motion` (or GSAP/Anime.js) when optional animations are requested.
-- **SEO & Structured Metadata:** Route to `schema-markup-generator`, `meta-tags-optimizer`, or `technical-seo-checker`.
+- **UI Composition and Craft:** Use bundled `frontend-design`, Palette Studio, Component Lab, and Layout Atlas. Optional skills may help but are not required.
+- **Motion and Micro-Interactions:** Use original CSS transitions or keyframes by default. Keep motion optional and provide an explicit `prefers-reduced-motion` fallback. No external library is required.
+- **SEO, GEO, and Structured Metadata:** Load `search-readiness.md`, then provide unique titles and descriptions, one H1, semantic navigation, crawlable visible text, and accurate heading structure. Make the entity identity clear, answer useful audience questions directly, and use verifiable facts. Use real Open Graph assets only when provided. Add canonical URLs only for verified public domains. Schema must match visible facts.
+- **Source Research:** Treat the catalog as research-only. The default workflow does not fetch or install external GitHub code.
+
+<!-- Source pin: the bundled scripts/seo-check.mjs contract and search-readiness.md govern website-finish search checks. -->
+At website finish, run `node "$KIT_ROOT/scripts/seo-check.mjs" "--file=$PROJECT_ROOT/<site>/index.html" --json` as a read-only local audit. Fix confirmed local failures and rerun it. Use `"--url=<verified-public-URL>"` only for a verified public URL. Do not promise rankings, indexing, AI-answer inclusion, or citations, and do not require `llms.txt` or special AI schema. Unless separately observed, report `live_http: not_checked`, `robots: not_checked`, `indexing: not_checked`, and `ai_citations: not_checked`. External SEO skills are strictly optional, only for researching a specific identified gap, and never required to install.
 
 ---
 
@@ -51,9 +55,9 @@ Designed for coaches, consultants, practitioners, and service providers who need
 - **Honest Placeholder Facts & Proof:**
   - Use real participant stats when available. State process details accurately based on participant input, never inventing fake testimonials, unverified cohort numbers, or fabricated revenue stats.
 - **CTA Fallbacks:**
-  - Direct mailto link using verified participant email. If email is absent, fallback to local section anchor form (`#contact`). Never invent placeholder emails or unverified booking URLs.
+  - Use a verified mailto or booking destination. A local `#contact` anchor may navigate to contact information, but it is not a form submission. Label unconnected demo forms and prevent submission.
 - **SEO & Accessibility:**
-  - Enforce semantic H1 structure, unique title and meta description, and schema markup.
+  - Use one meaningful H1, a unique title and description, semantic navigation, and crawlable text. Add only schema supported by visible facts.
   - Contrast ratio 4.5:1 minimum for body text, 3:1 for large headings.
   - Touch targets 44x44px minimum with visible focus states (`:focus-visible`).
 
@@ -85,7 +89,7 @@ Designed for visual artists, photographers, writers, designers, and creative fou
 - **Honest Placeholder Facts & Proof:**
   - List verified project names, client categories, or completed works. Do not invent awards or press coverage.
 - **CTA Fallbacks:**
-  - Direct email link using verified participant email or local section anchor (`#contact`).
+  - Use a verified email link or a local anchor to visible contact information. Do not present navigation as form submission.
 - **SEO & Accessibility:**
   - Alt text required on all image elements.
   - Keyboard nav focus outlines clearly visible (`:focus-visible`).
@@ -116,9 +120,9 @@ Designed for event hosts, retreat facilitators, workshop leaders, and product la
 - **Motion (Optional):**
   - Subtle pulse on CTA button. Keep static if reduced motion is requested.
 - **Honest Placeholder Facts & Proof:**
-  - Display actual seat count, date, location (or online link), and transparent schedule details. Clearly mark draft information as draft.
+  - Display confirmed seat count, date, location or online link, and schedule details. Draft callouts may appear visibly in a local prototype but must not be emitted as factual Event schema.
 - **CTA Fallbacks:**
-  - Direct ticket registration link or verified organizer mailto link. Fallback to local section anchor (`#register`).
+  - Use a verified ticket destination or organizer mailto link. A local `#register` anchor is navigation only unless a connected endpoint exists and the user has confirmed send intent.
 - **SEO & Accessibility:**
   - Single-column stack on mobile devices for agenda and pricing cards.
   - ARIA landmarks on main content regions.

@@ -1,17 +1,15 @@
-# Prompt 6: Finish And Prepare For Launch
+# Prompt 6: Finish and Prepare for Launch
 
-Paste this into Claude Code when your website design is ready to publish.
+Paste this into your AI assistant when the website design is ready for a final local review.
 
 ```text
-Use the Web Designer agent to finish my website and prepare it for launch.
+Use the Web Designer agent to finish my website and prepare a launch checklist. Do not publish.
 
-Instructions:
-- Perform a final site audit across mobile and desktop layouts.
-- Check title tags, meta descriptions, semantic heading hierarchy, and Open Graph tags.
-- Verify image alt text, contrast ratios (4.5:1 minimum), and 44x44px touch targets.
-- Confirm all CTA buttons have working destinations or mailto fallbacks.
-- Ensure no placeholder text or unverified claims remain.
-- Save final launch configuration summary to .masterminds-context/launch-checklist.json.
-- Explicitly state local preview status (preview only, not published) and report any unverified QA checks if live browser rendering was not executed.
-- Provide exact steps to deploy to Vercel, Netlify, or GitHub Pages.
+Run Speak Human copy cleanup first, with before/after examples and a protected-facts comparison. Then inspect a working local preview at desktop and mobile sizes.
+
+Verify unique titles and descriptions, one meaningful H1 per page, semantic navigation, crawlable text, accurate headings, approved Open Graph assets, alt text, 4.5:1 body-text contrast, 44x44px touch targets, reduced-motion behavior, and working CTA destinations. Add a canonical only when the public domain is verified. Ensure schema matches visible facts and contains no invented Event dates, metrics, ratings, prices, or addresses.
+
+Treat a form as connected only when its real endpoint is configured and I have confirmed send intent. Label unconnected demos and prevent accidental submission. Do not use action="#", contenteditable, or navigation as fake submission.
+
+Save the local launch checklist to .masterminds-context/launch-checklist.json. State that the local preview is not published, list observed checks, and list remaining uncertainty. Give deployment instructions as future steps, not as claims that deployment occurred.
 ```

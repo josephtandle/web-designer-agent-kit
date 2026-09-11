@@ -1,29 +1,36 @@
 #!/usr/bin/env node
-import { existsSync, mkdirSync, writeFileSync, lstatSync } from 'node:fs'
+import { mkdirSync } from 'node:fs'
 import { join, resolve } from 'node:path'
+import { assertNoSymlinkPath, exists, writeExclusive } from './lib/safe-paths.mjs'
 
 const args = process.argv.slice(2)
 let targetArg = null
 let help = false
-
-const allowedFlags = new Set(['help', 'h'])
+let targetSeen = false
+let helpSeen = false
 
 for (const arg of args) {
   if (arg === '-h' || arg === '--help') {
-    help = true
-  } else if (arg.startsWith('--target=')) {
-    targetArg = arg.slice('--target='.length)
-  } else if (arg.startsWith('--')) {
-    const key = arg.slice(2)
-    if (!allowedFlags.has(key)) {
-      console.error(`Error: Unknown option '--${key}'.`)
+    if (helpSeen) {
+      console.error("Error: duplicate '--help' option.")
       process.exit(1)
     }
-  } else if (arg.startsWith('-')) {
-    console.error(`Error: Unknown option '${arg}'.`)
-    process.exit(1)
+    helpSeen = true
+    help = true
+  } else if (arg.startsWith('--target=')) {
+    if (targetSeen) {
+      console.error("Error: duplicate '--target' option.")
+      process.exit(1)
+    }
+    targetSeen = true
+    const val = arg.slice('--target='.length)
+    if (!val || val.trim() === '') {
+      console.error("Error: '--target' path cannot be empty.")
+      process.exit(1)
+    }
+    targetArg = val
   } else {
-    console.error(`Error: Unknown argument '${arg}'.`)
+    console.error('Error: unknown argument or option.')
     process.exit(1)
   }
 }
@@ -45,8 +52,12 @@ Options:
 const TARGET = resolve(targetArg || process.cwd())
 const STAGING = join(TARGET, '.masterminds-context')
 
-if (existsSync(TARGET) && lstatSync(TARGET).isSymbolicLink()) {
-  console.error(`Error: Target directory '${TARGET}' is a symbolic link. Symlinks are refused for safety.`)
+const assertSafePath = (_root, fullPath) => assertNoSymlinkPath(fullPath, 'Target')
+
+try {
+  assertSafePath(TARGET, TARGET)
+} catch (e) {
+  console.error(`Error: ${e.message}`)
   process.exit(1)
 }
 
@@ -229,34 +240,41 @@ When important preferences, positioning, or business details emerge, suggest add
 
 function writeSafe(name, content) {
   const target = join(TARGET, name)
-  if (existsSync(target) && lstatSync(target).isSymbolicLink()) {
-    console.error(`Error: Target file '${target}' is a symbolic link. Refusing write.`)
-    process.exit(1)
-  }
+  assertSafePath(TARGET, target)
 
-  if (!existsSync(target)) {
-    writeFileSync(target, content)
+  if (!exists(target)) {
+    writeExclusive(target, content)
     return `created ${name}`
   }
 
   mkdirSync(STAGING, { recursive: true })
+  assertSafePath(TARGET, STAGING)
+
   const baseProposal = join(STAGING, name)
-  if (!existsSync(baseProposal)) {
-    writeFileSync(baseProposal, content)
+  assertSafePath(TARGET, baseProposal)
+
+  if (!exists(baseProposal)) {
+    writeExclusive(baseProposal, content)
     return `kept existing ${name}; wrote proposed version to .masterminds-context/${name}`
   }
 
   let counter = 1
   let candidate = join(STAGING, `${name}.${counter}`)
-  while (existsSync(candidate)) {
+  while (exists(candidate)) {
+    assertSafePath(TARGET, candidate)
     counter++
     candidate = join(STAGING, `${name}.${counter}`)
   }
-  writeFileSync(candidate, content)
+  assertSafePath(TARGET, candidate)
+  writeExclusive(candidate, content)
   return `kept existing ${name} and existing proposal; wrote candidate to .masterminds-context/${name}.${counter}`
 }
 
+assertNoSymlinkPath(TARGET, 'Target')
+// Validate every known output before creating the target directory.
+for (const name of Object.keys(files)) assertNoSymlinkPath(join(TARGET, name), 'Target')
 mkdirSync(TARGET, { recursive: true })
+assertSafePath(TARGET, TARGET)
 const results = Object.entries(files).map(([name, content]) => writeSafe(name, content))
 
 console.log(`Context install target: ${TARGET}`)

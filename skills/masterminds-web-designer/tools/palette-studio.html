@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Build, preview, check, and export paired website colour themes offline.">
+  <title>Palette Studio | Mastermind Web Designer</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --studio-bg: #eeeee7;
+      --studio-panel: #f8f7f0;
+      --studio-ink: #20231f;
+      --studio-muted: #5a6259;
+      --studio-line: #c8cbc0;
+      --studio-field: #ffffff;
+      --studio-action: #244d3b;
+      --studio-action-ink: #ffffff;
+      --studio-focus: #075ea8;
+      --studio-danger: #a1251c;
+      --studio-success: #176541;
+      --radius: 18px;
+      --shadow: 0 18px 50px rgba(40, 43, 36, .09);
+      font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    :root[data-editor-theme="dark"] {
+      color-scheme: dark;
+      --studio-bg: #171a17;
+      --studio-panel: #20241f;
+      --studio-ink: #f3f0e6;
+      --studio-muted: #bfc5ba;
+      --studio-line: #555d53;
+      --studio-field: #292e28;
+      --studio-action: #a8d8bd;
+      --studio-action-ink: #132219;
+      --studio-focus: #81bfff;
+      --studio-danger: #ffaaa1;
+      --studio-success: #91ddb5;
+      --shadow: 0 18px 50px rgba(0, 0, 0, .22);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--studio-bg); color: var(--studio-ink); }
+    button, input, textarea { font: inherit; }
+    button, input[type="text"], input[type="color"] { min-height: 44px; }
+    button { cursor: pointer; }
+    button:disabled { cursor: not-allowed; opacity: .46; }
+    a { color: inherit; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; letter-spacing: -.025em; }
+    .skip-link { position: fixed; left: 1rem; top: -6rem; z-index: 20; padding: .75rem 1rem; background: var(--studio-ink); color: var(--studio-bg); }
+    .skip-link:focus { top: 1rem; }
+    :focus-visible { outline: 3px solid var(--studio-focus); outline-offset: 3px; }
+    .masthead { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 1rem clamp(1rem, 4vw, 4rem); background: var(--studio-panel); border-bottom: 1px solid var(--studio-line); }
+    .wordmark { display: flex; align-items: baseline; gap: .75rem; }
+    .wordmark strong { font: 700 clamp(1.1rem, 3vw, 1.35rem)/1 Georgia, serif; }
+    .wordmark span { color: var(--studio-muted); font-size: .76rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; }
+    .editor-toggle { border: 1px solid var(--studio-line); border-radius: 999px; padding: .55rem .9rem; background: transparent; color: var(--studio-ink); font-weight: 700; }
+    .intro { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(15rem, .8fr); align-items: end; gap: clamp(1.5rem, 5vw, 5rem); max-width: 1440px; margin: 0 auto; padding: clamp(2rem, 6vw, 5.5rem) clamp(1rem, 4vw, 4rem) clamp(1.75rem, 4vw, 3rem); }
+    .kicker { margin-bottom: .55rem; color: var(--studio-action); font-size: .73rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+    .intro h1 { max-width: 13ch; margin-bottom: .8rem; font-size: clamp(2.5rem, 7.5vw, 6.4rem); line-height: .91; }
+    .intro-copy { max-width: 42rem; margin-bottom: .2rem; color: var(--studio-muted); font-size: clamp(1rem, 2vw, 1.18rem); }
+    .scope-note { margin: 0; padding-left: 1rem; border-left: 2px solid var(--studio-line); color: var(--studio-muted); font-size: .86rem; }
+    .workspace { display: grid; grid-template-columns: minmax(18rem, 24rem) minmax(0, 1fr); max-width: 1440px; margin: 0 auto; padding: 0 clamp(1rem, 4vw, 4rem) 5rem; gap: clamp(1rem, 3vw, 2rem); align-items: start; }
+    .controls, .preview-column { min-width: 0; }
+    .controls { position: sticky; top: 1rem; padding: clamp(1rem, 2.5vw, 1.5rem); background: var(--studio-panel); border: 1px solid var(--studio-line); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .section-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+    .section-heading h2 { margin-bottom: .25rem; font-size: 1.45rem; }
+    .section-heading small, .helper { color: var(--studio-muted); font-size: .78rem; }
+    .control-section + .control-section { margin-top: 1.4rem; padding-top: 1.35rem; border-top: 1px solid var(--studio-line); }
+    .preset-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .55rem; margin-top: .8rem; }
+    .preset-card { min-width: 0; padding: .55rem; border: 1px solid var(--studio-line); border-radius: 12px; background: transparent; color: var(--studio-ink); text-align: left; }
+    .preset-card[aria-pressed="true"] { border-color: var(--studio-action); box-shadow: inset 0 0 0 1px var(--studio-action); }
+    .preset-card strong { display: block; margin-top: .35rem; overflow: hidden; font-size: .72rem; text-overflow: ellipsis; white-space: nowrap; }
+    .swatch-strip { display: grid; grid-template-columns: repeat(4, 1fr); height: 16px; overflow: hidden; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--studio-line) 70%, transparent); }
+    label { display: block; margin-bottom: .35rem; font-size: .78rem; font-weight: 800; }
+    .seed-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .55rem; }
+    input[type="text"], textarea { width: 100%; border: 1px solid var(--studio-line); border-radius: 10px; background: var(--studio-field); color: var(--studio-ink); padding: .6rem .72rem; }
+    [aria-invalid="true"] { border-color: var(--studio-danger) !important; box-shadow: inset 0 0 0 1px var(--studio-danger); }
+    .field-error { min-height: 1.25rem; margin: .3rem 0 0; color: var(--studio-danger); font-size: .78rem; }
+    .button { border: 1px solid transparent; border-radius: 10px; padding: .58rem .9rem; background: var(--studio-action); color: var(--studio-action-ink); font-weight: 800; }
+    .button.secondary { border-color: var(--studio-line); background: transparent; color: var(--studio-ink); }
+    .button.quiet { padding-inline: .2rem; border-color: transparent; background: transparent; color: var(--studio-action); }
+    .button-row { display: flex; flex-wrap: wrap; gap: .55rem; }
+    .mode-tabs { display: grid; grid-template-columns: 1fr 1fr; padding: 4px; margin: .8rem 0 1rem; border-radius: 12px; background: var(--studio-bg); }
+    .mode-tab { border: 0; border-radius: 9px; background: transparent; color: var(--studio-muted); font-weight: 800; }
+    .mode-tab[aria-pressed="true"] { background: var(--studio-panel); color: var(--studio-ink); box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+    .role-list { display: grid; gap: .55rem; }
+    .role-field { display: grid; grid-template-columns: 44px minmax(0, 1fr); column-gap: .55rem; align-items: center; }
+    .role-field label { grid-column: 1 / -1; margin-bottom: .15rem; }
+    .role-field input[type="color"] { width: 44px; height: 44px; padding: 2px; border: 1px solid var(--studio-line); border-radius: 10px; background: var(--studio-field); }
+    .role-field .field-error { grid-column: 1 / -1; }
+    .repair-panel { margin-top: 1rem; padding: .8rem; border: 1px dashed var(--studio-line); border-radius: 12px; }
+    .repair-panel p { margin: 0 0 .65rem; color: var(--studio-muted); font-size: .78rem; }
+    .repair-summary { margin-top: .6rem !important; color: var(--studio-ink) !important; }
+    .preview-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin: .1rem 0 .75rem; }
+    .preview-toolbar h2 { margin: 0; font-size: clamp(1.35rem, 3vw, 2rem); }
+    .preview-mode { color: var(--studio-muted); font-size: .8rem; font-weight: 800; text-transform: uppercase; letter-spacing: .09em; }
+    .site-preview { --p-background: #faf8f5; --p-surface: #f0ece1; --p-surface-3: #e2dcd0; --p-text: #1f2421; --p-muted: #586057; --p-primary: #2d5a27; --p-on-primary: #ffffff; --p-accent: #98502d; --p-on-accent: #ffffff; --p-border: #c8c1b6; overflow: hidden; border: 1px solid var(--p-border); border-radius: clamp(14px, 2.5vw, 26px); background: var(--p-background); color: var(--p-text); box-shadow: var(--shadow); }
+    .sample-nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 64px; padding: .75rem clamp(1rem, 3vw, 2rem); border-bottom: 1px solid var(--p-border); }
+    .sample-brand { color: var(--p-text); font: 700 1rem/1 Georgia, serif; text-decoration: none; }
+    .sample-links { display: flex; align-items: center; gap: clamp(.5rem, 2vw, 1.35rem); }
+    .sample-links a { min-height: 44px; display: inline-flex; align-items: center; color: var(--p-muted); font-size: .8rem; font-weight: 700; }
+    .site-preview :focus-visible { outline-color: var(--p-accent); }
+    .sample-hero { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(14rem, .7fr); gap: clamp(1.5rem, 5vw, 4rem); align-items: end; padding: clamp(2rem, 7vw, 6rem) clamp(1rem, 4vw, 3.5rem); }
+    .sample-label { margin-bottom: .6rem; color: var(--p-accent); font-size: .74rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+    .sample-hero h3 { max-width: 13ch; margin-bottom: .85rem; color: var(--p-text); font-size: clamp(2rem, 5vw, 4.8rem); line-height: .94; }
+    .sample-hero p { max-width: 46ch; margin-bottom: 1.4rem; color: var(--p-muted); font-size: clamp(.94rem, 2vw, 1.08rem); }
+    .sample-actions { display: flex; flex-wrap: wrap; gap: .7rem; }
+    .sample-button { min-height: 44px; border: 1px solid transparent; border-radius: 999px; padding: .65rem 1rem; background: var(--p-primary); color: var(--p-on-primary); font-weight: 900; }
+    .sample-button.accent { background: var(--p-accent); color: var(--p-on-accent); }
+    .service-card { padding: 1.2rem; background: var(--p-surface); border: 1px solid var(--p-border); border-radius: 16px; }
+    .service-card .number { color: var(--p-accent); font-size: .72rem; font-weight: 900; }
+    .service-card h4 { margin: .8rem 0 .35rem; color: var(--p-text); font: 700 1.3rem/1.15 Georgia, serif; }
+    .service-card p { margin-bottom: .9rem; color: var(--p-muted); font-size: .88rem; }
+    .service-card a { min-height: 44px; display: inline-flex; align-items: center; color: var(--p-primary); font-weight: 900; }
+    .sample-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .65rem; padding: 1.25rem clamp(1rem, 4vw, 3.5rem); background: var(--p-surface-3); border-top: 1px solid var(--p-border); }
+    .sample-form label { grid-column: 1 / -1; margin: 0; color: var(--p-text); font-size: .8rem; }
+    .sample-input { min-height: 44px; padding: .6rem .75rem; border: 2px solid var(--p-accent); border-radius: 8px; background: var(--p-background); color: var(--p-text); }
+    .sample-error { grid-column: 1 / -1; margin: 0; color: var(--p-text); font-size: .78rem; font-weight: 700; }
+    .audit, .export-panel { margin-top: clamp(1.5rem, 4vw, 2.5rem); }
+    .audit-intro { display: flex; justify-content: space-between; gap: 1rem; align-items: end; }
+    .audit-intro h2, .export-panel h2 { margin-bottom: .25rem; }
+    .audit-intro p, .export-panel > p { max-width: 48rem; margin-bottom: 0; color: var(--studio-muted); font-size: .85rem; }
+    .audit-summary { flex: 0 0 auto; font-size: .82rem; font-weight: 900; }
+    .audit-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .65rem; margin-top: 1rem; }
+    .audit-item { padding: .85rem; border: 1px solid var(--studio-line); border-radius: 12px; background: var(--studio-panel); }
+    .audit-item span { display: block; color: var(--studio-muted); font-size: .73rem; }
+    .audit-item strong { display: block; margin: .15rem 0; font-size: 1.15rem; }
+    .audit-item.pass strong { color: var(--studio-success); }
+    .audit-item.fail { border-color: var(--studio-danger); }
+    .audit-item.fail strong { color: var(--studio-danger); }
+    .export-panel { padding: clamp(1rem, 3vw, 1.5rem); border: 1px solid var(--studio-line); border-radius: var(--radius); background: var(--studio-panel); }
+    .format-tabs { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1rem 0 .7rem; }
+    .format-button[aria-pressed="true"] { border-color: var(--studio-action); box-shadow: inset 0 0 0 1px var(--studio-action); }
+    .export-output { min-height: 230px; resize: vertical; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .78rem; line-height: 1.55; }
+    .export-status { min-height: 1.5rem; margin: .55rem 0 0; color: var(--studio-muted); font-size: .82rem; }
+    .export-status.error { color: var(--studio-danger); }
+    .manual-copy { margin-top: .6rem; }
+    [hidden] { display: none !important; }
+    @media (max-width: 980px) { .workspace { grid-template-columns: 1fr; } .controls { position: static; } .role-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } .intro { grid-template-columns: 1fr; } .scope-note { max-width: 42rem; } }
+    @media (max-width: 620px) { .masthead { align-items: flex-start; } .wordmark { display: block; } .wordmark span { display: block; margin-top: .3rem; } .preset-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .role-list, .audit-grid { grid-template-columns: 1fr; } .sample-hero { grid-template-columns: 1fr; } .sample-links a:not(:last-child) { display: none; } .sample-form { grid-template-columns: 1fr; } .sample-form label, .sample-error { grid-column: auto; } .audit-intro { display: block; } .audit-summary { margin-top: .65rem; } }
+    @media (max-width: 360px) { .masthead, .workspace, .intro { padding-left: .75rem; padding-right: .75rem; } .seed-row { grid-template-columns: 1fr; } .preview-toolbar { align-items: flex-start; flex-direction: column; } }
+    @media (prefers-reduced-motion: no-preference) { .preset-card, .button, .mode-tab, .editor-toggle { transition: transform 160ms ease-out, border-color 160ms ease-out, background-color 160ms ease-out; } .preset-card:hover, .button:hover:not(:disabled), .editor-toggle:hover { transform: translateY(-1px); } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#preview">Skip to preview</a>
+  <header class="masthead"><div class="wordmark"><strong>Palette Studio</strong><span>Offline colour workshop</span></div><button class="editor-toggle" id="editor-theme" type="button" aria-pressed="false">Dark editor</button></header>
+  <section class="intro" aria-labelledby="page-title">
+    <div><p class="kicker">Paired light and dark themes</p><h1 id="page-title">Colour with a job to do.</h1></div>
+    <div><p class="intro-copy">Choose a character, tune each semantic role, and test the exact pairs used in the sample interface.</p><p class="scope-note">These checks cover the listed text and focus pairs only. They do not certify an entire website.</p></div>
+  </section>
+  <main class="workspace">
+    <aside class="controls" aria-label="Palette controls">
+      <section class="control-section" aria-labelledby="starts-title"><div class="section-heading"><h2 id="starts-title">Curated starts</h2><small>12 paired themes</small></div><div class="preset-grid" id="preset-grid"></div></section>
+      <section class="control-section" aria-labelledby="seed-title">
+        <div class="section-heading"><h2 id="seed-title">Brand seed</h2><small>6-digit HEX</small></div><label for="brand-seed">Your anchor colour</label>
+        <div class="seed-row"><input id="brand-seed" type="text" value="#2d5a27" spellcheck="false" autocomplete="off" aria-describedby="seed-help seed-error"><button class="button" id="derive" type="button">Build pair</button></div>
+        <p class="helper" id="seed-help">Creates two modes and a distinct complementary accent.</p><p class="field-error" id="seed-error" role="alert"></p>
+      </section>
+      <section class="control-section" aria-labelledby="roles-title">
+        <div class="section-heading"><h2 id="roles-title">Semantic roles</h2><small id="editing-mode">Light mode</small></div>
+        <div class="mode-tabs" aria-label="Preview theme"><button class="mode-tab" id="light-tab" type="button" aria-pressed="true">Light</button><button class="mode-tab" id="dark-tab" type="button" aria-pressed="false">Dark</button></div>
+        <div class="role-list" id="role-list" aria-live="polite"></div>
+        <div class="repair-panel"><p>Repairs <strong>primary</strong> and <strong>accent</strong> contrast, plus their on-colour text, in this mode. The brand seed and other roles stay unchanged.</p><div class="button-row"><button class="button secondary" id="repair" type="button">Repair foregrounds</button><button class="button quiet" id="undo" type="button" hidden>Undo repair</button></div><p class="repair-summary" id="repair-summary" aria-live="polite"></p></div>
+      </section>
+    </aside>
+    <div class="preview-column">
+      <div class="preview-toolbar"><h2 id="preview-title">Live website sample</h2><span class="preview-mode" id="preview-mode">Paper Trail · Light</span></div>
+      <section class="site-preview" id="preview" aria-labelledby="sample-heading">
+        <nav class="sample-nav" aria-label="Sample navigation"><a class="sample-brand" href="#sample-heading">Northfield Studio</a><div class="sample-links"><a href="#sample-service">Services</a><a href="#sample-form">Contact</a></div></nav>
+        <div class="sample-hero"><div><p class="sample-label">A practical design partner</p><h3 id="sample-heading">Make the next decision feel obvious.</h3><p>Strategy and clear design for independent teams turning a useful idea into a confident customer experience.</p><div class="sample-actions"><button class="sample-button" id="primary-demo" type="button">Plan a working session</button><button class="sample-button accent" id="accent-demo" type="button">See the process</button></div></div><article class="service-card" id="sample-service"><span class="number">SERVICE 01</span><h4>Decision sprint</h4><p>One focused week to clarify the offer, page structure, and strongest next action.</p><a href="#sample-form">View the sprint details</a></article></div>
+        <form class="sample-form" id="sample-form" novalidate><label for="sample-email">Work email</label><input class="sample-input" id="sample-email" type="email" value="not-an-email" aria-invalid="true" aria-describedby="sample-error"><button class="sample-button" type="submit">Request the outline</button><p class="sample-error" id="sample-error">Enter an email in the format name@example.com.</p></form>
+      </section>
+      <section class="audit" aria-labelledby="audit-title"><div class="audit-intro"><div><h2 id="audit-title">Pair-by-pair check</h2><p>Text targets 4.5:1. Focus and adjacent interface boundaries target 3:1. Ratios use unrounded sRGB values and the 0.04045 breakpoint.</p></div><div class="audit-summary" id="audit-summary" aria-live="polite"></div></div><div class="audit-grid" id="audit-grid"></div></section>
+      <section class="export-panel" aria-labelledby="export-title"><h2 id="export-title">Take both themes with you</h2><p>Exports include the brand seed and ten semantic tokens for light and dark. Invalid drafts never enter this output.</p><div class="format-tabs" aria-label="Export format"><button class="button secondary format-button" type="button" data-format="css" aria-pressed="true">CSS</button><button class="button secondary format-button" type="button" data-format="json" aria-pressed="false">JSON</button><button class="button" id="copy" type="button">Copy</button><button class="button secondary" id="download" type="button">Download</button></div><textarea class="export-output" id="export-output" readonly aria-label="Palette export"></textarea><div class="manual-copy" id="manual-copy" hidden><button class="button secondary" id="select-export" type="button">Select text for manual copy</button></div><p class="export-status" id="export-status" aria-live="polite"></p></section>
+    </div>
+  </main>
+  <script>
+    (() => {
+      'use strict';
+      const TOKEN_DEFINITIONS = [['background','Page background'],['surface','Raised surface'],['surface3','Focus-adjacent surface'],['text','Main text'],['muted','Muted and small text'],['primary','Primary action'],['onPrimary','Text on primary'],['accent','Accent and focus'],['onAccent','Text on accent'],['border','Interface border']];
+      const RAW_PRESETS = [
+        ['Paper Trail','Quiet, grounded','#2d5a27','#98502d'],['Tidal Workshop','Clear, coastal','#155b68','#9a4828'],['Sunday Market','Warm, generous','#7a4300','#8d2d16'],['Clay Ledger','Earthy, assured','#84382d','#1f625e'],['Blue Pencil','Editorial, exact','#284b9b','#9b4129'],['Plum Index','Cultured, calm','#703458','#8a511e'],['Olive Press','Natural, focused','#46621e','#8b451d'],['Copper Signal','Bold, human','#8b3b19','#235a72'],['Moss Library','Studious, organic','#365b2a','#82401d'],['Night Orchard','Lush, luminous','#78a95f','#d59744'],['Ink & Coral','Direct, spirited','#769ce3','#df816d'],['Studio Gold','Graphic, refined','#d27828','#7ca0c5']
+      ];
+      const $ = (id) => document.getElementById(id);
+      const isHex = (value) => /^#[0-9a-f]{6}$/i.test(value);
+      const normalizeHex = (value) => value.toLowerCase();
+      function linearChannel(value) { const channel = value / 255; return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4; }
+      function luminance(hex) { if (!isHex(hex)) throw new TypeError('Expected a full 6-digit HEX colour.'); const channels = hex.slice(1).match(/../g).map((pair) => linearChannel(parseInt(pair, 16))); return (0.2126 * channels[0]) + (0.7152 * channels[1]) + (0.0722 * channels[2]); }
+      function contrast(first, second) { const lighter = Math.max(luminance(first), luminance(second)); const darker = Math.min(luminance(first), luminance(second)); return (lighter + 0.05) / (darker + 0.05); }
+      function readableForeground(background) { const white = '#ffffff'; const black = '#000000'; return contrast(white, background) >= contrast(black, background) ? white : black; }
+      function hexToHsl(hex) {
+        const [red, green, blue] = hex.slice(1).match(/../g).map((pair) => parseInt(pair, 16) / 255); const max = Math.max(red, green, blue); const min = Math.min(red, green, blue); const delta = max - min; let hue = 0;
+        if (delta) { if (max === red) hue = ((green - blue) / delta) % 6; else if (max === green) hue = ((blue - red) / delta) + 2; else hue = ((red - green) / delta) + 4; hue *= 60; if (hue < 0) hue += 360; }
+        const lightness = (max + min) / 2; const saturation = delta ? delta / (1 - Math.abs((2 * lightness) - 1)) : 0; return [hue, saturation * 100, lightness * 100];
+      }
+      function hslToHex(hue, saturation, lightness) {
+        const s = saturation / 100; const l = lightness / 100; const chroma = (1 - Math.abs((2 * l) - 1)) * s; const section = hue / 60; const x = chroma * (1 - Math.abs((section % 2) - 1)); let [red, green, blue] = [0, 0, 0];
+        if (section < 1) [red, green] = [chroma, x]; else if (section < 2) [red, green] = [x, chroma]; else if (section < 3) [green, blue] = [chroma, x]; else if (section < 4) [green, blue] = [x, chroma]; else if (section < 5) [red, blue] = [x, chroma]; else [red, blue] = [chroma, x]; const match = l - (chroma / 2); return `#${[red, green, blue].map((channel) => Math.round((channel + match) * 255).toString(16).padStart(2, '0')).join('')}`;
+      }
+      function complementaryAccent(seed, darkMode) { const [hue, saturation] = hexToHsl(seed); const accentHue = (hue + 155) % 360; const accentSaturation = Math.max(48, Math.min(72, saturation || 55)); const candidates = darkMode ? [72,78,66,84] : [34,28,40,22]; return candidates.map((lightness) => hslToHex(accentHue, accentSaturation, lightness)).find((candidate) => contrast(candidate, darkMode ? '#141713' : '#fbfaf5') >= 4.5) || (darkMode ? '#9fc7ff' : '#285d87'); }
+      function meetsContrastRequirements(foreground, requirements) { return requirements.every(([background,target]) => contrast(foreground, background) >= target); }
+      function ensureContrasts(foreground, requirements, fallback) { return meetsContrastRequirements(foreground, requirements) ? foreground : fallback; }
+      function buildThemes(seed, suppliedAccent) {
+        const lightBackground = '#fbfaf5'; const lightSurface = '#f1eee5'; const lightSurface3 = '#e4ded1'; const darkBackground = '#141713'; const darkSurface = '#20251f'; const darkSurface3 = '#2b322a';
+        const lightPrimary = ensureContrasts(seed, [[lightBackground,3],[lightSurface,4.5]], '#254f3b'); const darkPrimary = ensureContrasts(seed, [[darkBackground,3],[darkSurface,4.5]], '#a7d7bb');
+        const lightAccentCandidate = suppliedAccent || complementaryAccent(seed, false); const darkAccentCandidate = suppliedAccent || complementaryAccent(seed, true);
+        const lightAccent = ensureContrasts(lightAccentCandidate, [[lightBackground,4.5],[lightSurface,4.5],[lightSurface3,3]], '#285d87'); const darkAccent = ensureContrasts(darkAccentCandidate, [[darkBackground,4.5],[darkSurface,4.5],[darkSurface3,3]], '#9fc7ff');
+        return { light: { background:lightBackground,surface:lightSurface,surface3:lightSurface3,text:'#20231f',muted:'#535b52',primary:lightPrimary,onPrimary:readableForeground(lightPrimary),accent:lightAccent,onAccent:readableForeground(lightAccent),border:'#777971' }, dark: { background:darkBackground,surface:darkSurface,surface3:darkSurface3,text:'#f4f1e8',muted:'#bec5ba',primary:darkPrimary,onPrimary:readableForeground(darkPrimary),accent:darkAccent,onAccent:readableForeground(darkAccent),border:'#7d8679' } };
+      }
+      const PRESETS = RAW_PRESETS.map(([name,mood,seed,accent]) => ({ name,mood,seed,themes:buildThemes(seed,accent) }));
+      const state = { presetName:PRESETS[0].name,brandSeed:PRESETS[0].seed,themes:structuredClone(PRESETS[0].themes),previewMode:'light',exportFormat:'css',drafts:{light:{},dark:{}},errors:{light:{},dark:{}},repairHistory:null };
+      function kebab(value) { return value.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`).replace(/([a-z])(\d)/g, '$1-$2'); }
+      function currentTheme() { return state.themes[state.previewMode]; }
+      function hasErrors() { return Object.values(state.errors).some((mode) => Object.keys(mode).length > 0); }
+      function renderPresetCards() { $('preset-grid').innerHTML=''; PRESETS.forEach((preset) => { const button=document.createElement('button'); button.type='button'; button.className='preset-card'; button.setAttribute('aria-pressed',String(state.presetName===preset.name)); button.title=`${preset.name}: ${preset.mood}`; const colours=[preset.themes.light.background,preset.themes.light.primary,preset.themes.dark.background,preset.themes.dark.accent]; button.innerHTML=`<span class="swatch-strip">${colours.map((colour)=>`<i style="background:${colour}"></i>`).join('')}</span><strong>${preset.name}</strong>`; button.addEventListener('click',()=>loadPreset(preset)); $('preset-grid').append(button); }); }
+      function loadPreset(preset) { state.presetName=preset.name; state.brandSeed=preset.seed; state.themes=structuredClone(preset.themes); state.drafts={light:{},dark:{}}; state.errors={light:{},dark:{}}; state.repairHistory=null; $('brand-seed').value=preset.seed; $('brand-seed').setAttribute('aria-invalid','false'); $('seed-error').textContent=''; renderAll(); }
+      function setPreviewMode(mode) { state.previewMode=mode; state.repairHistory=null; renderAll(); }
+      function renderRoleFields() {
+        const mode=state.previewMode; const theme=state.themes[mode]; const list=$('role-list'); list.innerHTML='';
+        TOKEN_DEFINITIONS.forEach(([token,label]) => { const field=document.createElement('div'); field.className='role-field'; const textId=`${mode}-${token}`; const draft=Object.hasOwn(state.drafts[mode],token)?state.drafts[mode][token]:theme[token]; const error=state.errors[mode][token]||''; field.innerHTML=`<label for="${textId}">${label}</label><input type="color" id="${textId}-picker" aria-label="Choose ${label.toLowerCase()}" value="${theme[token]}"><input type="text" id="${textId}" spellcheck="false" autocomplete="off" aria-invalid="${Boolean(error)}" aria-describedby="${textId}-error"><p class="field-error" id="${textId}-error"></p>`; const textInput=field.querySelector(`#${textId}`); const colourInput=field.querySelector(`#${textId}-picker`); textInput.value=draft; field.querySelector('.field-error').textContent=error; textInput.addEventListener('input',()=>updateDraft(mode,token,textInput.value,colourInput,field)); colourInput.addEventListener('input',()=>commitRole(mode,token,colourInput.value)); list.append(field); });
+      }
+      function updateDraft(mode,token,value,colourInput,field) { state.drafts[mode][token]=value; const textInput=field.querySelector('input[type="text"]'); const errorNode=field.querySelector('.field-error'); if(!isHex(value.trim())) { state.errors[mode][token]='Use a full 6-digit HEX such as #1a2b3c.'; textInput.setAttribute('aria-invalid','true'); errorNode.textContent=state.errors[mode][token]; updateExportState(); return; } delete state.errors[mode][token]; const normalized=normalizeHex(value.trim()); state.drafts[mode][token]=normalized; state.themes[mode][token]=normalized; textInput.setAttribute('aria-invalid','false'); errorNode.textContent=''; colourInput.value=normalized; state.presetName='Custom'; state.repairHistory=null; renderPresetCards(); renderPreview(); renderAudit(); updateExportState(); }
+      function commitRole(mode,token,value) { state.themes[mode][token]=normalizeHex(value); state.drafts[mode][token]=normalizeHex(value); delete state.errors[mode][token]; state.presetName='Custom'; state.repairHistory=null; renderAll(); }
+      function deriveFromSeed() { const input=$('brand-seed'); const value=input.value.trim(); if(!isHex(value)){ input.setAttribute('aria-invalid','true'); $('seed-error').textContent='Enter exactly six HEX digits, including #.'; updateExportState(); return; } input.setAttribute('aria-invalid','false'); $('seed-error').textContent=''; state.brandSeed=normalizeHex(value); state.themes=buildThemes(state.brandSeed); state.presetName='Custom seed'; state.drafts={light:{},dark:{}}; state.errors={light:{},dark:{}}; state.repairHistory=null; renderAll(); }
+      function repairForegrounds() { if(hasErrors()){ $('repair-summary').textContent='Fix the visible HEX errors before repairing.'; return; } const mode=state.previewMode; const theme=state.themes[mode]; const before={primary:theme.primary,onPrimary:theme.onPrimary,accent:theme.accent,onAccent:theme.onAccent}; const surfaceForeground=readableForeground(theme.surface); const primary=ensureContrasts(theme.primary, [[theme.background,3],[theme.surface,4.5]], surfaceForeground); const accent=ensureContrasts(theme.accent, [[theme.background,4.5],[theme.surface,4.5],[theme.surface3,3]], surfaceForeground); const after={primary,onPrimary:readableForeground(primary),accent,onAccent:readableForeground(accent)}; state.repairHistory={mode,before,after}; Object.assign(theme,after); Object.keys(after).forEach((token)=>delete state.drafts[mode][token]); $('repair-summary').textContent=`Before: ${before.primary} / ${before.onPrimary} / ${before.accent} / ${before.onAccent}. After: ${after.primary} / ${after.onPrimary} / ${after.accent} / ${after.onAccent}. Updated primary, onPrimary, accent, and onAccent for this mode.`; renderRoleFields(); renderPreview(); renderAudit(); updateExportState(); $('undo').hidden=false; }
+      function undoRepair() { const history=state.repairHistory; if(!history)return; Object.assign(state.themes[history.mode],history.before); state.repairHistory=null; $('repair-summary').textContent='Foreground repair undone. Brand and all other roles remain unchanged.'; renderRoleFields(); renderPreview(); renderAudit(); updateExportState(); $('undo').hidden=true; }
+      const AUDIT_PAIRS = [['Main text on page','text','background',4.5,'Normal text'],['Main text on surface','text','surface',4.5,'Normal text'],['Main text on surface 3','text','surface3',4.5,'Small form text'],['Muted text on page','muted','background',4.5,'Small text'],['Muted text on surface','muted','surface',4.5,'Small text'],['On-primary text','onPrimary','primary',4.5,'Button text'],['On-accent text','onAccent','accent',4.5,'Button text'],['Accent text on page','accent','background',4.5,'Small label text'],['Accent text on surface','accent','surface',4.5,'Small label text'],['Primary link on surface','primary','surface',4.5,'Small link text'],['Focus against page','accent','background',3,'Focus indicator'],['Focus against surface 3','accent','surface3',3,'Focus indicator'],['Border next to page','border','background',3,'UI boundary']];
+      function auditTheme(theme) { return AUDIT_PAIRS.map(([name,foreground,background,minimum,usage])=>{ const ratio=contrast(theme[foreground],theme[background]); return {name,foreground,background,minimum,usage,ratio,pass:ratio>=minimum}; }); }
+      function renderPreview() { const theme=currentTheme(); TOKEN_DEFINITIONS.forEach(([token])=>$('preview').style.setProperty(`--p-${kebab(token)}`,theme[token])); $('preview-mode').textContent=`${state.presetName} · ${state.previewMode==='light'?'Light':'Dark'}`; $('editing-mode').textContent=`${state.previewMode==='light'?'Light':'Dark'} mode`; }
+      function renderAudit() { const results=auditTheme(currentTheme()); const failures=results.filter((result)=>!result.pass).length; $('audit-summary').textContent=failures?`${failures} pair${failures===1?'':'s'} need attention`:'All listed pairs pass'; $('audit-grid').innerHTML=results.map((result)=>`<article class="audit-item ${result.pass?'pass':'fail'}"><span>${result.name}</span><strong>${result.ratio.toFixed(2)}:1 ${result.pass?'Pass':'Fail'}</strong><span>${result.usage}, minimum ${result.minimum}:1</span></article>`).join(''); }
+      function exportObject() { return { brandSeed:state.brandSeed,themes:{light:{semantic:{...state.themes.light}},dark:{semantic:{...state.themes.dark}}} }; }
+      function exportText() { if(state.exportFormat==='json')return `${JSON.stringify(exportObject(),null,2)}\n`; const block=(selector,theme)=>`${selector} {\n  --brand-seed: ${state.brandSeed};\n${TOKEN_DEFINITIONS.map(([token])=>`  --color-${kebab(token)}: ${theme[token]};`).join('\n')}\n}`; return `${block(':root',state.themes.light)}\n\n${block('[data-theme="dark"]',state.themes.dark)}\n`; }
+      function seedNeedsBuild() { const value=$('brand-seed').value.trim(); return isHex(value) && normalizeHex(value)!==state.brandSeed; }
+      function exportBlocked() { return hasErrors() || $('brand-seed').getAttribute('aria-invalid')==='true' || seedNeedsBuild(); }
+      function updateExportState() { const blocked=exportBlocked(); document.querySelectorAll('.format-button').forEach((button)=>{button.disabled=blocked;}); $('copy').disabled=blocked; $('download').disabled=blocked; $('select-export').disabled=blocked; $('export-output').value=blocked?'':exportText(); $('export-status').classList.toggle('error',blocked); $('export-status').textContent=seedNeedsBuild()?'Export paused. Choose Build pair to apply this seed first.':blocked?'Export paused. Fix every visible HEX error first.':'Both validated modes are ready to export.'; $('manual-copy').hidden=true; }
+      function setExportFormat(format) { if(exportBlocked())return; state.exportFormat=format; document.querySelectorAll('.format-button').forEach((button)=>button.setAttribute('aria-pressed',String(button.dataset.format===format))); updateExportState(); }
+      async function copyExport() { const value=$('export-output').value; try { if(!navigator.clipboard||!window.isSecureContext)throw new Error('Clipboard unavailable'); await navigator.clipboard.writeText(value); $('manual-copy').hidden=true; $('export-status').textContent='Copied both themes to your clipboard.'; } catch(error) { $('manual-copy').hidden=false; $('export-output').focus(); $('export-output').select(); $('export-status').textContent='Direct clipboard access is unavailable. The export is selected; copy it with your keyboard or use Select text.'; } }
+      function selectExport() { $('export-output').focus(); $('export-output').select(); $('export-status').textContent='Export selected. Press Ctrl+C or Command+C to copy.'; }
+      function downloadExport() { const extension=state.exportFormat==='json'?'json':'css'; const mime=state.exportFormat==='json'?'application/json':'text/css'; const url=URL.createObjectURL(new Blob([$('export-output').value],{type:mime})); const link=document.createElement('a'); link.href=url; link.download=`palette-studio-themes.${extension}`; document.body.append(link); link.click(); link.remove(); setTimeout(()=>URL.revokeObjectURL(url),0); $('export-status').textContent=`Downloaded palette-studio-themes.${extension}.`; }
+      function renderAll() { renderPresetCards(); $('light-tab').setAttribute('aria-pressed',String(state.previewMode==='light')); $('dark-tab').setAttribute('aria-pressed',String(state.previewMode==='dark')); renderRoleFields(); renderPreview(); renderAudit(); $('undo').hidden=!state.repairHistory; if(!state.repairHistory)$('repair-summary').textContent=''; updateExportState(); }
+      function runInternalAudit() { const presets=PRESETS.map((preset)=>({name:preset.name,light:auditTheme(preset.themes.light),dark:auditTheme(preset.themes.dark)})); const seeds=['#000000','#ffffff'].map((seed)=>{const themes=buildThemes(seed); return {seed,light:auditTheme(themes.light),dark:auditTheme(themes.dark),themes};}); return {presets,seeds,contrast,luminance,readableForeground,buildThemes,exportObject,hasErrors,state}; }
+      $('light-tab').addEventListener('click',()=>setPreviewMode('light')); $('dark-tab').addEventListener('click',()=>setPreviewMode('dark')); $('derive').addEventListener('click',deriveFromSeed);
+      $('brand-seed').addEventListener('input',()=>{const valid=isHex($('brand-seed').value.trim()); $('brand-seed').setAttribute('aria-invalid',String(!valid)); $('seed-error').textContent=valid?'':'Enter exactly six HEX digits, including #.'; updateExportState();});
+      $('repair').addEventListener('click',repairForegrounds); $('undo').addEventListener('click',undoRepair); document.querySelectorAll('.format-button').forEach((button)=>button.addEventListener('click',()=>setExportFormat(button.dataset.format))); $('copy').addEventListener('click',copyExport); $('select-export').addEventListener('click',selectExport); $('download').addEventListener('click',downloadExport);
+      $('editor-theme').addEventListener('click',()=>{const dark=document.documentElement.dataset.editorTheme!=='dark'; document.documentElement.dataset.editorTheme=dark?'dark':'light'; $('editor-theme').setAttribute('aria-pressed',String(dark)); $('editor-theme').textContent=dark?'Light editor':'Dark editor';});
+      $('primary-demo').addEventListener('click',()=>{$('audit-summary').textContent='Sample action: working session selected';}); $('accent-demo').addEventListener('click',()=>{$('audit-summary').textContent='Sample action: process details selected';}); $('sample-form').addEventListener('submit',(event)=>{event.preventDefault(); $('audit-summary').textContent='Sample form: correct the email shown';});
+      window.PaletteStudioTest={runInternalAudit,state,setPreviewMode,loadPreset,PRESETS}; renderAll();
+    })();
+  </script>
+</body>
+</html>

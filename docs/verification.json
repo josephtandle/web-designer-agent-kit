@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "kitVersion": "4.0.0",
+  "status": "passed",
+  "scope": "Local portable kit, not publication or live search visibility",
+  "verifiedAt": "2026-09-11T23:32:39.611117+00:00",
+  "nodeRuntime": "24.21.0",
+  "coreNodeTests": {
+    "passed": 48,
+    "failed": 0
+  },
+  "starterVisual": {
+    "styles": 3,
+    "widths": [
+      320,
+      375,
+      768,
+      1440
+    ],
+    "casesPassed": 12,
+    "independentReviewers": 2
+  },
+  "componentLab": {
+    "layouts": 12,
+    "viewportCasesPassed": 24,
+    "widths": [
+      320,
+      1440
+    ],
+    "icons": 16,
+    "buttonTreatments": 4,
+    "effects": 3,
+    "clipboardFallbackPreservesPage": true,
+    "standaloneExports": "passed",
+    "darkLayoutLabelContrast": "passed"
+  },
+  "paletteAndComparatorBrowser": {
+    "checksPassed": 9,
+    "failed": 0,
+    "presetModesChecked": 24,
+    "unequalImageScaleAndPixelDifference": "passed"
+  },
+  "referenceCapture": {
+    "desktop": true,
+    "mobile": true,
+    "http404Rejected": true
+  },
+  "research": {
+    "primarySources": 30,
+    "record": "docs/github-design-research.md"
+  },
+  "upgradeRounds": [
+    {
+      "round": 1,
+      "outcome": "Intake, original guidance, context preservation"
+    },
+    {
+      "round": 2,
+      "outcome": "Portable offline starters and local preview"
+    },
+    {
+      "round": 3,
+      "outcome": "Original palette, components, reference tools, copy cleanup and SEO/GEO audit"
+    }
+  ],
+  "simplification": "Reviewed; no further change warranted",
+  "publication": "not_published",
+  "limits": [
+    "Windows commands reviewed, Windows runtime not exercised on this macOS host.",
+    "SEO/GEO inspector checks local static markup; indexing, ranking, citation and deployment controls remain not checked.",
+    "Visual reference reproduction is an agent-led build and compare workflow, not a guarantee of pixel accuracy."
+  ],
+  "payloadSha256": {
+    "scripts/capture-reference.mjs": "ba31c0d8e104b80d1eac77eabb03144f089a5d005cd68606f223734fba41c283",
+    "scripts/copy-check.mjs": "a94f0441e9aff881e2654b36e12949c3114147ad29c2fcd8016f2de488110ecb",
+    "scripts/create-site.mjs": "6f08fec73b26df1000801be30c70b773d39871c94ac909f3bf79de61333e5152",
+    "scripts/health-check.mjs": "7f098d9697d0c815c1a693d987c4eb0fc01c876411f8ae8daeed43523aba12da",
+    "scripts/install-context.mjs": "8cca7c36977a12d8e4e1c87374221900978ab015f4be7a0c58dff4d315f3ae2c",
+    "scripts/install-web-designer-kit.mjs": "c88152ca004ab2513fbe80aaea59494bd1b3d63f426a1710f6742408ad358cc7",
+    "scripts/lib/cli-format.mjs": "e2bacac31a20feb354dd8d6515ddf1ff1e7b52d32fd247c10c2693337c56cc91",
+    "scripts/lib/image-dimensions.mjs": "2ce08a7888e5411d189ffc9abd212fbc725b2b7766a6fca714f60fea44d1d82b",
+    "scripts/lib/kit-state.mjs": "675540cfd53f224c18b2a10f872349c7ac825cf3c35a8b304d4c935b7ac73549",
+    "scripts/lib/safe-paths.mjs": "f757888d6d6433b07ae47432383046a61b34a3e31c55eba8ffc82a8e4d621065",
+    "scripts/preview.mjs": "11fb8f612326dfe76f7ac9eec821882e7f22cbcdc69391575ce286ef58ef9211",
+    "scripts/reference-project.mjs": "b318b61fc3453dba242fca3ae9270ece8ecffab321158b8c95d23dbcac852591",
+    "scripts/seo-check.mjs": "7588ea11268801def99d02ee6befcfc940365cc90c4f243c0082bcafe505388c",
+    "templates/event.mjs": "5669905d0cd172fdf2a2ec6983659341c8648691da800e377eef17bc763997f4",
+    "templates/portfolio.mjs": "465281d7e7573f7879ca817705a1d80ac5e24e15d923894195e2ab1f2a2554f9",
+    "templates/service.mjs": "608f988ecedffbd3e53e204458bf4a2d2307f64d50895a8dab500862f2686d74",
+    "skills/frontend-design/SKILL.md": "29b75b639e7be329a543b494ee824326ffe627a42e557c68e6c3b6aed87b1458",
+    "skills/masterminds-web-designer/SKILL.md": "559dab3b191ea8283c59322d8bf7d8269ec68d21bae627399a14f5a5bb6b9b76",
+    "skills/masterminds-web-designer/references/copy-cleanup.md": "fc570a8f4d44dba65c945e653d2b06e6c380b7e7bac5abd6506c45986af401b1",
+    "skills/masterminds-web-designer/references/design-directions.md": "e050c2943ba0cb39709eb3b33a7f6f7c3c4d900f0a5c555721c29bb38ce89524",
+    "skills/masterminds-web-designer/references/layout-atlas.md": "40e01a1a556078f304d374c6efdb54d06c314d7429e43f28d183081812c6056f",
+    "skills/masterminds-web-designer/references/reference-layout.md": "169634589e5d84aa490ae4a3c14dd17e59d830edff6dab3a76cd2dac63f5a43e",
+    "skills/masterminds-web-designer/references/search-readiness.md": "4270474ab8bef92ae443ab8339ae795415d75b9717b3ff1a3515a62bede3bcb4",
+    "skills/masterminds-web-designer/tools/component-lab.html": "027ca733234fa6a3d6cba2838f8e29d55a07e07e59f71a8a8545d907aad82b0d",
+    "skills/masterminds-web-designer/tools/palette-studio.html": "2729e72283705478fc7e4942ad9e5c8262c67b14d18c5af312881173da738041",
+    "skills/masterminds-web-designer/tools/reference-compare.html": "6203033d759eec28e85c659982b294dfe6fe703f4c0b7d1d7efde14fd77708cd",
+    "agents/web-designer.md": "b12ec835a1d07baabc66c2c6377da1c6a290d9626672e7cc8496f3e9cab15699"
+  }
+}

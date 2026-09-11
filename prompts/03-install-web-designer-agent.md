@@ -1,43 +1,33 @@
-# Prompt 3: Install The Web Designer Agent Kit
+# Prompt 3: Install the Web Designer Agent Kit
 
-Paste this into Claude Code.
+Paste this into your AI assistant from the participant's website project folder.
 
 ```text
-Install Joe Che's Web Designer Agent Kit.
+Install the Web Designer agent and the two bundled local web-design skills from my existing Web Designer Agent Kit checkout.
 
-You are working inside my current website project folder. Treat "." as the project root on both Mac and Windows.
+Requirements:
+- Confirm Node.js 24 or newer.
+- Discover and record the absolute KIT_ROOT and separate absolute PROJECT_ROOT once.
+- Reuse the intended existing kit checkout. Do not clone, fetch external GitHub sources, or use --extras.
+- Preserve existing files by default. Use --upgrade only for previously managed files; keep customized files and write reviewable .candidate versions.
+- Do not replace CLAUDE.md, USER.md, or SOUL.md.
+- Pass every path flag as one quoted --key=value argument.
 
-Install the Web Designer agent and the 2 core local web design skills offline without git calls. (Optional 20 remote skills can be cloned with --extras if requested). My ./CLAUDE.md, ./USER.md, and ./SOUL.md files were installed in the previous step, so do not replace them.
+macOS or Linux Bash:
+PROJECT_ROOT="$PWD"
+# Preserve the previously discovered absolute KIT_ROOT. If this shell does not
+# have it, assign that exact checkout or extracted-archive path before continuing.
+: "${KIT_ROOT:?Set KIT_ROOT to the previously discovered absolute kit path}"
+node "$KIT_ROOT/scripts/install-web-designer-kit.mjs"
+node "$KIT_ROOT/scripts/health-check.mjs" "--project=$PROJECT_ROOT"
 
-Rules:
-- Detect whether I am on Mac, Windows PowerShell, or Windows Command Prompt.
-- Use the matching terminal commands.
-- Do not overwrite any existing files by default.
-- Use --upgrade to safely update previously managed unmodified files while preserving customized installs with reviewable .candidate files.
-- If node is missing, stop and tell me exactly what to install.
-- Use relative project paths for this project.
-- Use the existing ./.masterminds-web-designer-agent-kit folder if it already exists.
-- After installing, run the health check with --project=.
+Windows PowerShell:
+$PROJECT_ROOT = (Get-Location).Path
+# Preserve the previously discovered absolute KIT_ROOT, including a custom or
+# extracted-archive location. If it is unset, assign that exact path first.
+if (-not $KIT_ROOT) { throw 'Set KIT_ROOT to the previously discovered absolute kit path.' }
+node (Join-Path $KIT_ROOT 'scripts/install-web-designer-kit.mjs')
+node (Join-Path $KIT_ROOT 'scripts/health-check.mjs') "--project=$PROJECT_ROOT"
 
-Steps:
-1. Check:
-   node --version
-2. Install the offline core agent and skills:
-   Mac:
-   node .masterminds-web-designer-agent-kit/scripts/install-web-designer-kit.mjs
-
-   Windows PowerShell:
-   node .\.masterminds-web-designer-agent-kit\scripts\install-web-designer-kit.mjs
-3. Run the health check:
-   Mac:
-   node .masterminds-web-designer-agent-kit/scripts/health-check.mjs --project=.
-
-   Windows PowerShell:
-   node .\.masterminds-web-designer-agent-kit\scripts\health-check.mjs --project=.
-4. Tell me:
-   - installed core skills
-   - skipped skills
-   - whether the Web Designer agent is ready
-   - whether ./CLAUDE.md, ./USER.md, and ./SOUL.md are present
-   - the next prompt to paste
+Report installed and skipped files, whether the agent is ready, whether the three context files are present, and the next prompt.
 ```

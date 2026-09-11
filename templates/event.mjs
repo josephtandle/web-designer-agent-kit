@@ -14,7 +14,7 @@ export function generateEventSite({ name, headline, email }) {
   const safeEmail = email ? escapeHtml(email) : '';
 
   const ctaLink = safeEmail ? `mailto:${safeEmail}` : '#register';
-  const ctaText = safeEmail ? `Register via ${safeEmail}` : 'Reserve Seat';
+  const ctaText = 'Ask about registration';
 
   const ldData = {
     "@context": "https://schema.org",
@@ -56,7 +56,7 @@ ${jsonLdScript}
         <a href="#program">Program</a>
         <a href="#location">Location</a>
         <a href="#passes">Passes</a>
-        <a href="#register" class="nav-cta">Register</a>
+        <a href="#register" class="nav-cta">Registration</a>
       </nav>
     </div>
   </header>
@@ -64,7 +64,7 @@ ${jsonLdScript}
   <main id="main-content">
     <div class="draft-banner">
       <div class="container">
-        <span>Draft Event Announcement — Unconfirmed Details &amp; Draft Tiers</span>
+        <span>Draft event announcement: dates, venue, and registration details are examples</span>
       </div>
     </div>
 
@@ -76,13 +76,13 @@ ${jsonLdScript}
         <div class="event-meta-badge">
           <span class="meta-item">Date: Draft Schedule / TBD</span>
           <span class="meta-divider">•</span>
-          <span class="meta-item">Venue: Main Hall / Stream (TBD)</span>
+          <span class="meta-item">Venue: To be confirmed</span>
         </div>
         <h1 class="hero-title">${safeHeadline}</h1>
-        <p class="hero-description">An immersive gathering bringing together founders, practitioners, and leaders for intensive workshops and strategic exchange.</p>
+        <p class="hero-description">A day to meet, work through a shared topic, ask questions, and spend time together.</p>
         <div class="hero-actions">
           <a href="${ctaLink}" class="btn btn-primary">${ctaText}</a>
-          <a href="#program" class="btn btn-secondary">View Agenda (Draft)</a>
+          <a href="#program" class="btn btn-secondary">View the draft program</a>
         </div>
       </div>
     </section>
@@ -90,39 +90,39 @@ ${jsonLdScript}
     <section id="program" class="program-section">
       <div class="container">
         <div class="section-header">
-          <h2>Program Schedule (Draft Proposal)</h2>
-          <p>Structured sessions designed for actionable takeaways and peer collaboration.</p>
+          <h2>Draft program</h2>
+          <p>This is a sample outline. Replace the times and session details before publishing.</p>
         </div>
         <div class="timeline">
           <div class="timeline-item">
             <div class="time-col">09:00 AM</div>
             <div class="content-col">
-              <h3>Opening Keynote &amp; Vision</h3>
-              <p>Welcome address and strategic framework setting for the day's focus areas.</p>
+              <h3>Welcome</h3>
+              <p>A short welcome and overview of the day.</p>
             </div>
           </div>
 
           <div class="timeline-item">
             <div class="time-col">10:30 AM</div>
             <div class="content-col">
-              <h3>Interactive Workshop Sessions</h3>
-              <p>Breakout working groups tackling core execution challenges with live peer feedback.</p>
+              <h3>Work session</h3>
+              <p>Small-group time to work through the main topic.</p>
             </div>
           </div>
 
           <div class="timeline-item">
             <div class="time-col">02:00 PM</div>
             <div class="content-col">
-              <h3>Panel Discussion &amp; Q&amp;A</h3>
-              <p>Unfiltered discussion on practical implementation, overcoming friction, and scaling results.</p>
+              <h3>Questions and discussion</h3>
+              <p>Time for participant questions and shared discussion.</p>
             </div>
           </div>
 
           <div class="timeline-item">
             <div class="time-col">04:30 PM</div>
             <div class="content-col">
-              <h3>Closing Synthesis &amp; Networking</h3>
-              <p>Final summary of action items followed by open connection and networking reception.</p>
+              <h3>Closing and conversation</h3>
+              <p>Brief closing notes, followed by informal conversation.</p>
             </div>
           </div>
         </div>
@@ -131,8 +131,8 @@ ${jsonLdScript}
 
     <section id="location" class="location-section">
       <div class="container location-card">
-        <h2>Venue &amp; Event Logistics</h2>
-        <p class="notice-draft"><strong>Notice:</strong> Specific room assignments and stream links are finalized prior to event launch.</p>
+        <h2>Venue and event details</h2>
+        <p class="notice-draft"><strong>Draft details:</strong> Room and stream information still need organizer confirmation.</p>
         <div class="logistics-grid">
           <div class="logistics-item">
             <h3>Event Host</h3>
@@ -144,7 +144,7 @@ ${jsonLdScript}
           </div>
           <div class="logistics-item">
             <h3>Format</h3>
-            <p>Draft Proposal (Hybrid / In-person &amp; Virtual)</p>
+            <p>Example only: hybrid, in-person, or online</p>
           </div>
         </div>
       </div>
@@ -153,30 +153,30 @@ ${jsonLdScript}
     <section id="passes" class="passes-section">
       <div class="container">
         <div class="section-header">
-          <h2>Registration Passes (Draft Tiers)</h2>
-          <p>Transparent registration options with no hidden fees.</p>
+          <h2>Example registration options</h2>
+          <p>These sample options are not confirmed. Replace them with the organizer's actual offer.</p>
         </div>
         <div class="passes-grid">
           <div class="pass-card">
-            <span class="pass-type">Standard Pass</span>
-            <div class="pass-price">Draft Tier</div>
+            <span class="pass-type">In-person place (example)</span>
+            <div class="pass-price">Price to be confirmed</div>
             <ul class="pass-features">
-              <li>Full access to all keynote sessions</li>
-              <li>Workshop materials and action guides</li>
-              <li>Peer networking access</li>
+              <li>Scheduled sessions</li>
+              <li>Event materials</li>
+              <li>Venue access</li>
             </ul>
-            <a href="${ctaLink}" class="btn btn-secondary card-btn">Register Interest</a>
+            <a href="${ctaLink}" class="btn btn-secondary card-btn">Ask about registration</a>
           </div>
 
           <div class="pass-card pass-featured">
-            <span class="pass-type">VIP Access</span>
-            <div class="pass-price">Draft Tier</div>
+            <span class="pass-type">Online place (example)</span>
+            <div class="pass-price">Price to be confirmed</div>
             <ul class="pass-features">
-              <li>Includes all Standard Pass features</li>
-              <li>Priority seating &amp; VIP reception</li>
-              <li>1-on-1 organizer consultation block</li>
+              <li>Stream access</li>
+              <li>Online event materials</li>
+              <li>Joining details by email</li>
             </ul>
-            <a href="${ctaLink}" class="btn btn-primary card-btn">Reserve VIP Pass</a>
+            <a href="${ctaLink}" class="btn btn-primary card-btn">Ask about registration</a>
           </div>
         </div>
       </div>
@@ -185,16 +185,16 @@ ${jsonLdScript}
     <section id="register" class="register-section">
       <div class="container">
         <div class="register-box">
-          <h2>Secure Your Place</h2>
-          <p>Capacity is managed to ensure high-quality discussion and group interaction.</p>
+          <h2>Registration details</h2>
+          <p>This is a draft announcement. Registration is not configured until an organizer contact is provided.</p>
           ${safeEmail ? `
           <div class="register-action">
-            <a href="mailto:${safeEmail}" class="btn btn-primary btn-large">Email ${safeEmail} to Register</a>
+            <a href="mailto:${safeEmail}" class="btn btn-primary btn-large">Ask about registration: ${safeEmail}</a>
           </div>
           ` : `
           <div class="register-notice">
-            <p><strong>Organizer Contact:</strong> Please provide a valid host email in your project brief to activate direct email registration links.</p>
-            <a href="#main-content" class="btn btn-primary">Back to Top</a>
+            <p>Add a host email to the project brief before publishing this draft.</p>
+            <a href="#main-content" class="btn btn-primary">Back to top</a>
           </div>
           `}
         </div>
@@ -247,6 +247,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .skip-link {
@@ -278,9 +279,17 @@ body {
 }
 
 .container {
+  width: 100%;
+  min-width: 0;
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 0 1.5rem;
+}
+
+main, section, .header-inner, .site-nav, .hero-actions,
+.timeline-item, .content-col, .logistics-grid, .logistics-item,
+.passes-grid, .pass-card, .register-box, .register-notice {
+  min-width: 0;
 }
 
 h1, h2, h3 {
@@ -343,11 +352,13 @@ a:focus-visible, button:focus-visible {
   font-size: 1.35rem;
   font-weight: 800;
   color: var(--text-main);
+  overflow-wrap: anywhere;
 }
 
 .site-nav {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 1.5rem;
 }
 
@@ -383,6 +394,12 @@ a:focus-visible, button:focus-visible {
   cursor: pointer;
   transition: background-color 0.2s ease;
   text-decoration: none;
+  max-width: 100%;
+  height: auto;
+  padding-top: 0.65rem;
+  padding-bottom: 0.65rem;
+  overflow-wrap: anywhere;
+  text-align: center;
 }
 
 .btn-primary {
@@ -418,7 +435,11 @@ a:focus-visible, button:focus-visible {
 }
 
 .poster-motif-svg {
-  max-width: 450px;
+  display: block;
+  width: 100%;
+  height: auto;
+  min-width: 0;
+  max-width: 680px;
 }
 
 /* Event Meta Badge */
@@ -434,6 +455,7 @@ a:focus-visible, button:focus-visible {
   font-weight: 600;
   color: var(--accent-secondary);
   margin-bottom: 1.5rem;
+  max-width: 100%;
 }
 
 .meta-divider {
@@ -478,17 +500,16 @@ a:focus-visible, button:focus-visible {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 0;
+  border-top: 1px solid var(--border-color);
 }
 
 .timeline-item {
   display: grid;
   grid-template-columns: 140px 1fr;
   gap: 1.5rem;
-  background-color: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 1.75rem;
+  border-bottom: 1px solid var(--border-color);
+  padding: 1.75rem 0;
 }
 
 .time-col {
@@ -506,7 +527,8 @@ a:focus-visible, button:focus-visible {
   background-color: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: 12px;
-  padding: 3rem;
+  padding: clamp(1.25rem, 5vw, 3rem);
+  overflow-wrap: anywhere;
 }
 
 .notice-draft {
@@ -654,12 +676,20 @@ a:focus-visible, button:focus-visible {
 }
 
 @media (max-width: 600px) {
+  .container { padding-left: 1rem; padding-right: 1rem; }
+  .hero-section, .program-section, .location-section, .passes-section, .register-section { padding-top: 3.5rem; padding-bottom: 3.5rem; }
   h1.hero-title { font-size: 2rem; }
+  h2 { font-size: 1.75rem; }
   .header-inner { flex-direction: column; height: auto; padding: 1rem 0; gap: 0.75rem; }
-  .site-nav { gap: 1rem; }
+  .site-nav { width: 100%; justify-content: center; gap: 0.25rem 0.9rem; }
+  .site-nav a { font-size: 0.9rem; }
   .footer-inner { flex-direction: column; gap: 1rem; text-align: center; }
   .event-meta-badge { flex-direction: column; gap: 0.25rem; border-radius: 12px; }
   .meta-divider { display: none; }
+  .timeline-item { padding: 1.25rem 0; }
+  .pass-card { padding: 1.25rem; }
+  .register-box { padding: 2.5rem 1rem; }
+  .btn-large { padding-left: 1rem; padding-right: 1rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -685,9 +715,9 @@ a:focus-visible, button:focus-visible {
 
 - **Palette:** Warm charcoal background (\`#1C1917\`), surface warm stone (\`#292524\`), card stone (\`#322D29\`), vibrant pink accent (\`#E11D48\`), warm ochre secondary accent (\`#D97706\`).
 - **Typography:** Warm ochre/pink poster typography, decorative original SVG motif, clear agenda layout.
-- **Layout:** Centered event hero with date/venue badges, vertical program timeline, honest venue logistics status block, transparent pass tiers.
+- **Layout:** Centered event hero with date/venue badges, vertical program timeline, venue status block, and two clearly marked example registration options.
 - **Accessibility:** Minimum 4.5:1 text contrast ratio, 44x44px touch targets, skip link, visible focus states, prefers-reduced-motion CSS support.
-- **CTA Routing:** ${safeEmail ? `Verified mailto link to ${safeEmail}` : 'Working #register section anchor fallback.'}
+- **CTA Routing:** ${safeEmail ? `Mailto link to ${safeEmail}` : 'Working #register section anchor fallback.'}
 `;
 
   const readmeMd = `# ${safeName} : Event Starter Site (Draft)

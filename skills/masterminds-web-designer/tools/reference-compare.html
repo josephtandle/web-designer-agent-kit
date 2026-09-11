@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reference Compare</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --background: #121715;
+      --surface: #1d2521;
+      --line: #536259;
+      --ink: #f4f1e9;
+      --muted: #c4cbc3;
+      --accent: #b7df64;
+      --danger: #ffb08a;
+      --danger-surface: #492820;
+      font: 16px/1.5 ui-rounded, "Avenir Next", Avenir, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-width: 0;
+      margin: 0;
+      overflow-x: hidden;
+      background: var(--background);
+      color: var(--ink);
+    }
+
+    button,
+    input {
+      min-height: 44px;
+      font: inherit;
+    }
+
+    button {
+      padding: 0.55rem 0.85rem;
+      border: 1px solid var(--line);
+      border-radius: 0.35rem;
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+      font-weight: 750;
+    }
+
+    button[aria-pressed="true"] {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #172011;
+    }
+
+    button:focus-visible,
+    input:focus-visible {
+      outline: 3px solid var(--ink);
+      outline-offset: 3px;
+    }
+
+    h1,
+    p { margin: 0; }
+
+    .top,
+    .tools,
+    main {
+      padding-inline: clamp(1rem, 3vw, 2.5rem);
+    }
+
+    .top {
+      padding-block: clamp(1.1rem, 3vw, 2rem);
+      border-bottom: 1px solid var(--line);
+      background: var(--surface);
+    }
+
+    .top h1 {
+      font-size: clamp(1.6rem, 4vw, 2.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+    }
+
+    .muted {
+      max-width: 68ch;
+      margin-top: 0.45rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .tools {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      gap: 0.9rem 1.25rem;
+      padding-block: 1rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .field,
+    .slider {
+      display: grid;
+      min-width: 0;
+      gap: 0.3rem;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .field input[type="file"] {
+      width: min(19rem, 100%);
+      max-width: 100%;
+    }
+
+    .modes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .slider { width: min(16rem, 100%); }
+
+    .slider[hidden] { display: none; }
+
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .slider input {
+      min-width: 0;
+      flex: 1;
+    }
+
+    main {
+      min-width: 0;
+      padding-block: clamp(1rem, 3vw, 2rem);
+    }
+
+    .message,
+    .meta {
+      margin-bottom: 1rem;
+      padding: 0.7rem 0.9rem;
+      border: 1px solid var(--line);
+      border-radius: 0.4rem;
+    }
+
+    .message {
+      background: var(--surface);
+      color: var(--muted);
+    }
+
+    .message[data-kind="error"] {
+      border-color: var(--danger);
+      background: var(--danger-surface);
+      color: #ffd9c7;
+    }
+
+    .message:empty { display: none; }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 1.25rem;
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .meta b { color: var(--ink); }
+
+    .stage {
+      display: grid;
+      min-width: 0;
+      min-height: 330px;
+      padding: clamp(0.55rem, 2vw, 1rem);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 0.55rem;
+      background: #0d120f;
+    }
+
+    .empty {
+      width: min(42ch, 100%);
+      margin: auto;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .side-by-side {
+      display: grid;
+      min-width: 0;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(0.55rem, 2vw, 1rem);
+      align-items: start;
+    }
+
+    .pane {
+      min-width: 0;
+      padding: 0.55rem;
+      border: 1px solid var(--line);
+      background: var(--surface);
+    }
+
+    .pane-title {
+      display: block;
+      margin-bottom: 0.45rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .viewport,
+    .single-view {
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .world {
+      position: relative;
+      overflow: hidden;
+      background-color: #141a17;
+      background-image:
+        linear-gradient(45deg, #2c3530 25%, transparent 25%),
+        linear-gradient(-45deg, #2c3530 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #2c3530 75%),
+        linear-gradient(-45deg, transparent 75%, #2c3530 75%);
+      background-position: 0 0, 0 6px, 6px -6px, -6px 0;
+      background-size: 12px 12px;
+      isolation: isolate;
+    }
+
+    .world img,
+    .world canvas {
+      position: absolute;
+      inset: 0 auto auto 0;
+      display: block;
+      max-width: none;
+    }
+
+    .build-clip {
+      position: absolute;
+      inset: 0 auto auto 0;
+      height: 100%;
+      overflow: hidden;
+      border-right: 2px solid var(--accent);
+      z-index: 1;
+    }
+
+    .difference-canvas { background: #000; }
+
+    @media (max-width: 620px) {
+      .tools,
+      .field,
+      .slider { width: 100%; }
+
+      .side-by-side { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <h1>Reference Compare</h1>
+    <p class="muted">Compare local screenshots at their actual pixel ratio from one shared top-left origin. Difference mode flattens both images against white before comparing.</p>
+  </header>
+
+  <section class="tools" aria-label="Comparison controls">
+    <label class="field" for="reference-input">
+      Reference image
+      <input id="reference-input" type="file" accept="image/png,image/jpeg,image/webp">
+    </label>
+
+    <label class="field" for="build-input">
+      Build screenshot
+      <input id="build-input" type="file" accept="image/png,image/jpeg,image/webp">
+    </label>
+
+    <div class="field">
+      <span id="view-label">View</span>
+      <div class="modes" role="group" aria-labelledby="view-label">
+        <button type="button" data-mode="side" aria-pressed="true">Side by side</button>
+        <button type="button" data-mode="overlay" aria-pressed="false">Overlay</button>
+        <button type="button" data-mode="difference" aria-pressed="false">Difference</button>
+      </div>
+    </div>
+
+    <label class="slider" id="split-control" for="split-input" hidden>
+      Overlay split
+      <span class="slider-row">
+        <input id="split-input" type="range" min="0" max="100" value="50">
+        <output id="split-output" for="split-input">50%</output>
+      </span>
+    </label>
+  </section>
+
+  <main>
+    <p class="message" id="message" aria-live="polite"></p>
+
+    <div class="meta" aria-live="polite">
+      <span>Reference: <b id="reference-meta">not loaded</b></span>
+      <span>Build: <b id="build-meta">not loaded</b></span>
+      <span>Display scale: <b id="scale-meta">waiting for both images</b></span>
+    </div>
+
+    <section class="stage" id="stage" aria-label="Image comparison">
+      <p class="empty">Choose a reference image and a build screenshot. Files stay on this device, and a failed selection keeps the last valid image.</p>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const allowedTypes = new Set(["image/png", "image/jpeg", "image/webp"]);
+      const differenceBackground = "#fff";
+      const state = {
+        mode: "side",
+        fileError: null,
+        reference: createImageState(),
+        build: createImageState()
+      };
+
+      const elements = {
+        referenceInput: document.getElementById("reference-input"),
+        buildInput: document.getElementById("build-input"),
+        referenceMeta: document.getElementById("reference-meta"),
+        buildMeta: document.getElementById("build-meta"),
+        scaleMeta: document.getElementById("scale-meta"),
+        message: document.getElementById("message"),
+        stage: document.getElementById("stage"),
+        splitControl: document.getElementById("split-control"),
+        splitInput: document.getElementById("split-input"),
+        splitOutput: document.getElementById("split-output")
+      };
+
+      function createImageState() {
+        return { url: null, width: 0, height: 0, image: null, requestId: 0 };
+      }
+
+      function dimensions(imageState) {
+        return `${imageState.width} × ${imageState.height} px`;
+      }
+
+      function setMessage(text, kind = "status") {
+        elements.message.textContent = text;
+        elements.message.dataset.kind = kind;
+        elements.message.setAttribute("role", kind === "error" ? "alert" : "status");
+      }
+
+      function selectFile(file, imageState, label) {
+        if (!file) return;
+
+        const requestId = ++imageState.requestId;
+        if (!allowedTypes.has(file.type)) {
+          state.fileError = `${label} must be a PNG, JPEG, or WebP image. The last valid image was kept.`;
+          setMessage(state.fileError, "error");
+          return;
+        }
+
+        const candidateUrl = URL.createObjectURL(file);
+        const candidateImage = new Image();
+
+        candidateImage.onload = () => {
+          if (requestId !== imageState.requestId) {
+            URL.revokeObjectURL(candidateUrl);
+            return;
+          }
+
+          const previousUrl = imageState.url;
+          imageState.url = candidateUrl;
+          imageState.width = candidateImage.naturalWidth;
+          imageState.height = candidateImage.naturalHeight;
+          imageState.image = candidateImage;
+          state.fileError = null;
+
+          if (previousUrl) URL.revokeObjectURL(previousUrl);
+          setMessage(`${label} loaded: ${dimensions(imageState)}.`);
+          render();
+        };
+
+        candidateImage.onerror = () => {
+          URL.revokeObjectURL(candidateUrl);
+          if (requestId === imageState.requestId) {
+            state.fileError = `${label} could not be decoded. The last valid image was kept.`;
+            setMessage(state.fileError, "error");
+          }
+        };
+
+        candidateImage.src = candidateUrl;
+      }
+
+      function worldDimensions() {
+        return {
+          width: Math.max(state.reference.width, state.build.width),
+          height: Math.max(state.reference.height, state.build.height)
+        };
+      }
+
+      function sharedScale(availableWidth, worldWidth) {
+        return Math.min(1, availableWidth / worldWidth);
+      }
+
+      function makeWorld(scale) {
+        const world = worldDimensions();
+        const node = document.createElement("div");
+        node.className = "world";
+        node.style.width = `${world.width * scale}px`;
+        node.style.height = `${world.height * scale}px`;
+        return node;
+      }
+
+      function makeImage(imageState, label, scale) {
+        const image = document.createElement("img");
+        image.src = imageState.url;
+        image.alt = label;
+        image.draggable = false;
+        image.style.width = `${imageState.width * scale}px`;
+        image.style.height = `${imageState.height * scale}px`;
+        return image;
+      }
+
+      function createPane(label, imageState) {
+        const root = document.createElement("section");
+        root.className = "pane";
+        root.setAttribute("aria-label", `${label} image`);
+
+        const title = document.createElement("span");
+        title.className = "pane-title";
+        title.textContent = `${label} · ${dimensions(imageState)}`;
+
+        const viewport = document.createElement("div");
+        viewport.className = "viewport";
+        root.append(title, viewport);
+        return { root, viewport, imageState, label };
+      }
+
+      function renderSideBySide() {
+        const container = document.createElement("div");
+        container.className = "side-by-side";
+        const panes = [
+          createPane("Reference", state.reference),
+          createPane("Build", state.build)
+        ];
+        panes.forEach((pane) => container.append(pane.root));
+        elements.stage.replaceChildren(container);
+
+        const world = worldDimensions();
+        const availableWidth = Math.min(...panes.map((pane) => pane.viewport.clientWidth));
+        const scale = sharedScale(availableWidth, world.width);
+
+        panes.forEach((pane) => {
+          const worldNode = makeWorld(scale);
+          worldNode.append(makeImage(pane.imageState, pane.label, scale));
+          pane.viewport.append(worldNode);
+        });
+        updateScaleMeta(scale);
+      }
+
+      function renderCombinedView() {
+        const viewport = document.createElement("div");
+        viewport.className = "single-view";
+        elements.stage.replaceChildren(viewport);
+
+        const world = worldDimensions();
+        const scale = sharedScale(viewport.clientWidth, world.width);
+        const worldNode = makeWorld(scale);
+
+        if (state.mode === "overlay") {
+          worldNode.append(makeImage(state.reference, "Reference", scale));
+          const buildClip = document.createElement("div");
+          buildClip.className = "build-clip";
+          buildClip.id = "build-clip";
+          buildClip.style.width = `${elements.splitInput.value}%`;
+          buildClip.append(makeImage(state.build, "Build screenshot", scale));
+          worldNode.append(buildClip);
+        } else {
+          const canvas = renderDifferenceCanvas();
+          if (!canvas) {
+            elements.scaleMeta.textContent = "difference unavailable";
+            return;
+          }
+          canvas.className = "difference-canvas";
+          canvas.setAttribute("aria-label", "Pixel difference between reference and build");
+          canvas.setAttribute("role", "img");
+          canvas.style.width = `${world.width * scale}px`;
+          canvas.style.height = `${world.height * scale}px`;
+          worldNode.append(canvas);
+        }
+
+        viewport.append(worldNode);
+        updateScaleMeta(scale);
+      }
+
+      function renderDifferenceCanvas() {
+        const world = worldDimensions();
+        try {
+          const reference = createDifferenceSurface(world);
+          reference.context.drawImage(state.reference.image, 0, 0);
+
+          const build = createDifferenceSurface(world);
+          build.context.drawImage(state.build.image, 0, 0);
+
+          reference.context.globalCompositeOperation = "difference";
+          reference.context.drawImage(build.canvas, 0, 0);
+          reference.context.globalCompositeOperation = "source-over";
+          return reference.canvas;
+        } catch (error) {
+          setMessage(
+            `Difference view could not allocate ${world.width} × ${world.height} px canvases in this browser. Resize the images locally to smaller dimensions, then upload them again.`,
+            "error"
+          );
+          return null;
+        }
+      }
+
+      function createDifferenceSurface(world) {
+        const canvas = document.createElement("canvas");
+        canvas.width = world.width;
+        canvas.height = world.height;
+        if (canvas.width !== world.width || canvas.height !== world.height) {
+          throw new Error("Canvas dimensions were rejected.");
+        }
+
+        const context = canvas.getContext("2d", { alpha: false });
+        if (!context) throw new Error("Canvas context is unavailable.");
+        context.fillStyle = differenceBackground;
+        context.fillRect(0, 0, world.width, world.height);
+        return { canvas, context };
+      }
+
+      function updateScaleMeta(scale) {
+        elements.scaleMeta.textContent = `${scale.toFixed(3)} × for both images`;
+      }
+
+      function render() {
+        elements.referenceMeta.textContent = state.reference.url ? dimensions(state.reference) : "not loaded";
+        elements.buildMeta.textContent = state.build.url ? dimensions(state.build) : "not loaded";
+
+        if (!state.reference.url || !state.build.url) {
+          elements.scaleMeta.textContent = "waiting for both images";
+          const empty = document.createElement("p");
+          empty.className = "empty";
+          empty.textContent = "Choose both images to compare them. A valid image already loaded here will remain while you choose the other.";
+          elements.stage.replaceChildren(empty);
+          return;
+        }
+
+        const dimensionsMatch = state.reference.width === state.build.width
+          && state.reference.height === state.build.height;
+        if (state.fileError) {
+          setMessage(state.fileError, "error");
+        } else {
+          setMessage(
+            dimensionsMatch
+              ? "Pixel dimensions match. CSS viewport size is unknown."
+              : "Pixel dimensions differ. Images remain at the same pixel ratio from the top-left origin; CSS viewport size is unknown."
+          );
+        }
+
+        if (state.mode === "side") renderSideBySide();
+        else renderCombinedView();
+      }
+
+      elements.referenceInput.addEventListener("change", (event) => {
+        selectFile(event.target.files[0], state.reference, "Reference image");
+      });
+
+      elements.buildInput.addEventListener("change", (event) => {
+        selectFile(event.target.files[0], state.build, "Build screenshot");
+      });
+
+      document.querySelectorAll("[data-mode]").forEach((button) => {
+        button.addEventListener("click", () => {
+          state.mode = button.dataset.mode;
+          document.querySelectorAll("[data-mode]").forEach((candidate) => {
+            candidate.setAttribute("aria-pressed", String(candidate === button));
+          });
+          elements.splitControl.hidden = state.mode !== "overlay";
+          render();
+        });
+      });
+
+      elements.splitInput.addEventListener("input", () => {
+        elements.splitOutput.value = `${elements.splitInput.value}%`;
+        const buildClip = document.getElementById("build-clip");
+        if (buildClip) buildClip.style.width = `${elements.splitInput.value}%`;
+      });
+
+      const resizeObserver = new ResizeObserver(() => {
+        if (state.reference.url && state.build.url) render();
+      });
+      resizeObserver.observe(elements.stage);
+
+      window.addEventListener("beforeunload", () => {
+        resizeObserver.disconnect();
+        [state.reference, state.build].forEach((imageState) => {
+          imageState.requestId += 1;
+          if (imageState.url) URL.revokeObjectURL(imageState.url);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

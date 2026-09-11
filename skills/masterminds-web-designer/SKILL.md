@@ -1,46 +1,61 @@
 ---
 name: masterminds-web-designer
-description: Build and refine websites for Mastermind and All Sorted participants. Supports new builds and existing site updates for service businesses, portfolios, and events with fast quick-start intake, clear visual directions, responsive layouts, accessibility standards, and SEO/AEO foundations.
+description: Build and refine editable websites for Mastermind and All Sorted participants using original layouts, honest content, local design tools, responsive verification, and safe installation behavior.
 ---
 
 # Masterminds Web Designer
 
-Use this skill when building a new website or updating an existing site for Mastermind and All Sorted participants.
+Use this skill for new websites and existing-site updates. Deliver a working editable build, not only a design description, reference image, or capture folder.
 
-## Quick-Start Workflow
+## Workflow
 
-1. Read existing context from `CLAUDE.md`, `USER.md`, and `SOUL.md` if available.
-2. Discover the installed `masterminds-web-designer` skill location, then load visual direction references from relative path `references/design-directions.md`.
-3. Create or load the participant business brief in `.masterminds-context/brief.json`.
-4. Ask at most 3 essential questions only when genuinely blocked:
-   - What is your business or project name and primary offer?
-   - Who is your target client or audience?
-   - What primary action or CTA should visitors take?
-5. Present at most 3 visual directions based on site archetype (Service, Portfolio, or Event) with a recommended option. If the participant delegates the choice, select the recommended direction for their business archetype rather than defaulting to Direction 1.
-6. Save design choices to `.masterminds-context/design-decisions.json` without overwriting original context files.
-7. Build or update the website. Discover kit starter CLI tools (`node scripts/create-site.mjs`) as an optional accelerator for new builds, but never require them when absent to preserve the participant's existing tech stack.
+1. Read `CLAUDE.md`, `USER.md`, and `SOUL.md` when present.
+2. Discover this skill's installed path, then load references relative to it, including `references/search-readiness.md` for website finishing.
+3. Discover and record one absolute kit root and a separate absolute website project root.
+4. Create or load `.masterminds-context/brief.json`. Ask at most 3 essential questions only when missing facts block a sound build.
+5. Offer at most 3 distinct directions based on the Service, Portfolio, or Event archetype, and recommend the best fit for the stated audience and offer.
+6. Use Palette Studio for color and Component Lab or Layout Atlas for composition. Save decisions in `.masterminds-context/design-decisions.json`.
+7. Build or update original, editable HTML/CSS/JS.
+8. Run the Speak Human process in `references/copy-cleanup.md` before visual QA. Show before/after examples and confirm facts, qualifications, and evidence remain honest.
+9. Run the read-only local SEO audit with `node "$KIT_ROOT/scripts/seo-check.mjs" "--file=$PROJECT_ROOT/<site>/index.html" --json`. Fix confirmed local failures and rerun it. Add `"--url=<verified-public-URL>"` only when that URL has been verified.
+10. Verify desktop and mobile behavior, accessibility, links, controls, metadata, and responsive states.
+11. Start a working local preview and report what was observed, what remains uncertain, and that preview is not publication.
 
-## References & Skill Routing
+Run every kit script from the discovered absolute kit root with explicit absolute project targets. Do not use naked `scripts/...` paths from a participant project. Pass each path option as one quoted `--key=value` argument.
 
-Always inspect `references/design-directions.md` relative to this skill installation for detailed color palettes, typography pairings, layout compositions, asset strategies, and CTA fallbacks.
+## Bundled contract
 
-Skill Routing:
-- Advanced visual styling and UI polish: route to `frontend-design` or `impeccable`.
-- Motion and micro-interactions: route to `motion` (or GSAP/Anime.js when requested).
-- SEO, Meta tags, and Schema markup: route to `schema-markup-generator`, `meta-tags-optimizer`, or `technical-seo-checker`.
+- **Palette Studio:** 12 distinct palettes, paired light/dark themes, sRGB checks, and 10 exported semantic tokens including `border` and `onAccent`.
+- **Component Lab:** 12 distinct layouts, 4 button treatments, 16 icons, and 3 optional effects.
+- **Reference Compare:** side-by-side, overlay, and difference views using a common coordinate origin and scale.
+- **Layout Atlas:** responsive layout guidance.
+- **Reference Layout Guide:** observed-versus-inferred mapping, editable candidate builds, equal-state captures, local comparison, discrepancy repair, and repeated desktop/mobile passes.
+- **Copy Cleanup Guide:** safe visible-prose editing with before/after examples and a protected-facts check.
+- **Search Readiness Guide:** built-in SEO and GEO guidance, local audit interpretation, and explicit boundaries between local evidence and live checks.
 
-## Participant Support
+The core workflow uses local tools and original CSS. No external library, remote skill, or external GitHub fetch is required. The source catalog is research-only by default. URL capture and a cloud-hosted model may use a network.
 
-- **Beginners:** Deliver a complete, working single-page site using CLI starters (`node scripts/create-site.mjs`) when available or custom HTML/CSS, with clear instructions to preview (`node scripts/preview.mjs --dir=. --port=3000`).
-- **Existing Sites:** Inspect current structure before making changes. Keep existing content intact and place new assets or designs safely alongside existing files.
+## Built-in SEO, GEO, and interaction fallback
 
-## Non-Negotiable Standards
+<!-- Source pin: the bundled scripts/seo-check.mjs contract and references/search-readiness.md govern this local workflow. -->
+- Give each page a unique title and description, one meaningful H1, semantic navigation, crawlable visible text, and a logical heading hierarchy.
+- Use an Open Graph image only when a real asset is provided or approved.
+- Add a canonical URL only for a verified public domain. Without one, omit deployment-dependent URL metadata and leave a launch TODO.
+- Keep structured data consistent with visible facts. Never invent Event dates, metrics, ratings, addresses, prices, or availability.
+- Make entity identity clear, answer useful audience questions directly, and use verifiable facts. Do not promise rankings, indexing, AI-answer inclusion, or citations.
+- Do not require `llms.txt` or special AI schema. Use accurate visible content and structured data that matches it.
+- Treat the local SEO audit as evidence only for the file and optional verified URL actually checked. Unless separately observed, report `live_http: not_checked`, `robots: not_checked`, `indexing: not_checked`, and `ai_citations: not_checked`.
+- Treat a form as connected only when it has a real endpoint and the user has confirmed send intent. Never fake a form with `action="#"`, `contenteditable`, or a navigation link styled as submission.
+- Mark local demo forms as unconnected and prevent accidental submission. Keep navigation and verified contact links separate.
 
-- **Mobile First:** Ensure responsive layout across screen sizes from 320px up to 1440px.
-- **Accessibility:** Maintain minimum 4.5:1 text contrast ratio, 44x44px touch targets, visible focus states, skip to content link, and proper semantic HTML elements (`<main>`, `<nav>`, `<header>`, `<footer>`).
-- **Honest Content:** Use real participant facts. Do not invent proof, false subscriber counts, fake testimonials, or unverified revenue figures.
-- **Truthful SEO & Schema:** Enforce semantic H1 structure, unique title and meta description tags, Open Graph tags, and structured JSON-LD schema markup.
-- **Working CTA Fallbacks:** Ensure buttons link to active URLs or valid `mailto:` links when provided. If email is absent, fallback to local section anchors (`#contact` or `#register`). Never use invented placeholder URLs.
-- **Motion is Optional:** Motion and animations are optional enhancements, never mandatory. Always wrap animations in `prefers-reduced-motion` checks.
-- **Safe Persistence:** Write generated briefs and decisions to `.masterminds-context/` without replacing existing user files.
-- **Verification:** Test local page launch (`node scripts/preview.mjs`) and link functionality before reporting complete.
+External SEO skills are strictly optional and may be used only to research a specific identified gap. The built-in workflow never requires installing one.
+
+## Non-negotiable standards
+
+- **Original and editable:** Create original HTML/CSS/JS. A screenshot may inform a build but may never become the page itself.
+- **Responsive:** Design from 320px through 1440px and test more than one viewport.
+- **Accessible:** Use semantic HTML, a skip link, visible focus, at least 4.5:1 body-text contrast, and 44x44px touch targets.
+- **Honest:** Preserve real names, dates, prices, claims, evidence, and qualifications. Do not fabricate proof or destinations.
+- **Human copy:** Rephrasing is allowed when meaning, facts, evidence, and qualifications remain intact. Preserve exact quotations, technical names, legal text, links, and SEO fields unless the user explicitly authorizes changes.
+- **Motion:** Use optional original CSS transitions or keyframes by default, with an explicit `prefers-reduced-motion` fallback. Do not require external libraries.
+- **Verification:** Report only what was observed. Return a working local preview and remaining uncertainty. Do not describe preview as published.

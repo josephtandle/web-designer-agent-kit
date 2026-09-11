@@ -14,7 +14,7 @@ export function generatePortfolioSite({ name, headline, email }) {
   const safeEmail = email ? escapeHtml(email) : '';
 
   const ctaLink = safeEmail ? `mailto:${safeEmail}` : '#contact';
-  const ctaText = safeEmail ? `Inquire: ${safeEmail}` : 'Start A Project';
+  const ctaText = safeEmail ? `Email ${safeEmail}` : 'Ask about a project';
 
   const ldData = {
     "@context": "https://schema.org",
@@ -24,7 +24,7 @@ export function generatePortfolioSite({ name, headline, email }) {
   };
   const jsonLdScript = JSON.stringify(ldData, null, 2).replace(/</g, '\\u003c');
 
-  const svgAbstract1 = `<svg class="project-artwork" width="100%" height="240" viewBox="0 0 400 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Example Abstract Illustration Placeholder 01: Vector Study">
+  const svgAbstract1 = `<svg class="project-artwork" width="100%" height="240" viewBox="0 0 400 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Example abstract illustration 01: circle, triangle, and curve">
     <rect width="400" height="240" fill="#181824"/>
     <circle cx="120" cy="120" r="70" fill="url(#grad1)" opacity="0.8"/>
     <polygon points="220,40 340,200 160,180" fill="url(#grad2)" opacity="0.6"/>
@@ -42,7 +42,7 @@ export function generatePortfolioSite({ name, headline, email }) {
     </defs>
   </svg>`;
 
-  const svgAbstract2 = `<svg class="project-artwork" width="100%" height="240" viewBox="0 0 400 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Example Abstract Illustration Placeholder 02: Dynamic Grid Architecture">
+  const svgAbstract2 = `<svg class="project-artwork" width="100%" height="240" viewBox="0 0 400 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Example abstract illustration 02: rectangle, circle, and line">
     <rect width="400" height="240" fill="#14141E"/>
     <rect x="40" y="40" width="140" height="160" stroke="#A855F7" stroke-width="2" rx="8" fill="#1F1F30"/>
     <circle cx="280" cy="120" r="60" stroke="#38BDF8" stroke-width="2" stroke-dasharray="8 6"/>
@@ -50,7 +50,7 @@ export function generatePortfolioSite({ name, headline, email }) {
     <text x="40" y="225" fill="#64748B" font-size="11" font-family="monospace">EXAMPLE ABSTRACT ILLUSTRATION PLACEHOLDER 02</text>
   </svg>`;
 
-  const svgAbstract3 = `<svg class="project-artwork" width="100%" height="240" viewBox="0 0 400 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Example Abstract Illustration Placeholder 03: Fluid Canvas">
+  const svgAbstract3 = `<svg class="project-artwork" width="100%" height="240" viewBox="0 0 400 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Example abstract illustration 03: two curves and a circle">
     <rect width="400" height="240" fill="#1A1829"/>
     <path d="M 40 120 C 120 40, 240 200, 360 120" stroke="#38BDF8" stroke-width="4" fill="none"/>
     <path d="M 40 160 C 160 80, 280 220, 360 80" stroke="#A855F7" stroke-width="2" stroke-dasharray="4 4" fill="none"/>
@@ -64,9 +64,9 @@ export function generatePortfolioSite({ name, headline, email }) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${safeName} | ${safeHeadline}</title>
-  <meta name="description" content="Selected portfolio works and design direction by ${safeName}. ${safeHeadline}">
+  <meta name="description" content="A draft portfolio starter for ${safeName}, with example SVG studies to replace before publishing.">
   <meta property="og:title" content="${safeName} | ${safeHeadline}">
-  <meta property="og:description" content="Selected portfolio works and design direction by ${safeName}. ${safeHeadline}">
+  <meta property="og:description" content="A draft portfolio starter for ${safeName}, with example SVG studies to replace before publishing.">
   <meta property="og:type" content="website">
   <link rel="stylesheet" href="styles.css">
   <script type="application/ld+json">
@@ -90,18 +90,18 @@ ${jsonLdScript}
   <main id="main-content">
     <div class="draft-banner">
       <div class="container">
-        <span>Draft Preview — Starter Example Content</span>
+        <span>Draft preview: starter example content</span>
       </div>
     </div>
 
     <section class="hero-section">
       <div class="container">
-        <span class="hero-tag">Creative Studio &amp; Portfolio</span>
+        <span class="hero-tag">Portfolio starter · example</span>
         <h1 class="hero-title">${safeHeadline}</h1>
-        <p class="hero-subtitle">Digital experiences, editorial systems, and creative technology.</p>
+        <p class="hero-subtitle">Original SVG studies in color, shape, line, and composition.</p>
         <div class="hero-actions">
           <a href="${ctaLink}" class="btn btn-primary">${ctaText}</a>
-          <a href="#work" class="btn btn-secondary">View Showcase</a>
+          <a href="#work" class="btn btn-secondary">View the studies</a>
         </div>
       </div>
     </section>
@@ -109,8 +109,9 @@ ${jsonLdScript}
     <section id="work" class="work-section">
       <div class="container">
         <div class="section-header">
-          <h2>Selected Work (Example Showcase)</h2>
-          <p>Explorations in digital composition, systems architecture, and visual identity.</p>
+          <h2>Selected studies</h2>
+          <p class="showcase-note">Example work: replace these starter studies with your own.</p>
+          <p>Three original compositions made from simple geometric forms.</p>
         </div>
         <div class="gallery-grid">
           <article class="gallery-card card-large">
@@ -118,12 +119,12 @@ ${jsonLdScript}
               ${svgAbstract1}
             </div>
             <div class="card-meta">
-              <span class="category">Brand Identity &amp; Digital (Example)</span>
-              <h3>Prism Systems Showcase</h3>
-              <p>An exploration of light refraction, modern color theory, and vector dynamics built for interactive platforms.</p>
+              <span class="category">Original SVG study (example)</span>
+              <h3>Circle, triangle, and curve</h3>
+              <p>A blue circle, purple triangle, and curved line overlap on a dark field.</p>
               <div class="tags">
-                <span class="tag">Identity</span>
-                <span class="tag">Design System</span>
+                <span class="tag">Color</span>
+                <span class="tag">Shape</span>
               </div>
             </div>
           </article>
@@ -133,12 +134,12 @@ ${jsonLdScript}
               ${svgAbstract2}
             </div>
             <div class="card-meta">
-              <span class="category">Interactive Architecture (Example)</span>
-              <h3>Dynamic Grid Protocol</h3>
-              <p>Asymmetric grid layout exploration emphasizing structural negative space and geometric typography.</p>
+              <span class="category">Original SVG study (example)</span>
+              <h3>Rectangle, circle, and line</h3>
+              <p>A purple rectangle, dotted blue circle, and diagonal pink line form an asymmetric composition.</p>
               <div class="tags">
-                <span class="tag">UI/UX</span>
-                <span class="tag">Typography</span>
+                <span class="tag">Line</span>
+                <span class="tag">Balance</span>
               </div>
             </div>
           </article>
@@ -148,12 +149,12 @@ ${jsonLdScript}
               ${svgAbstract3}
             </div>
             <div class="card-meta">
-              <span class="category">Motion &amp; Canvas (Example)</span>
-              <h3>Fluid Canvas Experiment</h3>
-              <p>Minimalist generative canvas curves illustrating fluid state transitions and user feedback loops.</p>
+              <span class="category">Original SVG study (example)</span>
+              <h3>Curves and a red circle</h3>
+              <p>Two curved lines cross behind a small red circle on a dark field.</p>
               <div class="tags">
-                <span class="tag">Generative</span>
-                <span class="tag">Motion</span>
+                <span class="tag">Curves</span>
+                <span class="tag">Contrast</span>
               </div>
             </div>
           </article>
@@ -164,17 +165,17 @@ ${jsonLdScript}
     <section id="about" class="about-section">
       <div class="container about-grid">
         <div class="about-bio">
-          <h2>Creative Approach</h2>
-          <p>Building high-impact digital experiences that strip away visual noise and focus on fundamental typography, deliberate layout, and brand story.</p>
-          <p>Every project is crafted with strict performance standards, accessible interactions, and zero unnecessary dependencies.</p>
+          <h2>About this portfolio</h2>
+          <p>This draft uses three original SVG studies to show how project images, titles, and short notes can work together.</p>
+          <p>The dark palette and asymmetric layout keep the focus on each composition.</p>
         </div>
         <div class="capabilities-card">
-          <h3>Capabilities</h3>
+          <h3>Study details</h3>
           <ul class="capabilities-list">
-            <li>Art Direction &amp; Brand Systems</li>
-            <li>Editorial Web Design &amp; Development</li>
-            <li>Custom SVG &amp; Abstract Vector Works</li>
-            <li>Accessible &amp; High-Performance UI</li>
+            <li>Simple geometric forms</li>
+            <li>Asymmetric composition</li>
+            <li>Color and line studies</li>
+            <li>Original embedded SVG artwork</li>
           </ul>
         </div>
       </div>
@@ -183,16 +184,15 @@ ${jsonLdScript}
     <section id="contact" class="contact-section">
       <div class="container">
         <div class="inquiry-box">
-          <h2>Let's build something exceptional</h2>
-          <p>Currently accepting select project commissions and strategic design partnerships.</p>
+          <h2>Get in touch</h2>
+          <p>${safeEmail ? 'Send an email with your question or project details.' : 'Add a contact email before publishing this draft.'}</p>
           ${safeEmail ? `
           <div class="inquiry-action">
-            <a href="mailto:${safeEmail}" class="btn btn-primary btn-large">Send Inquiry (${safeEmail})</a>
+            <a href="mailto:${safeEmail}" class="btn btn-primary btn-large">Email ${safeEmail}</a>
           </div>
           ` : `
           <div class="inquiry-notice">
-            <p><strong>Direct Inquiries:</strong> Provide a valid email during project creation to enable direct click-to-email routing.</p>
-            <a href="#main-content" class="btn btn-primary">Return to Top</a>
+            <a href="#main-content" class="btn btn-primary">Return to top</a>
           </div>
           `}
         </div>
@@ -276,6 +276,8 @@ body {
 }
 
 .container {
+  width: 100%;
+  min-width: 0;
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 0 1.5rem;
@@ -344,6 +346,7 @@ a:focus-visible, button:focus-visible {
   color: var(--text-main);
   letter-spacing: 0.05em;
   text-transform: uppercase;
+  overflow-wrap: anywhere;
 }
 
 .site-nav {
@@ -390,6 +393,12 @@ a:focus-visible, button:focus-visible {
   cursor: pointer;
   transition: all 0.2s ease;
   text-decoration: none;
+  max-width: 100%;
+  height: auto;
+  padding-top: 0.65rem;
+  padding-bottom: 0.65rem;
+  overflow-wrap: anywhere;
+  text-align: center;
 }
 
 .btn-primary {
@@ -432,8 +441,8 @@ a:focus-visible, button:focus-visible {
 
 /* Hero Section */
 .hero-section {
-  padding: 7rem 0 5rem 0;
-  max-width: 900px;
+  padding: 5rem 0 4rem 0;
+  text-align: center;
 }
 
 .hero-subtitle {
@@ -444,6 +453,7 @@ a:focus-visible, button:focus-visible {
 
 .hero-actions {
   display: flex;
+  justify-content: center;
   gap: 1.25rem;
   flex-wrap: wrap;
 }
@@ -464,11 +474,24 @@ a:focus-visible, button:focus-visible {
   gap: 2.5rem;
 }
 
-.card-large {
+.gallery-card.card-large {
   grid-column: 1 / -1;
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
+.card-large .artwork-wrapper {
+  border-bottom: 0;
+}
+
+.card-large .card-meta {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .gallery-card {
+  min-width: 0;
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 8px;
@@ -627,10 +650,15 @@ a:focus-visible, button:focus-visible {
 }
 
 @media (max-width: 600px) {
+  .hero-section { padding: 3.25rem 0 2.75rem; }
   h1.hero-title { font-size: 2rem; }
   .header-inner { flex-direction: column; height: auto; padding: 1rem 0; gap: 0.75rem; }
-  .site-nav { gap: 1rem; }
+  .site-nav { width: 100%; justify-content: center; flex-wrap: wrap; gap: 0.25rem 1rem; }
   .footer-inner { flex-direction: column; gap: 1rem; text-align: center; }
+  .card-meta, .capabilities-card { padding: 1.25rem; }
+  .card-large .card-meta { padding-left: 0; padding-right: 0; }
+  .inquiry-box { padding: 2.5rem 1rem; }
+  .btn-large { padding-left: 1rem; padding-right: 1rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -658,7 +686,7 @@ a:focus-visible, button:focus-visible {
 - **Typography:** Oversized solid typography (no gradient text), clean neutral body text.
 - **Layout:** Full editorial hero, asymmetric gallery featuring original bundled abstract SVG artworks visibly labelled as example placeholders, capabilities list, direct inquiry card.
 - **Accessibility:** High-contrast text on dark background, 44x44px touch targets, skip link, visible focus states, prefers-reduced-motion CSS support.
-- **CTA Routing:** ${safeEmail ? `Verified mailto link to ${safeEmail}` : 'Working #contact section anchor fallback.'}
+- **CTA Routing:** ${safeEmail ? `Mailto link to ${safeEmail}` : 'Working #contact section anchor fallback.'}
 `;
 
   const readmeMd = `# ${safeName} : Portfolio Starter Site (Draft)
