@@ -1,18 +1,26 @@
-# Web Designer Agent Kit
+# Web Designer Agent Kit 2.0.0
 
-Install Joe Che's starter context files, Web Designer agent, and curated web design skill stack for Mastermind students.
+Install Joe Che's starter context files, Web Designer agent, and curated web design skill stack for Mastermind and All Sorted participants.
 
-This kit is built for Cohort 3, Session 2. It is intentionally practical:
+## Quick Start: Short First-Build Prompt
 
-- no silent overwrites
-- macOS and Windows compatible
-- one installer for `CLAUDE.md`, `USER.md`, and `SOUL.md`
-- one installer for the Web Designer agent and curated skills
-- one profile prompt students can fill in before building their site
+If your context files are already installed, paste this prompt into your AI assistant from your website project folder:
+
+```text
+Use the Web Designer agent and Masterminds Web Designer skill stack to build my website.
+Read CLAUDE.md, USER.md, and SOUL.md if present.
+Load skills/masterminds-web-designer/references/design-directions.md.
+Ask at most 3 questions if vital info is missing.
+Offer at most 3 visual directions with a recommendation and default option.
+Build a responsive, accessible website with working CTA links and honest details.
+Save decisions to .masterminds-context/design-decisions.json and show me how to preview it locally.
+```
+
+---
 
 ## What Gets Installed
 
-The default Web Designer stack installs 22 skills:
+The default installer populates the Web Designer agent into `~/.claude/agents` and installs 22 curated web design skills:
 
 1. Masterminds Web Designer
 2. Frontend Design fallback
@@ -37,23 +45,13 @@ The default Web Designer stack installs 22 skills:
 21. Technical SEO Checker
 22. Content Quality Auditor
 
-It also installs the `web-designer` Claude agent into `~/.claude/agents`.
+---
 
-## Recommended Session 2 Flow
+## Installation Steps
 
-1. Start Claude Code from Terminal:
+### Step 1: Install Starter Context Files Only
 
-```bash
-claude --dangerously-skip-permissions
-```
-
-2. Install context files only.
-3. Install the Web Designer agent and skills.
-4. Build the first website.
-
-## Step 1: Install Context Files Only
-
-Paste this into Claude Code from the website project folder. It uses `.` as the project root on Mac and Windows.
+Paste this into your AI assistant from your website project folder (`.` represents project root):
 
 ```text
 Install only my Mastermind starter context files for this website project.
@@ -97,9 +95,11 @@ git clone https://github.com/josephtandle/web-designer-agent-kit .masterminds-we
 node .\.masterminds-web-designer-agent-kit\scripts\install-context.mjs --target=.
 ```
 
-## Step 2: Install The Web Designer Agent Kit
+---
 
-Paste this into Claude Code after `CLAUDE.md`, `USER.md`, and `SOUL.md` exist.
+### Step 2: Install Web Designer Agent and Skills
+
+Paste this into your AI assistant after `CLAUDE.md`, `USER.md`, and `SOUL.md` exist:
 
 ```text
 Install Joe Che's Web Designer Agent Kit.
@@ -108,22 +108,21 @@ Install only the Web Designer agent and the 22 curated web design skills. My ./C
 
 Rules:
 - Detect whether I am on Mac, Windows PowerShell, or Windows Command Prompt.
-- Use the matching terminal commands.
+- Use matching terminal commands.
 - Do not overwrite any existing files.
-- If a target file or skill already exists, leave it alone and report that it was skipped.
-- If you need to replace something, ask me first.
+- If a target file or skill already exists, leave it alone and report skipped.
 - Use relative project paths. Treat "." as the website project root.
-- Clone the repo into ./.masterminds-web-designer-agent-kit.
-- After installing, run the health check against --project=. and summarize what was installed, skipped, or failed.
+- Clone the kit into ./.masterminds-web-designer-agent-kit.
+- After installing, run health check against --project=. and summarize output.
 
 Steps:
 1. Make sure git and node are available.
-2. Clone the kit into this project if it is not already here:
+2. Clone kit if not present:
    git clone https://github.com/josephtandle/web-designer-agent-kit .masterminds-web-designer-agent-kit
-3. Install the agent and skills:
+3. Install agent and skills:
    Mac: node .masterminds-web-designer-agent-kit/scripts/install-web-designer-kit.mjs
    Windows: node .\.masterminds-web-designer-agent-kit\scripts\install-web-designer-kit.mjs
-4. Run the health check:
+4. Run health check:
    Mac: node .masterminds-web-designer-agent-kit/scripts/health-check.mjs --project=.
    Windows: node .\.masterminds-web-designer-agent-kit\scripts\health-check.mjs --project=.
 ```
@@ -144,25 +143,31 @@ node .\.masterminds-web-designer-agent-kit\scripts\install-web-designer-kit.mjs
 node .\.masterminds-web-designer-agent-kit\scripts\health-check.mjs --project=.
 ```
 
-If any of those files already exist, the installer leaves them untouched and writes proposed replacements to `.masterminds-context/`.
+---
 
-## Fill In Your Profile
+### Step 3: Fill In Profile Details
 
-After context files are installed, paste the prompt in `prompts/02-fill-user-and-soul.md` into Claude Code. Claude will ask questions and update `USER.md` and `SOUL.md`.
+After context files are installed, paste the prompt in `prompts/02-fill-user-and-soul.md` into your AI assistant. It will update `USER.md` and `SOUL.md`.
 
-## Start Building
+---
 
-After the agent kit and context files are installed, paste the prompt in `prompts/04-build-first-website.md`.
+### Step 4: Build and Revise Your Website
 
-## Health Check
+- First Build: Use `prompts/04-build-first-website.md`
+- Revise Design: Use `prompts/05-revise-website.md`
+- Launch Finish: Use `prompts/06-finish-website.md`
+
+---
+
+## Health Check and Command Compatibility
+
+Run the health check at any time to verify installation status:
 
 ```bash
-node .masterminds-web-designer-agent-kit/scripts/health-check.mjs --project=.
+npm run health -- --project=.
 ```
 
-The health check verifies:
-
-- Claude skill directory exists
-- Web Designer agent file exists
-- curated skills are installed or skipped
-- context files exist in the current project
+Available package scripts:
+- `npm run install:kit` (installs agent and 22 curated skills)
+- `npm run install:context` (installs `CLAUDE.md`, `USER.md`, and `SOUL.md`)
+- `npm run health` (verifies agent, skills, and context files)

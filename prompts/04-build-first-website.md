@@ -3,28 +3,29 @@
 Paste this into Claude Code from the website project folder.
 
 ```text
-Use the Web Designer agent and the installed Web Designer Agent Kit to build my first website.
+Use the Web Designer agent and the Masterminds Web Designer skill stack to build or update my website.
 
 First:
-- Read CLAUDE.md, USER.md, and SOUL.md.
-- Inspect the current folder.
-- Do not overwrite any existing file without asking.
-- If there is no website yet, create the simplest working website that can be opened locally.
+- Read CLAUDE.md, USER.md, and SOUL.md if present.
+- Inspect the current folder to check if this is a new build or an existing website update.
+- Load visual directions from skills/masterminds-web-designer/references/design-directions.md.
+- Save project brief to .masterminds-context/brief.json and design choices to .masterminds-context/design-decisions.json.
+- Ask at most 3 questions only if vital details are missing.
+- Offer at most 3 visual directions with a recommendation and default choice if I delegate.
 
 Build:
-- A personal brand or service business website for the person described in USER.md.
-- Include hero, audience/problem, services or offer, about, proof or credibility, FAQ, and CTA.
-- Use a visual direction that fits my business, not a generic AI template.
-- Include one memorable premium effect, such as a GSAP text reveal, Three.js/Vanta background, particle field, magnetic button, or scroll-driven section.
-- Make it mobile responsive.
-- Include SEO basics: title, meta description, semantic headings, and share metadata if possible.
-- Include AEO/GEO basics: clear entity facts, FAQ answers, and schema suggestions or implementation if the stack supports it.
-- Respect reduced motion.
-- Verify that it opens locally before saying it is done.
+- A clear, responsive website tailored for the participant business or project.
+- Include hero, audience/problem, services or offer, about section, proof or process, FAQ, and CTA.
+- Use a visual direction that fits my brand without generic AI slop.
+- Motion is optional. If added, ensure it respects reduced-motion preferences.
+- Ensure responsive layout, minimum 4.5:1 text contrast, and 44x44px touch targets.
+- Include SEO and AEO basics: title, meta description, semantic headings, and clean structure.
+- Use honest facts without fabricated proof or fake stats.
+- Provide working CTA links or a valid mailto fallback.
+- Verify local preview before reporting done.
 
 After building:
-- Tell me how to preview it.
-- Tell me how to deploy it.
-- Give me 3 plain-English prompts I can use to improve it.
+- Show me how to preview the site locally.
+- Save decisions to .masterminds-context/design-decisions.json.
+- Provide prompt 05 to revise or prompt 06 to finish.
 ```
-

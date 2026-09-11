@@ -1,101 +1,40 @@
 ---
 name: masterminds-web-designer
-description: Build beautiful personal brand, service business, landing page, and lead magnet websites for Mastermind students. Use for web design, website redesign, page polish, mobile responsiveness, SEO/AEO structure, animation, 3D/WebGL effects, and conversion flow.
+description: Build and refine websites for Mastermind and All Sorted participants. Supports new builds and existing site updates for service businesses, portfolios, and events with fast quick-start intake, clear visual directions, responsive layouts, accessibility standards, and SEO/AEO foundations.
 ---
 
 # Masterminds Web Designer
 
-Use this skill when a student is building or improving a website.
+Use this skill when building a new website or updating an existing site for Mastermind and All Sorted participants.
 
-## Goal
+## Quick-Start Workflow
 
-Help a non-technical business owner get a polished, live, useful website quickly.
+1. Read existing context from `CLAUDE.md`, `USER.md`, and `SOUL.md` if available.
+2. Load visual direction references from relative location `references/design-directions.md`.
+3. Create or load the participant business brief in `.masterminds-context/brief.json`.
+4. Ask at most 3 essential questions only when genuinely blocked:
+   - What is your business or project name and primary offer?
+   - Who is your target client or audience?
+   - What primary action or CTA should visitors take?
+5. Present at most 3 visual directions based on site archetype (Service, Portfolio, or Event) with a recommended option. If the participant delegates the choice, default to Direction 1.
+6. Save design choices to `.masterminds-context/design-decisions.json` without overwriting original context files.
+7. Build or update the website using clean, responsive HTML/CSS/JS or modern component code.
 
-The result should feel:
+## References
 
-- clear
-- premium
-- human
-- mobile-ready
-- easy to edit later
+Always inspect `references/design-directions.md` relative to this skill installation for detailed color palettes, typography pairings, layout compositions, asset strategies, and CTA fallbacks.
 
-## Required Inputs
+## Participant Support
 
-Use `USER.md` and `SOUL.md` first when they exist.
+- **Beginners:** Deliver a complete, working single-page site with clear instructions to preview and edit.
+- **Existing Sites:** Inspect current structure before making changes. Keep existing content intact and place new assets or designs safely alongside existing files.
 
-If context is missing, ask for only what blocks the build:
+## Non-Negotiable Standards
 
-- name
-- business
-- who they help
-- offer or services
-- preferred CTA
-- visual vibe
-- photo or logo if available
-
-## Build Shape
-
-Default personal brand site:
-
-1. Hero with name, positioning, CTA
-2. Who this is for
-3. Services or offer cards
-4. About section
-5. Proof, testimonials, or credibility
-6. FAQ or common objections
-7. Final CTA
-
-## Design Stack
-
-Use the installed skills as needed:
-
-- `impeccable` for design quality, anti-slop, typography, layout, and polish
-- `frontend-design` for strong visual direction
-- `modern-web-design` for current patterns
-- `gsap-*` for scroll and timeline animation
-- `threejs-webgl`, `react-three-fiber`, and `lightweight-3d-effects` for 3D/WebGL moments
-- `motion-framer`, `animejs`, `barba-js`, and `scroll-reveal-libraries` for motion
-- SEO/GEO skills for metadata, schema, content quality, and AI-search readiness
-
-## Non-Negotiables
-
-- Mobile first.
-- Text must fit.
-- Buttons and links must work.
-- Contrast must be readable.
-- Motion must respect reduced-motion preferences.
-- Existing files must not be silently overwritten.
-- Verify the result before saying done.
-
-## SEO/AEO Foundation
-
-Every serious page should include:
-
-- unique title
-- meta description
-- one clear H1
-- structured headings
-- semantic HTML
-- Open Graph tags if possible
-- visible business facts
-- FAQ or answer-ready content where useful
-- schema suggestion or implementation when the stack supports it
-
-## Visual Effects Menu
-
-Choose effects that match the brand:
-
-- GSAP scroll reveals
-- Lenis smooth scroll
-- split text reveal
-- magnetic buttons
-- 3D tilt cards
-- Vanta or Three.js hero background
-- particle field
-- canvas texture or grain
-- page transitions
-- animated counters
-- SVG draw-on effects
-
-Do not use all effects by default. Pick one memorable hero effect and two to three supporting interactions.
-
+- **Mobile First:** Ensure responsive layout across screen sizes from 320px up.
+- **Accessibility:** Maintain minimum 4.5:1 text contrast ratio, 44x44px touch targets, and proper semantic HTML elements (`<main>`, `<nav>`, `<header>`, `<footer>`).
+- **Honest Content:** Use real participant facts. Do not invent proof, false subscriber counts, or fake revenue figures.
+- **Working CTA Fallbacks:** Ensure buttons link to active URLs, booking links, or a clean `mailto:` fallback.
+- **Motion is Optional:** Motion and animations are optional enhancements, never mandatory. Always wrap animations in `prefers-reduced-motion` checks.
+- **Safe Persistence:** Write generated briefs and decisions to `.masterminds-context/` without replacing existing user files.
+- **Verification:** Test local page launch and link functionality before reporting complete.
