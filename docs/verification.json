@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kitVersion": "5.0.0",
-  "status": "local_tools_passed_benchmark_pending",
+  "status": "passed",
   "priorVersionEvidence": "docs/verification-v4.json",
   "coreNodeTests": {
     "passed": 62,
@@ -29,5 +29,35 @@
     "actionsMismatchDetected": true,
     "hashMismatchDominant": true
   },
-  "editorImagePolicy": "Unsupported local formats rejected before writes with preservation and raster conversion guidance"
+  "editorImagePolicy": "Unsupported local formats rejected before writes with preservation and raster conversion guidance",
+  "scope": "Local toolkit implementation and browser acceptance; no global agent ranking claim",
+  "sectionsBrowser": {
+    "captures": 108,
+    "viewports": [
+      320,
+      390,
+      1440
+    ],
+    "sections": 36,
+    "documentOverflow": 0
+  },
+  "benchmark": {
+    "cases": 4,
+    "model": "gpt-5.6-sol",
+    "result": "Mixed first-trial results; reviewer-guided repairs evaluated separately",
+    "limitations": [
+      "Single trial per case",
+      "Original baseline orchestration wrapper not retained",
+      "Revision visible upfront",
+      "Browser validation performed independently after writer runs"
+    ],
+    "guidanceRepair": "Explicit image geometry, clipping, CTA interaction, motion settling, identity preservation and matched reference capture checks"
+  },
+  "distribution": {
+    "cohortInstalledTests": 62,
+    "allSortedInstalledTests": 62,
+    "pathContainingSpaces": "passed",
+    "allSortedScrubRules": 281,
+    "allSortedScrubFindings": 0
+  }
 }

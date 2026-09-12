@@ -54,3 +54,17 @@ Objective checks should cover fact preservation, valid structure, heading order,
 Subjective review asks whether composition fits the relationship, hierarchy and rhythm are clear, copy sounds human, claims have evidence, and Match or Adapt intent is met. Label judgments and preserve screenshots and notes.
 
 Do not hide quality in one score. Report dimensions, conditions, unresolved differences, and confidence. Readiness requires objective gates and no material subjective concern. One example is not proof of general capability.
+
+## Run a bounded browser acceptance loop
+
+Use a finite **build -> capture -> critique -> fix -> recheck** loop. Start with one complete pass at 320, 390, 768, and 1440 CSS pixels, repair prioritized material failures, then recheck every affected viewport. Run one final pass after inserting representative long copy or making later revisions. Do not keep polishing without a new observed discrepancy; record remaining uncertainty.
+
+Before capturing evidence, wait for fonts and images, then settle or disable finite entry animations so the capture represents the intended resting state. Separately enable `prefers-reduced-motion: reduce` and confirm moving treatments are removed or safely reduced without hiding content or actions.
+
+At every viewport, inspect the rendered box and intended aspect ratio of each meaningful image. Successful loading and a document with no reported overflow do not prove visual quality. Keep intrinsic `width` and `height` attributes to reserve space, and use `height: auto` for naturally fluid images. Use an explicit bounded frame, declared aspect ratio, and intentional `object-fit`/`object-position` only when cropping is part of the design. Inspect edges and descendants for clipping masked by `overflow: hidden`, including text, focus rings, shadows, and controls.
+
+Verify each primary CTA at its visible center with the browser's actual hit-test result, then reach and activate it by keyboard. The target must be the intended control, not an overlay, decorative layer, or neighboring link. Confirm visible focus and the expected navigation or safe local behavior.
+
+For Match work, capture candidate and reference at the same viewport, device pixel ratio, UI state, font/loading state, and scroll position. Compare text line breaks and measured element positions, sizes, and spacing; a similar page silhouette or overall outline is insufficient. For Adapt work, identify which reference relationships are intentionally retained and judge those under the same controlled conditions.
+
+If a real browser cannot be used, stop the browser portion and report exactly which viewports and interactions are blocked. Static inspection, loaded-image checks, launch scripts, and absence of document overflow remain useful partial evidence, but none may be reported as browser or visual acceptance.
