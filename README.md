@@ -1,4 +1,4 @@
-# Web Designer Agent Kit 4.0.0
+# Web Designer Agent Kit 5.0.0
 
 Install Joe Che's starter context files, Web Designer agent, and original local design toolkit for Mastermind and All Sorted participants.
 
@@ -9,7 +9,7 @@ Install Node.js 24 or newer, then download this kit once by cloning it or downlo
 Open a terminal in the website project you want to build. Keep that project separate from the kit checkout. Then paste this request into your AI assistant:
 
 ```text
-Use the Web Designer Agent Kit from my local .masterminds-web-designer-agent-kit folder to build a working website in this current website project. First verify Node.js 24 or newer, discover and record the absolute kit root and website project root, install the context files and core agent without overwriting existing files, build editable HTML/CSS/JS, clean the visible copy, verify desktop and mobile in a local preview, and report anything not observed. Do not publish.
+Use the Web Designer Agent Kit from my local .masterminds-web-designer-agent-kit folder to build a working website in this current website project. First verify Node.js 24 or newer, discover and record the absolute kit root and website project root, install the context files and core agent without overwriting existing files, and read the applicable skill references. Turn my conversation and supplied facts into any required schema yourself. Validate it and generate complete editable pages. Never ask me to handwrite JSON. Offer 3 coherent directions and recommend one, clean the visible copy in my actual business voice, verify the whole site plus desktop and mobile in a local preview, and report anything not observed. Do not publish.
 
 Business Name: Apex Advisory
 Style Archetype: Service (or Portfolio, or Event)
@@ -84,9 +84,27 @@ Once downloaded, the local tools and generation, installation, preview, and copy
 - **Component Lab:** `skills/masterminds-web-designer/tools/component-lab.html`, with 12 distinct layouts, 4 button treatments, 16 geometric line icons, and 3 optional effects
 - **Reference Compare:** `skills/masterminds-web-designer/tools/reference-compare.html`, with side-by-side, overlay, and difference views aligned to a common coordinate origin and scale
 - **Layout Atlas:** `skills/masterminds-web-designer/references/layout-atlas.md`
+- **Composition Design:** `skills/masterminds-web-designer/references/composition-design.md`, for content-led layout and section ordering
+- **Section Gallery:** `scripts/section-gallery.mjs`, which creates an offline chooser with 36 section layouts and 3 complete example compositions
+- **Structured Sites:** `skills/masterminds-web-designer/references/structured-sites.md`, with the generated-site, editor, whole-site audit, copy-review, capture, asset, and palette handoff contracts
 - **Search Readiness:** `skills/masterminds-web-designer/references/search-readiness.md`, with built-in SEO and GEO guidance plus honest local-versus-live reporting
 
 The GitHub design research catalog at `docs/github-design-research.md` is research-only in the default workflow. It does not fetch, install, clone, or vendor external repositories.
+
+The built-in tools require no external repository installation. When a participant benefits from visual selection, the agent creates the gallery in a new directory, starts a local preview, and guides the participant through 3 coherent directions instead of presenting all 36 sections as decisions:
+
+```bash
+node "$KIT_ROOT/scripts/section-gallery.mjs" "--target=$PROJECT_ROOT/my-section-gallery"
+node "$KIT_ROOT/scripts/preview.mjs" "--dir=$PROJECT_ROOT/my-section-gallery" "--port=3000"
+```
+
+For a content-adaptive multi-page site, the agent converts supplied facts into a validated brief file and runs:
+
+```bash
+node "$KIT_ROOT/scripts/create-site.mjs" "--brief=$PROJECT_ROOT/.masterminds-context/site-brief.json" "--target=$PROJECT_ROOT/my-three-page-site"
+```
+
+Structured `--brief=FILE` mode is mutually exclusive with the `--style`, `--name`, `--headline`, and `--email` quick-starter flags. A 3-page brief can generate `index.html`, `about/index.html`, and `contact/index.html` with shared navigation and styling. The original `service`, `portfolio`, and `event` starter commands remain available.
 
 ## Safe installation behavior
 
@@ -104,6 +122,8 @@ Example Bash commands follow. PowerShell users should call each script with `nod
 node "$KIT_ROOT/scripts/reference-project.mjs" "--target=$PROJECT_ROOT/my-reference" "--url=https://example.com" "--mode=match"
 node "$KIT_ROOT/scripts/capture-reference.mjs" "https://example.com" "--target=$PROJECT_ROOT/my-reference/captures-01"
 ```
+
+For a declared interactive capture state, the agent may add a raw JSON string with `--spec=JSON`. It constructs up to 6 cases, each with required `name`, `width`, `height`, `dpr`, `colorScheme`, and `reducedMotion`, plus exactly one of `fullPage` or `clip`. Supported actions are timed waits and selector-based hover, focus, open-details, or scroll. Capture metadata preserves actions, DPR, state, crop, and hashes for reliable comparison.
 
 Before review or preview, have the AI create `$PROJECT_ROOT/my-reference/candidate/index.html` with editable CSS and JavaScript. Keep the candidate separate from the captured reference evidence. Then run:
 
@@ -127,10 +147,13 @@ URL fetch text is not visual evidence. Follow `skills/masterminds-web-designer/r
 
 1. Read the participant context and confirm facts, offer, audience, and intended CTA.
 2. Build editable, functioning, original HTML/CSS/JS. An image may be evidence or an asset, never the page implementation.
-3. Run Speak Human cleanup before visual QA. Show before/after examples and verify that names, dates, prices, claims, qualifiers, quotations, legal meaning, citations, links, and SEO meaning remain intact.
+3. Run Speak Human cleanup before visual QA. Use the participant's actual voice, not Joe's voice by default, and avoid generic AI phrasing. Show before/after examples and verify that names, dates, prices, claims, qualifiers, quotations, legal meaning, citations, links, button facts, and SEO meaning remain intact. `copy-review.mjs --before=FILE --after=FILE --json` supplements this review; removed tokens alone do not prove semantic preservation.
 4. Verify semantic navigation, one H1, crawlable text, unique title and description, responsive layouts, 4.5:1 body-text contrast, 44x44px touch targets, skip navigation, focus states, and reduced-motion behavior.
 5. Treat a form as connected only after verifying a real endpoint and receiving user-confirmed send intent. Otherwise label it clearly as an unconnected local demo. Links navigate; they do not pretend to submit.
-6. Report local preview separately from publication or deployment. Never claim a browser check that was not observed.
-7. Record final assembled machine-readable acceptance evidence in `docs/verification.json`. Until that file exists and is current, do not infer every check passes.
+6. For generated structured sites, offer the editor only as an opt-in. Run `edit-site.mjs --dir=SITE --port=INTEGER`, open only its exact printed private one-session URL, and verify text/image edits, save, undo, and reload. The editor owns validated `site.json` fields, never arbitrary HTML; external manual source changes are conflicts to preserve for review.
+7. Before audit, copy only participant-approved local images into the generated output. Remote images remain links and are not fetched automatically.
+8. Run `launch-check.mjs --dir=SITE --json` across the whole site. Fix hard failures, then manually inspect keyboard use, responsive behavior, form state, and performance. The check does not provide a ranking or guarantee SEO results.
+9. Report local preview separately from publication or deployment. Never claim a browser check that was not observed.
+10. Record final assembled machine-readable acceptance evidence in `docs/verification.json`. Until that file exists and is current, do not infer every check passes.
 
 See `docs/acceptance.md` for the concise acceptance rubric and `docs/three-upgrade-loops.md` for the feature-intention record.

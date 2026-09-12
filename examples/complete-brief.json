@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "name": "Juniper Field Studio — Example",
+  "language": "en",
+  "brand": {
+    "background": "#F7F3EA",
+    "text": "#243129",
+    "accent": "#B34A2F",
+    "accentText": "#FFFFFF",
+    "muted": "#667068",
+    "surface": "#E8E1D4",
+    "font": "system",
+    "headingFont": "serif",
+    "radius": 12,
+    "space": 24
+  },
+  "navigation": [
+    { "label": "Home", "href": "/" },
+    { "label": "Work", "href": "/work/" },
+    { "label": "Approach", "href": "/approach/" }
+  ],
+  "footer": {
+    "text": "Juniper Field Studio is a fictional example created to demonstrate the structured brief format.",
+    "links": [
+      { "label": "Return home", "href": "/" },
+      { "label": "Email the example studio", "href": "mailto:hello@juniperfield.example" }
+    ]
+  },
+  "pages": [
+    {
+      "path": "index.html",
+      "title": "Juniper Field Studio example",
+      "description": "A fictional three-page studio site demonstrating structured sections, shared navigation, and a text-led work index.",
+      "sections": [
+        {
+          "id": "welcome",
+          "type": "hero-editorial",
+          "eyebrow": "Fictional example",
+          "title": "A quieter place to shape useful ideas",
+          "body": "Juniper Field Studio is an invented creative practice used only to show how a complete structured brief can feel.",
+          "action": { "label": "Browse the example work", "href": "/work/" }
+        },
+        {
+          "id": "ways-of-working",
+          "type": "services-rows",
+          "eyebrow": "Ways of working",
+          "title": "A small, adaptable practice",
+          "body": "These are descriptive example offerings, not claims about a real business.",
+          "items": [
+            { "title": "Working sessions", "body": "Focused conversations that turn a loose question into a useful direction." },
+            { "title": "Editorial systems", "body": "Simple structures for keeping language, pages, and decisions coherent." },
+            { "title": "Spatial studies", "body": "Early visual explorations for fictional rooms, gatherings, and displays." }
+          ]
+        },
+        {
+          "id": "next-step",
+          "type": "contact-band",
+          "title": "Continue through the example",
+          "body": "The work and approach pages demonstrate nested routes and shared presentation without relying on unavailable media.",
+          "action": { "label": "Read the example approach", "href": "/approach/#review" }
+        }
+      ]
+    },
+    {
+      "path": "work/index.html",
+      "title": "Work — Juniper Field example",
+      "description": "A text-led index of fictional projects in the Juniper Field structured-site example.",
+      "sections": [
+        {
+          "id": "work-intro",
+          "type": "hero-split",
+          "eyebrow": "About this example",
+          "title": "A work index built from supplied words",
+          "body": "Everything on this page is original demonstration copy. It does not describe a real person, client, or result."
+        },
+        {
+          "id": "selected-work",
+          "type": "work-index",
+          "title": "Selected fictional studies",
+          "items": [
+            { "title": "Field Notes", "body": "A compact editorial system for organizing observations, decisions, and next steps." },
+            { "title": "Gathering Plan", "body": "A fictional spatial study that uses plain language to make arrival and flow easier to understand." },
+            { "title": "Workshop Record", "body": "A text-led archive structure for keeping project context close to the finished work." }
+          ]
+        },
+        {
+          "id": "method",
+          "type": "process-narrative",
+          "title": "An illustrative process",
+          "items": [
+            { "label": "Listen", "title": "Collect the supplied facts", "body": "Begin with the participant’s actual language and constraints." },
+            { "label": "Arrange", "title": "Choose a fitting structure", "body": "Place the facts into sections without manufacturing proof." },
+            { "label": "Review", "title": "Read the whole journey", "body": "Check every page, destination, and content detail together." }
+          ],
+          "action": { "label": "See the example approach", "href": "/approach/" }
+        }
+      ]
+    },
+    {
+      "path": "approach/index.html",
+      "title": "Approach — Juniper Field example",
+      "description": "A fictional approach page demonstrating process, contact, and internal fragment links.",
+      "sections": [
+        {
+          "id": "approach-intro",
+          "type": "hero-poster",
+          "eyebrow": "Example approach",
+          "title": "Clear structure before decoration",
+          "body": "This fictional process starts with supplied facts and keeps every claim visible for review.",
+          "action": { "label": "Read the review step", "href": "#review" }
+        },
+        {
+          "id": "process",
+          "type": "process-narrative",
+          "title": "A practical example sequence",
+          "items": [
+            { "label": "Collect", "title": "Gather the supplied facts", "body": "Start with the participant’s actual words, constraints, and approved references." },
+            { "label": "Arrange", "title": "Build a complete journey", "body": "Give each fact a useful place across the pages and shared navigation." },
+            { "label": "Review", "title": "Check the whole result", "body": "Read every page and destination together before anything is published." }
+          ]
+        },
+        {
+          "id": "review",
+          "type": "contact-band",
+          "eyebrow": "Review note",
+          "title": "Use only details approved by the participant",
+          "body": "A real participant can later copy approved local assets into the generated site according to the project contract.",
+          "action": { "label": "Email a question", "href": "mailto:hello@juniperfield.example" }
+        }
+      ]
+    }
+  ]
+}

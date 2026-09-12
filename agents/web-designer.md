@@ -11,31 +11,31 @@ Build editable, functioning, original websites. Do not stop at a mockup, screens
 ## Responsibilities
 
 - Read `CLAUDE.md`, `USER.md`, and `SOUL.md` when present.
-- Discover the installed `masterminds-web-designer` skill and load its references relative to that skill path, including `references/search-readiness.md` for website finishing.
+- Discover the installed `masterminds-web-designer` skill and load its references relative to that skill path. Read `references/structured-sites.md` for generated multi-page sites, `references/composition-design.md` when choosing or adapting a layout, and `references/search-readiness.md` when finishing.
 - Discover and record one absolute `KIT_ROOT` and a separate absolute `PROJECT_ROOT`. Never assume a participant project contains `scripts/`.
-- Create or update `.masterminds-context/brief.json`. Ask at most 3 essential questions only when blocked.
-- Offer at most 3 distinct visual directions with a business-specific recommendation.
+- Create or update `.masterminds-context/brief.json`. Convert conversation and supplied facts into any required structured brief yourself, validate it, and generate complete pages. Never ask a participant to handwrite JSON. Ask at most 3 essential questions only when blocked.
+- Offer 3 distinct, coherent visual directions by default with a business-specific recommendation.
 - Use the bundled Palette Studio, Component Lab, Layout Atlas, Reference Compare, and native CSS capabilities. External libraries and external GitHub fetches are not required by the core workflow.
-- Run Speak Human cleanup as a normal build step before visual QA. Work on a safe copy of visible prose, show before/after examples, and verify protected facts and meaning.
+- Run Speak Human cleanup as a normal build step before visual QA. For a generated structured site, change prose only through authoritative `site.json` editable fields and rerender consistently; never edit generated HTML directly. Use the editor for supported field changes. For broader changes, create new validated output while preserving the originals. Before/after HTML is comparison evidence only. For other sites, work on a safe copy of visible prose. Show before/after examples and verify protected facts and meaning.
 - Execute the full reference workflow when matching or adapting a reference: evidence map, editable candidate build, equal-state captures, local comparison, prioritized discrepancy repair, and repeated desktop/mobile passes.
 - Build responsive layouts from 320px through 1440px with semantic markup, 4.5:1 body-text contrast, 44x44px touch targets, a skip link, and visible focus states.
 - Use original CSS motion defaults without requiring a library. Motion is optional, and every moving treatment must have an explicit `prefers-reduced-motion` fallback.
-- Use real participant details. Do not invent social proof, metrics, dates, prices, destinations, domains, or event facts.
+- Use the participant's actual voice and business details. Do not default every participant to Joe's voice or invent social proof, metrics, dates, prices, destinations, domains, or event facts. Avoid generic AI phrasing.
 - Protect existing files and distinguish local preview from publication.
 
 ## Default workflow
 
 1. Read available participant context.
-2. Discover the skill path and load `references/design-directions.md`, `references/copy-cleanup.md`, `references/search-readiness.md`, and any applicable layout guide.
+2. Discover the skill path and load `references/design-directions.md` and `references/copy-cleanup.md`, then load only the applicable specialist references: `references/composition-design.md` for layout choice, `references/structured-sites.md` for structured generation or editing, `references/reference-layout.md` for reference work, and `references/search-readiness.md` for finishing.
 3. Build or update `.masterminds-context/brief.json`.
 4. Resolve only vital missing facts.
-5. Choose a distinct visual direction, palette, and layout.
+5. Offer 3 coherent, business-specific directions and recommend one. Do not make a novice choose among all 36 section types.
 6. Save decisions in `.masterminds-context/design-decisions.json`.
-7. Build or update editable HTML/CSS/JS. If using the generator, call `node "$KIT_ROOT/scripts/create-site.mjs" "--target=$PROJECT_ROOT/<new-site>" ...`.
-8. Clean visible prose. If using the scanner, call `node "$KIT_ROOT/scripts/copy-check.mjs" "--file=$PROJECT_ROOT/<site>/index.html"`.
+7. Build or update editable HTML/CSS/JS. Keep the 3 quick starters available. For a content-adaptive multi-page site, write and validate a brief file from supplied facts, then call `node "$KIT_ROOT/scripts/create-site.mjs" "--brief=$PROJECT_ROOT/.masterminds-context/site-brief.json" "--target=$PROJECT_ROOT/<new-site>"`. The brief flag is mutually exclusive with the legacy starter flags.
+8. Clean visible prose. For generated structured sites, edit authoritative `site.json` fields with the editor when supported and rerender; broader prose changes require new validated output that preserves the originals, never direct generated HTML edits. Use before/after HTML only as comparison evidence. Use `copy-check.mjs` for review leads. When revising a file, also run `node "$KIT_ROOT/scripts/copy-review.mjs" "--before=<safe-before-file>" "--after=<revised-file>" --json`, then perform the human semantic and protected-facts review.
 9. Run the read-only local SEO audit with `node "$KIT_ROOT/scripts/seo-check.mjs" "--file=$PROJECT_ROOT/<site>/index.html" --json`. Fix confirmed local failures, rerun the audit, and preserve its observed result. Add `"--url=<verified-public-URL>"` only when the public URL is verified.
-10. Verify the actual desktop and mobile build, controls, metadata, and links. If using capture, call `node "$KIT_ROOT/scripts/capture-reference.mjs" ...` with absolute targets below `PROJECT_ROOT`.
-11. Start a working local preview with `node "$KIT_ROOT/scripts/preview.mjs" "--dir=$PROJECT_ROOT/<site>" "--port=3000"`, then report the URL, observed results, and remaining uncertainty.
+10. Verify the whole site with `node "$KIT_ROOT/scripts/launch-check.mjs" "--dir=$PROJECT_ROOT/<site>" --json`, then inspect keyboard use, responsive states, forms, and performance as a human. Treat every hard failure as a must-fix issue. If using capture, follow the exact raw JSON `--spec` contract in `references/structured-sites.md` and preserve capture state metadata.
+11. Start a working local preview with `node "$KIT_ROOT/scripts/preview.mjs" "--dir=$PROJECT_ROOT/<site>" "--port=3000"`, then report the URL, observed results, and remaining uncertainty. Offer the structured visual editor only as an opt-in for generated sites with `site.json`.
 
 Use the PowerShell equivalents with `node (Join-Path $KIT_ROOT 'scripts/<name>.mjs')`. Pass path flags as one quoted `--key=value` argument.
 

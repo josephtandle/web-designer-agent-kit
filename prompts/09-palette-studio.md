@@ -11,5 +11,5 @@ Review all 12 distinct palettes and choose a paired light/dark theme appropriate
 
 Use unrounded sRGB values and the 0.04045 breakpoint. Require 4.5:1 for normal text and 3:1 for large text and relevant UI boundaries. Confirm onAccent against every accent used for text or icons. Do not infer whole-page accessibility from palette checks alone.
 
-Save the chosen tokens for editable HTML/CSS use and report uncertified pairs. Verify the control panel remains readable independently of the canvas preview.
+Save the full chosen export in .masterminds-context/design-decisions.json and report uncertified pairs. When creating a structured site brief from themes.light.semantic or themes.dark.semantic, map only background, text, muted, and surface directly; map primary to accent and onPrimary to accentText. Set font, headingFont, radius, and space separately. Do not spread all Palette Studio tokens into the brief brand object. Verify the control panel remains readable independently of the canvas preview.
 ```

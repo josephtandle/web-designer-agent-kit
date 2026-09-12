@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "kitVersion": "4.0.0",
+  "status": "passed",
+  "scope": "Local portable kit, not publication or live search visibility",
+  "verifiedAt": "2026-09-11T23:32:39.611117+00:00",
+  "nodeRuntime": "24.21.0",
+  "coreNodeTests": {
+    "passed": 48,
+    "failed": 0
+  },
+  "starterVisual": {
+    "styles": 3,
+    "widths": [
+      320,
+      375,
+      768,
+      1440
+    ],
+    "casesPassed": 12,
+    "independentReviewers": 2
+  },
+  "componentLab": {
+    "layouts": 12,
+    "viewportCasesPassed": 24,
+    "widths": [
+      320,
+      1440
+    ],
+    "icons": 16,
+    "buttonTreatments": 4,
+    "effects": 3,
+    "clipboardFallbackPreservesPage": true,
+    "standaloneExports": "passed",
+    "darkLayoutLabelContrast": "passed"
+  },
+  "paletteAndComparatorBrowser": {
+    "checksPassed": 9,
+    "failed": 0,
+    "presetModesChecked": 24,
+    "unequalImageScaleAndPixelDifference": "passed"
+  },
+  "referenceCapture": {
+    "desktop": true,
+    "mobile": true,
+    "http404Rejected": true
+  },
+  "research": {
+    "primarySources": 30,
+    "record": "docs/github-design-research.md"
+  },
+  "upgradeRounds": [
+    {
+      "round": 1,
+      "outcome": "Intake, original guidance, context preservation"
+    },
+    {
+      "round": 2,
+      "outcome": "Portable offline starters and local preview"
+    },
+    {
+      "round": 3,
+      "outcome": "Original palette, components, reference tools, copy cleanup and SEO/GEO audit"
+    }
+  ],
+  "simplification": "Reviewed; no further change warranted",
+  "publication": "not_published",
+  "limits": [
+    "Windows commands reviewed, Windows runtime not exercised on this macOS host.",
+    "SEO/GEO inspector checks local static markup; indexing, ranking, citation and deployment controls remain not checked.",
+    "Visual reference reproduction is an agent-led build and compare workflow, not a guarantee of pixel accuracy."
+  ],
+  "integrity": "Release and embedded-toolkit manifests record artifact-specific file hashes."
+}
