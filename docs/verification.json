@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "kitVersion": "5.0.0",
+  "kitVersion": "5.1.0",
   "status": "passed",
   "priorVersionEvidence": "docs/verification-v4.json",
   "coreNodeTests": {
@@ -30,7 +30,7 @@
     "hashMismatchDominant": true
   },
   "editorImagePolicy": "Unsupported local formats rejected before writes with preservation and raster conversion guidance",
-  "scope": "Local toolkit implementation and browser acceptance; no global agent ranking claim",
+  "scope": "62 current toolkit tests, research guidance review, reference installation preservation and bounded workflow trials; no global ranking claim",
   "sectionsBrowser": {
     "captures": 108,
     "viewports": [
@@ -51,13 +51,35 @@
       "Revision visible upfront",
       "Browser validation performed independently after writer runs"
     ],
-    "guidanceRepair": "Explicit image geometry, clipping, CTA interaction, motion settling, identity preservation and matched reference capture checks"
+    "guidanceRepair": "Explicit image geometry, clipping, CTA interaction, motion settling, identity preservation and matched reference capture checks",
+    "observedKitVersion": "5.0.0"
   },
   "distribution": {
     "cohortInstalledTests": 62,
     "allSortedInstalledTests": 62,
     "pathContainingSpaces": "passed",
     "allSortedScrubRules": 281,
-    "allSortedScrubFindings": 0
+    "allSortedScrubFindings": 0,
+    "observedKitVersion": "5.0.0"
+  },
+  "inheritedToolEvidence": {
+    "kitVersion": "5.0.0",
+    "commit": "76256007a2a03937e185c144b724854075044aa8",
+    "note": "Gallery, sections, editor, capture and comparator implementations unchanged. Their detailed browser evidence is inherited; current Node tests rerun."
+  },
+  "researchWorkflow": {
+    "referenceGuideInstalled": true,
+    "customizedReferencePreserved": true,
+    "liveResearchStage": "Two real sites inspected at desktop and mobile with selected navigation interactions",
+    "offlineRouting": "Build continued with explicit skipped-research record",
+    "tinyEdit": "Requested label and final newline only; destination preserved",
+    "independentReview": "approved",
+    "limitations": [
+      "Live research and source writing assessed in separate ownership lanes",
+      "Reference keyboard coverage incomplete",
+      "No independent network-call audit for offline trial",
+      "Some secondary targets in offline fixture below44px; no full accessibility claim",
+      "Quality-selection criterion tightened after trial, reviewed but not blindly retested"
+    ]
   }
 }

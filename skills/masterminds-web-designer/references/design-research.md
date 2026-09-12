@@ -6,6 +6,8 @@ Use this guide for a new site or substantial redesign after the brief and vital 
 
 Use one pass of roughly 10 minutes: shortlist up to 6 relevant sites, deeply inspect normally 2 or 3 that are materially different, and stop when the direction choice has enough relevant support. Use fewer honestly when access or relevance is limited. Go deeper only when the participant explicitly asks.
 
+Select deep references for observable excellence in hierarchy, typography, spacing, imagery, and composition, explaining the specific strengths; category relevance or search position alone is insufficient. When category results are visually ordinary, use an exceptional reference from another field with comparable content needs rather than lowering the design standard.
+
 Start with participant-supplied references and the current project. For discovery, use available Web Search or these galleries:
 
 - [Siteinspire](https://www.siteinspire.com/)
