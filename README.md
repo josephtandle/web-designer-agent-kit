@@ -1,10 +1,12 @@
-# Web Designer Agent Kit 5.0.0
+# Web Designer Agent Kit 5.1.0
 
 Install Joe Che's starter context files, Web Designer agent, and original local design toolkit for Mastermind and All Sorted participants.
 
+Version 5.1 adds a bounded research-first workflow for new sites and substantial redesigns. It inspects a small set of relevant live references before direction selection, records provenance and observed-versus-inferred findings outside the public site, and verifies selected adaptations in the finished output. Explicit offline, skip-research, use-only-my-materials, and tiny-fix requests remain direct paths.
+
 ## Quick start: one pasteable AI request
 
-Install Node.js 24 or newer, then download this kit once by cloning it or downloading a repository archive and extracting it into a local kit directory. Confirm that the extracted directory contains `scripts/`, `skills/`, and `agents/`. Internet access is required only for that initial download. The bundled scripts and UI tools then work locally, although a cloud-hosted AI model may still use a network.
+Install Node.js 24 or newer, then download this kit once by cloning it or downloading a repository archive and extracting it into a local kit directory. Confirm that the extracted directory contains `scripts/`, `skills/`, and `agents/`. Internet access is required for the initial download and live-reference research. After download, the bundled scripts and UI tools work locally. An explicit offline request skips live-reference research, although a cloud-hosted AI model may still use a network.
 
 Open a terminal in the website project you want to build. Keep that project separate from the kit checkout. Then paste this request into your AI assistant:
 
@@ -76,7 +78,7 @@ Every path flag is passed as one quoted `--key=value` argument so paths containi
 
 ## Bundled core tools and skills
 
-Once downloaded, the local tools and generation, installation, preview, and copy-review scripts need no additional network access. URL capture is optional network work. Playwright is optional and installed separately only when that capture route is chosen.
+Once downloaded, the local tools and generation, installation, preview, and copy-review scripts need no additional network access. Live-reference research and URL capture require internet access unless an explicit offline request skips live research. Playwright is optional and installed separately only when that capture route is chosen.
 
 - **Masterminds Web Designer:** `skills/masterminds-web-designer`
 - **Frontend Design:** `skills/frontend-design`
@@ -85,6 +87,7 @@ Once downloaded, the local tools and generation, installation, preview, and copy
 - **Reference Compare:** `skills/masterminds-web-designer/tools/reference-compare.html`, with side-by-side, overlay, and difference views aligned to a common coordinate origin and scale
 - **Layout Atlas:** `skills/masterminds-web-designer/references/layout-atlas.md`
 - **Composition Design:** `skills/masterminds-web-designer/references/composition-design.md`, for content-led layout and section ordering
+- **Design Research:** `skills/masterminds-web-designer/references/design-research.md`, for bounded live-reference discovery, evidence, synthesis, and adaptation verification
 - **Section Gallery:** `scripts/section-gallery.mjs`, which creates an offline chooser with 36 section layouts and 3 complete example compositions
 - **Structured Sites:** `skills/masterminds-web-designer/references/structured-sites.md`, with the generated-site, editor, whole-site audit, copy-review, capture, asset, and palette handoff contracts
 - **Search Readiness:** `skills/masterminds-web-designer/references/search-readiness.md`, with built-in SEO and GEO guidance plus honest local-versus-live reporting

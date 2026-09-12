@@ -2,6 +2,8 @@
 
 Use composition to clarify the relationships already present in the participant's content. Do not begin with a page funnel, a favorite grid, or a component showcase. Read the facts first, identify what belongs together, then choose and order sections that make those relationships legible.
 
+For a new site or substantial redesign, use the synthesis in [design-research.md](design-research.md) as evidence, not as a collage template. Select only principles that fit the participant's content relationships and implement them through the original composition rules below.
+
 ## Diagnose the relationship
 
 Classify each content group by its main job:
