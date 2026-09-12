@@ -1,5 +1,6 @@
+import {fileURLToPath} from 'node:url';
 import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import os from 'node:os';import path from 'node:path';import {spawnSync} from 'node:child_process';
-const root=new URL('..',import.meta.url).pathname;
+const root=fileURLToPath(new URL('..',import.meta.url));
 const page=(title,body,head='')=>`<!doctype html><html lang="en"><head><title>${title}</title><meta name="description" content="${title} supplied description"><meta name="viewport" content="width=device-width,initial-scale=1">${head}</head><body><h1>${title}</h1>${body}</body></html>`;
 function dir(){return fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(),'wd-launch-test-')))}
 function audit(site){const result=spawnSync(process.execPath,[root+'scripts/launch-check.mjs',`--dir=${site}`,'--json'],{encoding:'utf8'});return{...result,report:JSON.parse(result.stdout)}}
