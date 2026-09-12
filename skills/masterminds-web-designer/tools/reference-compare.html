@@ -1,609 +1,167 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Reference Compare</title>
-  <style>
-    :root {
-      color-scheme: dark;
-      --background: #121715;
-      --surface: #1d2521;
-      --line: #536259;
-      --ink: #f4f1e9;
-      --muted: #c4cbc3;
-      --accent: #b7df64;
-      --danger: #ffb08a;
-      --danger-surface: #492820;
-      font: 16px/1.5 ui-rounded, "Avenir Next", Avenir, sans-serif;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      min-width: 0;
-      margin: 0;
-      overflow-x: hidden;
-      background: var(--background);
-      color: var(--ink);
-    }
-
-    button,
-    input {
-      min-height: 44px;
-      font: inherit;
-    }
-
-    button {
-      padding: 0.55rem 0.85rem;
-      border: 1px solid var(--line);
-      border-radius: 0.35rem;
-      background: transparent;
-      color: var(--ink);
-      cursor: pointer;
-      font-weight: 750;
-    }
-
-    button[aria-pressed="true"] {
-      border-color: var(--accent);
-      background: var(--accent);
-      color: #172011;
-    }
-
-    button:focus-visible,
-    input:focus-visible {
-      outline: 3px solid var(--ink);
-      outline-offset: 3px;
-    }
-
-    h1,
-    p { margin: 0; }
-
-    .top,
-    .tools,
-    main {
-      padding-inline: clamp(1rem, 3vw, 2.5rem);
-    }
-
-    .top {
-      padding-block: clamp(1.1rem, 3vw, 2rem);
-      border-bottom: 1px solid var(--line);
-      background: var(--surface);
-    }
-
-    .top h1 {
-      font-size: clamp(1.6rem, 4vw, 2.5rem);
-      line-height: 1.05;
-      letter-spacing: -0.035em;
-    }
-
-    .muted {
-      max-width: 68ch;
-      margin-top: 0.45rem;
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-
-    .tools {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: end;
-      gap: 0.9rem 1.25rem;
-      padding-block: 1rem;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .field,
-    .slider {
-      display: grid;
-      min-width: 0;
-      gap: 0.3rem;
-      color: var(--muted);
-      font-size: 0.82rem;
-      font-weight: 700;
-    }
-
-    .field input[type="file"] {
-      width: min(19rem, 100%);
-      max-width: 100%;
-    }
-
-    .modes {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }
-
-    .slider { width: min(16rem, 100%); }
-
-    .slider[hidden] { display: none; }
-
-    .slider-row {
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-    }
-
-    .slider input {
-      min-width: 0;
-      flex: 1;
-    }
-
-    main {
-      min-width: 0;
-      padding-block: clamp(1rem, 3vw, 2rem);
-    }
-
-    .message,
-    .meta {
-      margin-bottom: 1rem;
-      padding: 0.7rem 0.9rem;
-      border: 1px solid var(--line);
-      border-radius: 0.4rem;
-    }
-
-    .message {
-      background: var(--surface);
-      color: var(--muted);
-    }
-
-    .message[data-kind="error"] {
-      border-color: var(--danger);
-      background: var(--danger-surface);
-      color: #ffd9c7;
-    }
-
-    .message:empty { display: none; }
-
-    .meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem 1.25rem;
-      background: var(--surface);
-      color: var(--muted);
-      font-size: 0.88rem;
-    }
-
-    .meta b { color: var(--ink); }
-
-    .stage {
-      display: grid;
-      min-width: 0;
-      min-height: 330px;
-      padding: clamp(0.55rem, 2vw, 1rem);
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: 0.55rem;
-      background: #0d120f;
-    }
-
-    .empty {
-      width: min(42ch, 100%);
-      margin: auto;
-      color: var(--muted);
-      text-align: center;
-    }
-
-    .side-by-side {
-      display: grid;
-      min-width: 0;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: clamp(0.55rem, 2vw, 1rem);
-      align-items: start;
-    }
-
-    .pane {
-      min-width: 0;
-      padding: 0.55rem;
-      border: 1px solid var(--line);
-      background: var(--surface);
-    }
-
-    .pane-title {
-      display: block;
-      margin-bottom: 0.45rem;
-      color: var(--muted);
-      font-size: 0.8rem;
-    }
-
-    .viewport,
-    .single-view {
-      min-width: 0;
-      overflow: hidden;
-    }
-
-    .world {
-      position: relative;
-      overflow: hidden;
-      background-color: #141a17;
-      background-image:
-        linear-gradient(45deg, #2c3530 25%, transparent 25%),
-        linear-gradient(-45deg, #2c3530 25%, transparent 25%),
-        linear-gradient(45deg, transparent 75%, #2c3530 75%),
-        linear-gradient(-45deg, transparent 75%, #2c3530 75%);
-      background-position: 0 0, 0 6px, 6px -6px, -6px 0;
-      background-size: 12px 12px;
-      isolation: isolate;
-    }
-
-    .world img,
-    .world canvas {
-      position: absolute;
-      inset: 0 auto auto 0;
-      display: block;
-      max-width: none;
-    }
-
-    .build-clip {
-      position: absolute;
-      inset: 0 auto auto 0;
-      height: 100%;
-      overflow: hidden;
-      border-right: 2px solid var(--accent);
-      z-index: 1;
-    }
-
-    .difference-canvas { background: #000; }
-
-    @media (max-width: 620px) {
-      .tools,
-      .field,
-      .slider { width: 100%; }
-
-      .side-by-side { grid-template-columns: minmax(0, 1fr); }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        scroll-behavior: auto !important;
-        transition: none !important;
-      }
-    }
-  </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reference Compare</title>
+<style>
+:root{color-scheme:dark;--bg:#121715;--surface:#1d2521;--line:#536259;--ink:#f4f1e9;--muted:#c4cbc3;--accent:#b7df64;--danger:#ffb08a;font:16px/1.5 ui-rounded,"Avenir Next",Avenir,sans-serif}*{box-sizing:border-box}body{margin:0;overflow-x:hidden;background:var(--bg);color:var(--ink)}button,input,select{min-height:44px;font:inherit}button{padding:.55rem .85rem;border:1px solid var(--line);border-radius:.35rem;background:transparent;color:var(--ink);cursor:pointer;font-weight:750}button[aria-pressed=true]{border-color:var(--accent);background:var(--accent);color:#172011}button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--ink);outline-offset:3px}h1,p{margin:0}.top,.tools,main{padding-inline:clamp(1rem,3vw,2.5rem)}.top{padding-block:clamp(1.1rem,3vw,2rem);border-bottom:1px solid var(--line);background:var(--surface)}.top h1{font-size:clamp(1.6rem,4vw,2.5rem);line-height:1.05;letter-spacing:-.035em}.muted{max-width:72ch;margin-top:.45rem;color:var(--muted);font-size:.92rem}.tools{display:flex;flex-wrap:wrap;align-items:end;gap:.9rem 1.25rem;padding-block:1rem;border-bottom:1px solid var(--line)}.field,.slider{display:grid;min-width:0;gap:.3rem;color:var(--muted);font-size:.82rem;font-weight:700}.field input[type=file]{width:min(19rem,100%);max-width:100%}.modes,.slider-row{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem}.slider{width:min(16rem,100%)}[hidden]{display:none!important}.slider input{min-width:0;flex:1}main{min-width:0;padding-block:clamp(1rem,3vw,2rem)}.message,.meta,details.advanced{margin-bottom:1rem;padding:.7rem .9rem;border:1px solid var(--line);border-radius:.4rem;background:var(--surface);color:var(--muted)}.message[data-kind=error]{border-color:var(--danger);background:#492820;color:#ffd9c7}.message:empty{display:none}.meta{display:flex;flex-wrap:wrap;gap:.35rem 1.25rem;font-size:.88rem}.meta b,details summary{color:var(--ink)}details summary{cursor:pointer;font-weight:750}.alignment-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:1rem;margin-top:.8rem}.alignment-card{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem;padding:.7rem;border:1px solid var(--line)}.alignment-card h2{grid-column:1/-1;margin:0;color:var(--ink);font-size:1rem}.alignment-card input{width:100%}.stage{display:grid;min-width:0;min-height:330px;padding:clamp(.55rem,2vw,1rem);overflow:auto;border:1px solid var(--line);border-radius:.55rem;background:#0d120f}.empty{width:min(42ch,100%);margin:auto;color:var(--muted);text-align:center}.side-by-side{display:grid;min-width:0;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(.55rem,2vw,1rem);align-items:start}.pane{min-width:0;padding:.55rem;overflow:auto;border:1px solid var(--line);background:var(--surface)}.pane-title{display:block;margin-bottom:.45rem;color:var(--muted);font-size:.8rem}.viewport,.single-view{min-width:0;overflow:auto}.world{position:relative;overflow:hidden;background-color:#141a17;background-image:linear-gradient(45deg,#2c3530 25%,transparent 25%),linear-gradient(-45deg,#2c3530 25%,transparent 25%);background-size:12px 12px;isolation:isolate}.world img,.world canvas{position:absolute;display:block;max-width:none}.build-clip{position:absolute;inset:0 auto auto 0;height:100%;overflow:hidden;border-right:2px solid var(--accent);z-index:1}.difference-canvas{background:#000}@media(max-width:700px){.tools,.field,.slider{width:100%}.side-by-side{grid-template-columns:minmax(0,1fr)}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+</style>
 </head>
 <body>
-  <header class="top">
-    <h1>Reference Compare</h1>
-    <p class="muted">Compare local screenshots at their actual pixel ratio from one shared top-left origin. Difference mode flattens both images against white before comparing.</p>
-  </header>
-
-  <section class="tools" aria-label="Comparison controls">
-    <label class="field" for="reference-input">
-      Reference image
-      <input id="reference-input" type="file" accept="image/png,image/jpeg,image/webp">
-    </label>
-
-    <label class="field" for="build-input">
-      Build screenshot
-      <input id="build-input" type="file" accept="image/png,image/jpeg,image/webp">
-    </label>
-
-    <div class="field">
-      <span id="view-label">View</span>
-      <div class="modes" role="group" aria-labelledby="view-label">
-        <button type="button" data-mode="side" aria-pressed="true">Side by side</button>
-        <button type="button" data-mode="overlay" aria-pressed="false">Overlay</button>
-        <button type="button" data-mode="difference" aria-pressed="false">Difference</button>
-      </div>
-    </div>
-
-    <label class="slider" id="split-control" for="split-input" hidden>
-      Overlay split
-      <span class="slider-row">
-        <input id="split-input" type="range" min="0" max="100" value="50">
-        <output id="split-output" for="split-input">50%</output>
-      </span>
-    </label>
-  </section>
-
-  <main>
-    <p class="message" id="message" aria-live="polite"></p>
-
-    <div class="meta" aria-live="polite">
-      <span>Reference: <b id="reference-meta">not loaded</b></span>
-      <span>Build: <b id="build-meta">not loaded</b></span>
-      <span>Display scale: <b id="scale-meta">waiting for both images</b></span>
-    </div>
-
-    <section class="stage" id="stage" aria-label="Image comparison">
-      <p class="empty">Choose a reference image and a build screenshot. Files stay on this device, and a failed selection keeps the last valid image.</p>
-    </section>
-  </main>
-
-  <script>
-    (() => {
-      "use strict";
-
-      const allowedTypes = new Set(["image/png", "image/jpeg", "image/webp"]);
-      const differenceBackground = "#fff";
-      const state = {
-        mode: "side",
-        fileError: null,
-        reference: createImageState(),
-        build: createImageState()
-      };
-
-      const elements = {
-        referenceInput: document.getElementById("reference-input"),
-        buildInput: document.getElementById("build-input"),
-        referenceMeta: document.getElementById("reference-meta"),
-        buildMeta: document.getElementById("build-meta"),
-        scaleMeta: document.getElementById("scale-meta"),
-        message: document.getElementById("message"),
-        stage: document.getElementById("stage"),
-        splitControl: document.getElementById("split-control"),
-        splitInput: document.getElementById("split-input"),
-        splitOutput: document.getElementById("split-output")
-      };
-
-      function createImageState() {
-        return { url: null, width: 0, height: 0, image: null, requestId: 0 };
-      }
-
-      function dimensions(imageState) {
-        return `${imageState.width} × ${imageState.height} px`;
-      }
-
-      function setMessage(text, kind = "status") {
-        elements.message.textContent = text;
-        elements.message.dataset.kind = kind;
-        elements.message.setAttribute("role", kind === "error" ? "alert" : "status");
-      }
-
-      function selectFile(file, imageState, label) {
-        if (!file) return;
-
-        const requestId = ++imageState.requestId;
-        if (!allowedTypes.has(file.type)) {
-          state.fileError = `${label} must be a PNG, JPEG, or WebP image. The last valid image was kept.`;
-          setMessage(state.fileError, "error");
-          return;
-        }
-
-        const candidateUrl = URL.createObjectURL(file);
-        const candidateImage = new Image();
-
-        candidateImage.onload = () => {
-          if (requestId !== imageState.requestId) {
-            URL.revokeObjectURL(candidateUrl);
-            return;
-          }
-
-          const previousUrl = imageState.url;
-          imageState.url = candidateUrl;
-          imageState.width = candidateImage.naturalWidth;
-          imageState.height = candidateImage.naturalHeight;
-          imageState.image = candidateImage;
-          state.fileError = null;
-
-          if (previousUrl) URL.revokeObjectURL(previousUrl);
-          setMessage(`${label} loaded: ${dimensions(imageState)}.`);
-          render();
-        };
-
-        candidateImage.onerror = () => {
-          URL.revokeObjectURL(candidateUrl);
-          if (requestId === imageState.requestId) {
-            state.fileError = `${label} could not be decoded. The last valid image was kept.`;
-            setMessage(state.fileError, "error");
-          }
-        };
-
-        candidateImage.src = candidateUrl;
-      }
-
-      function worldDimensions() {
-        return {
-          width: Math.max(state.reference.width, state.build.width),
-          height: Math.max(state.reference.height, state.build.height)
-        };
-      }
-
-      function sharedScale(availableWidth, worldWidth) {
-        return Math.min(1, availableWidth / worldWidth);
-      }
-
-      function makeWorld(scale) {
-        const world = worldDimensions();
-        const node = document.createElement("div");
-        node.className = "world";
-        node.style.width = `${world.width * scale}px`;
-        node.style.height = `${world.height * scale}px`;
-        return node;
-      }
-
-      function makeImage(imageState, label, scale) {
-        const image = document.createElement("img");
-        image.src = imageState.url;
-        image.alt = label;
-        image.draggable = false;
-        image.style.width = `${imageState.width * scale}px`;
-        image.style.height = `${imageState.height * scale}px`;
-        return image;
-      }
-
-      function createPane(label, imageState) {
-        const root = document.createElement("section");
-        root.className = "pane";
-        root.setAttribute("aria-label", `${label} image`);
-
-        const title = document.createElement("span");
-        title.className = "pane-title";
-        title.textContent = `${label} · ${dimensions(imageState)}`;
-
-        const viewport = document.createElement("div");
-        viewport.className = "viewport";
-        root.append(title, viewport);
-        return { root, viewport, imageState, label };
-      }
-
-      function renderSideBySide() {
-        const container = document.createElement("div");
-        container.className = "side-by-side";
-        const panes = [
-          createPane("Reference", state.reference),
-          createPane("Build", state.build)
-        ];
-        panes.forEach((pane) => container.append(pane.root));
-        elements.stage.replaceChildren(container);
-
-        const world = worldDimensions();
-        const availableWidth = Math.min(...panes.map((pane) => pane.viewport.clientWidth));
-        const scale = sharedScale(availableWidth, world.width);
-
-        panes.forEach((pane) => {
-          const worldNode = makeWorld(scale);
-          worldNode.append(makeImage(pane.imageState, pane.label, scale));
-          pane.viewport.append(worldNode);
-        });
-        updateScaleMeta(scale);
-      }
-
-      function renderCombinedView() {
-        const viewport = document.createElement("div");
-        viewport.className = "single-view";
-        elements.stage.replaceChildren(viewport);
-
-        const world = worldDimensions();
-        const scale = sharedScale(viewport.clientWidth, world.width);
-        const worldNode = makeWorld(scale);
-
-        if (state.mode === "overlay") {
-          worldNode.append(makeImage(state.reference, "Reference", scale));
-          const buildClip = document.createElement("div");
-          buildClip.className = "build-clip";
-          buildClip.id = "build-clip";
-          buildClip.style.width = `${elements.splitInput.value}%`;
-          buildClip.append(makeImage(state.build, "Build screenshot", scale));
-          worldNode.append(buildClip);
-        } else {
-          const canvas = renderDifferenceCanvas();
-          if (!canvas) {
-            elements.scaleMeta.textContent = "difference unavailable";
-            return;
-          }
-          canvas.className = "difference-canvas";
-          canvas.setAttribute("aria-label", "Pixel difference between reference and build");
-          canvas.setAttribute("role", "img");
-          canvas.style.width = `${world.width * scale}px`;
-          canvas.style.height = `${world.height * scale}px`;
-          worldNode.append(canvas);
-        }
-
-        viewport.append(worldNode);
-        updateScaleMeta(scale);
-      }
-
-      function renderDifferenceCanvas() {
-        const world = worldDimensions();
-        try {
-          const reference = createDifferenceSurface(world);
-          reference.context.drawImage(state.reference.image, 0, 0);
-
-          const build = createDifferenceSurface(world);
-          build.context.drawImage(state.build.image, 0, 0);
-
-          reference.context.globalCompositeOperation = "difference";
-          reference.context.drawImage(build.canvas, 0, 0);
-          reference.context.globalCompositeOperation = "source-over";
-          return reference.canvas;
-        } catch (error) {
-          setMessage(
-            `Difference view could not allocate ${world.width} × ${world.height} px canvases in this browser. Resize the images locally to smaller dimensions, then upload them again.`,
-            "error"
-          );
-          return null;
-        }
-      }
-
-      function createDifferenceSurface(world) {
-        const canvas = document.createElement("canvas");
-        canvas.width = world.width;
-        canvas.height = world.height;
-        if (canvas.width !== world.width || canvas.height !== world.height) {
-          throw new Error("Canvas dimensions were rejected.");
-        }
-
-        const context = canvas.getContext("2d", { alpha: false });
-        if (!context) throw new Error("Canvas context is unavailable.");
-        context.fillStyle = differenceBackground;
-        context.fillRect(0, 0, world.width, world.height);
-        return { canvas, context };
-      }
-
-      function updateScaleMeta(scale) {
-        elements.scaleMeta.textContent = `${scale.toFixed(3)} × for both images`;
-      }
-
-      function render() {
-        elements.referenceMeta.textContent = state.reference.url ? dimensions(state.reference) : "not loaded";
-        elements.buildMeta.textContent = state.build.url ? dimensions(state.build) : "not loaded";
-
-        if (!state.reference.url || !state.build.url) {
-          elements.scaleMeta.textContent = "waiting for both images";
-          const empty = document.createElement("p");
-          empty.className = "empty";
-          empty.textContent = "Choose both images to compare them. A valid image already loaded here will remain while you choose the other.";
-          elements.stage.replaceChildren(empty);
-          return;
-        }
-
-        const dimensionsMatch = state.reference.width === state.build.width
-          && state.reference.height === state.build.height;
-        if (state.fileError) {
-          setMessage(state.fileError, "error");
-        } else {
-          setMessage(
-            dimensionsMatch
-              ? "Pixel dimensions match. CSS viewport size is unknown."
-              : "Pixel dimensions differ. Images remain at the same pixel ratio from the top-left origin; CSS viewport size is unknown."
-          );
-        }
-
-        if (state.mode === "side") renderSideBySide();
-        else renderCombinedView();
-      }
-
-      elements.referenceInput.addEventListener("change", (event) => {
-        selectFile(event.target.files[0], state.reference, "Reference image");
-      });
-
-      elements.buildInput.addEventListener("change", (event) => {
-        selectFile(event.target.files[0], state.build, "Build screenshot");
-      });
-
-      document.querySelectorAll("[data-mode]").forEach((button) => {
-        button.addEventListener("click", () => {
-          state.mode = button.dataset.mode;
-          document.querySelectorAll("[data-mode]").forEach((candidate) => {
-            candidate.setAttribute("aria-pressed", String(candidate === button));
-          });
-          elements.splitControl.hidden = state.mode !== "overlay";
-          render();
-        });
-      });
-
-      elements.splitInput.addEventListener("input", () => {
-        elements.splitOutput.value = `${elements.splitInput.value}%`;
-        const buildClip = document.getElementById("build-clip");
-        if (buildClip) buildClip.style.width = `${elements.splitInput.value}%`;
-      });
-
-      const resizeObserver = new ResizeObserver(() => {
-        if (state.reference.url && state.build.url) render();
-      });
-      resizeObserver.observe(elements.stage);
-
-      window.addEventListener("beforeunload", () => {
-        resizeObserver.disconnect();
-        [state.reference, state.build].forEach((imageState) => {
-          imageState.requestId += 1;
-          if (imageState.url) URL.revokeObjectURL(imageState.url);
-        });
-      });
-    })();
-  </script>
+<header class="top"><h1>Reference Compare</h1><p class="muted">Compare local screenshots in one CSS-pixel coordinate system. Optional capture metadata verifies the image, viewport, DPR, crop, and state; files stay on this device.</p></header>
+<section class="tools" aria-label="Comparison controls">
+  <label class="field">Reference image<input id="reference-input" type="file" accept="image/png,image/jpeg,image/webp"></label>
+  <label class="field">Reference metadata (optional)<input id="reference-json" type="file" accept="application/json,.json"></label>
+  <label class="field" id="reference-capture-field" hidden>Reference capture<select id="reference-capture"></select></label>
+  <label class="field">Build screenshot<input id="build-input" type="file" accept="image/png,image/jpeg,image/webp"></label>
+  <label class="field">Build metadata (optional)<input id="build-json" type="file" accept="application/json,.json"></label>
+  <label class="field" id="build-capture-field" hidden>Build capture<select id="build-capture"></select></label>
+  <div class="field"><span id="view-label">View</span><div class="modes" role="group" aria-labelledby="view-label"><button type="button" data-mode="side" aria-pressed="true">Side by side</button><button type="button" data-mode="overlay" aria-pressed="false">Overlay</button><button type="button" data-mode="difference" aria-pressed="false">Difference</button></div></div>
+  <div class="field"><span id="zoom-label">Zoom</span><div class="modes" role="group" aria-labelledby="zoom-label"><button type="button" data-zoom="fit" aria-pressed="true">Fit</button><button type="button" data-zoom="actual" aria-pressed="false">100%</button></div></div>
+  <label class="slider" id="split-control" hidden>Overlay split<span class="slider-row"><input id="split-input" type="range" min="0" max="100" value="50"><output id="split-output">50%</output></span></label>
+</section>
+<main>
+  <p class="message" id="message" aria-live="polite"></p>
+  <div class="meta" aria-live="polite"><span>Reference: <b id="reference-meta">not loaded</b></span><span>Build: <b id="build-meta">not loaded</b></span><span>Coordinates: <b id="scale-meta">waiting for both images</b></span></div>
+  <details class="advanced"><summary>Advanced alignment</summary><p class="muted">Metadata fills these values. Override them only when you know the screenshot pixel ratio, crop origin, or desired CSS-pixel offset.</p><div class="alignment-grid"><section class="alignment-card" data-align="reference"><h2>Reference</h2></section><section class="alignment-card" data-align="build"><h2>Build</h2></section></div></details>
+  <section class="stage" id="stage" aria-label="Image comparison"><p class="empty">Choose a reference image and a build screenshot. A failed selection keeps the last valid image.</p></section>
+</main>
+<script>
+(()=>{
+"use strict";
+const allowedTypes=new Set(["image/png","image/jpeg","image/webp"]);
+const state={mode:"side",zoom:"fit",fileError:null,reference:createImageState(),build:createImageState()};
+const id=value=>document.getElementById(value);
+const elements={referenceInput:id("reference-input"),buildInput:id("build-input"),referenceJson:id("reference-json"),buildJson:id("build-json"),referenceCapture:id("reference-capture"),buildCapture:id("build-capture"),referenceCaptureField:id("reference-capture-field"),buildCaptureField:id("build-capture-field"),referenceMeta:id("reference-meta"),buildMeta:id("build-meta"),scaleMeta:id("scale-meta"),message:id("message"),stage:id("stage"),splitControl:id("split-control"),splitInput:id("split-input"),splitOutput:id("split-output")};
+function createImageState(){return{url:null,file:null,width:0,height:0,image:null,imageRequestId:0,metadataRequestId:0,associationRequestId:0,hashRequestId:0,metadata:null,metadataFailures:[],capture:null,ratio:1,cropX:0,cropY:0,offsetX:0,offsetY:0,hashStatus:"metadata not loaded"}}
+const finite=value=>typeof value==="number"&&Number.isFinite(value);
+const dimensions=item=>`${item.width} × ${item.height} px`;
+function setMessage(text,kind="status"){elements.message.textContent=text;elements.message.dataset.kind=kind;elements.message.setAttribute("role",kind==="error"?"alert":"status")}
+function captureUi(kind){return{select:elements[`${kind}Capture`],field:elements[`${kind}CaptureField`]}}
+function installAlignment(kind){
+  const card=document.querySelector(`[data-align="${kind}"]`);
+  [["ratio","Pixels / CSS pixel",.01,10,.01],["cropX","Crop origin X",-100000,100000,.5],["cropY","Crop origin Y",-100000,100000,.5],["offsetX","Alignment offset X",-100000,100000,.5],["offsetY","Alignment offset Y",-100000,100000,.5]].forEach(([key,label,min,max,step])=>{
+    const wrapper=document.createElement("label");wrapper.className="field";wrapper.textContent=label;
+    const input=document.createElement("input");input.type="number";input.min=min;input.max=max;input.step=step;input.value=key==="ratio"?"1":"0";input.dataset.kind=kind;input.dataset.key=key;wrapper.append(input);card.append(wrapper);
+  });
+}
+installAlignment("reference");installAlignment("build");
+function selectFile(file,item,label){
+  if(!file)return;const requestId=++item.imageRequestId;++item.associationRequestId;++item.hashRequestId;
+  if(!allowedTypes.has(file.type)){state.fileError=`${label} must be PNG, JPEG, or WebP. The last valid image was kept.`;setMessage(state.fileError,"error");return}
+  const candidateUrl=URL.createObjectURL(file),candidateImage=new Image();
+  candidateImage.onload=async()=>{
+    if(requestId!==item.imageRequestId){URL.revokeObjectURL(candidateUrl);return}
+    const previousUrl=item.url;item.url=candidateUrl;item.file=file;item.width=candidateImage.naturalWidth;item.height=candidateImage.naturalHeight;item.image=candidateImage;state.fileError=null;
+    if(previousUrl)URL.revokeObjectURL(previousUrl);clearCapture(item,item===state.reference?"reference":"build");await chooseMatchingCapture(item,label);if(requestId===item.imageRequestId)render();
+  };
+  candidateImage.onerror=()=>{URL.revokeObjectURL(candidateUrl);if(requestId===item.imageRequestId){state.fileError=`${label} could not be decoded. The last valid image was kept.`;setMessage(state.fileError,"error")}};
+  candidateImage.src=candidateUrl;
+}
+function validCapture(value){return value&&typeof value==="object"&&typeof value.name==="string"&&value.screenshot&&typeof value.screenshot==="object"&&typeof value.screenshot.file==="string"&&finite(value.screenshot.width)&&finite(value.screenshot.height)}
+function failedCapture(value,index){const name=value&&typeof value.name==="string"?value.name:`entry ${index+1}`;const reason=value&&typeof value.error==="string"?value.error:"no valid screenshot";return`${name}: ${reason}`}
+function loadMetadata(file,item,kind,label){
+  if(!file)return;const requestId=++item.metadataRequestId,reader=new FileReader();
+  reader.onload=async()=>{
+    if(requestId!==item.metadataRequestId)return;
+    try{
+      const parsed=JSON.parse(String(reader.result));
+      if(!parsed||!Array.isArray(parsed.captures)||!parsed.captures.length)throw new Error("captures are missing or invalid");
+      const captures=parsed.captures.filter(validCapture);if(!captures.length)throw new Error("captures contain no valid screenshots");
+      item.metadata={...parsed,captures};item.metadataFailures=parsed.captures.map((capture,index)=>({capture,index})).filter(entry=>!validCapture(entry.capture)).map(entry=>failedCapture(entry.capture,entry.index));++item.associationRequestId;++item.hashRequestId;clearCapture(item,kind);populateCaptures(item,kind);await chooseMatchingCapture(item,label);if(requestId!==item.metadataRequestId)return;state.fileError=null;render();
+    }catch(error){state.fileError=`${label} metadata is invalid (${error.message}). The last valid metadata was kept.`;setMessage(state.fileError,"error")}
+  };
+  reader.onerror=()=>{if(requestId===item.metadataRequestId)setMessage(`${label} metadata could not be read.`,"error")};reader.readAsText(file);
+}
+function populateCaptures(item,kind){
+  const ui=captureUi(kind);ui.select.replaceChildren();
+  if(item.metadata.captures.length>1){const prompt=new Option("Choose capture…","");prompt.disabled=true;prompt.selected=true;ui.select.add(prompt);ui.field.hidden=false}else ui.field.hidden=true;
+  item.metadata.captures.forEach((capture,index)=>ui.select.add(new Option(`${capture.name} · ${capture.screenshot.width}×${capture.screenshot.height}`,String(index))));
+}
+function clearCapture(item,kind){item.capture=null;item.ratio=1;item.cropX=0;item.cropY=0;item.hashStatus=item.metadata?"capture not chosen":"metadata not loaded";const ui=captureUi(kind);ui.select.value="";syncControls(kind,item)}
+async function chooseMatchingCapture(item,label){
+  if(!item.metadata||!item.file)return;const requestId=++item.associationRequestId,kind=item===state.reference?"reference":"build",entries=item.metadata.captures.map((capture,index)=>({capture,index}));let candidates=entries.filter(entry=>entry.capture.screenshot.file===item.file.name),match=candidates.length===1?candidates[0]:entries.length===1?entries[0]:null;
+  if(crypto.subtle){const digest=await crypto.subtle.digest("SHA-256",await item.file.arrayBuffer());if(requestId!==item.associationRequestId)return;const actual=[...new Uint8Array(digest)].map(byte=>byte.toString(16).padStart(2,"0")).join("");const filenameHashMatches=candidates.filter(entry=>typeof entry.capture.screenshot.sha256==="string"&&entry.capture.screenshot.sha256.toLowerCase()===actual),allHashMatches=entries.filter(entry=>typeof entry.capture.screenshot.sha256==="string"&&entry.capture.screenshot.sha256.toLowerCase()===actual);if(filenameHashMatches.length===1)match=filenameHashMatches[0];else if(allHashMatches.length===1)match=allHashMatches[0];else if(match&&typeof match.capture.screenshot.sha256==="string"&&match.capture.screenshot.sha256.toLowerCase()!==actual)match=null}
+  if(requestId!==item.associationRequestId)return;if(match){captureUi(kind).select.value=String(match.index);applyCapture(item,match.capture,kind);await verifyHash(item,label)}else setMessage(`${label}: choose which metadata capture belongs to ${item.file.name}.`);
+}
+function applyCapture(item,capture,kind){
+  item.capture=capture;const ppc=capture.screenshot.pixelsPerCssPixel;
+  const x=finite(ppc?.x)?ppc.x:(capture.screenshot.scale==="css"?1:capture.dpr),y=finite(ppc?.y)?ppc.y:(capture.screenshot.scale==="css"?1:capture.dpr);
+  if(finite(x)&&finite(y)&&x>0&&Math.abs(x-y)<.001)item.ratio=x;
+  else{item.ratio=1;state.fileError=`${kind} metadata has missing or unequal X/Y pixel ratios; ratio remains 1 for explicit review.`}
+  const origin=capture.screenshot.cropOrigin||(capture.clip?{x:capture.clip.x,y:capture.clip.y}:{x:0,y:0});item.cropX=finite(origin?.x)?origin.x:0;item.cropY=finite(origin?.y)?origin.y:0;syncControls(kind,item);
+}
+function syncControls(kind,item){document.querySelectorAll(`[data-kind="${kind}"]`).forEach(input=>{input.value=String(item[input.dataset.key])})}
+async function verifyHash(item,label){
+  const requestId=++item.hashRequestId;
+  if(!item.file||!item.capture){item.hashStatus=item.metadata?"capture not chosen":"metadata not loaded";return}
+  const expected=item.capture.screenshot.sha256;
+  if(typeof expected!=="string"||!/^[a-f0-9]{64}$/i.test(expected)){item.hashStatus="metadata has no valid SHA-256";return}
+  if(!crypto.subtle){item.hashStatus="SHA-256 unavailable";return}
+  const digest=await crypto.subtle.digest("SHA-256",await item.file.arrayBuffer());if(requestId!==item.hashRequestId)return;
+  const actual=[...new Uint8Array(digest)].map(byte=>byte.toString(16).padStart(2,"0")).join("");item.hashStatus=actual.toLowerCase()===expected.toLowerCase()?"SHA-256 verified":"SHA-256 MISMATCH";
+  if(item.hashStatus.includes("MISMATCH"))setMessage(`${label} does not match the selected metadata capture.`,"error");
+}
+function imageBox(item){const ratio=item.ratio>0?item.ratio:1;return{x:item.cropX+item.offsetX,y:item.cropY+item.offsetY,width:item.width/ratio,height:item.height/ratio}}
+function worldDimensions(){
+  const boxes=[imageBox(state.reference),imageBox(state.build)],minX=Math.min(0,...boxes.map(box=>box.x)),minY=Math.min(0,...boxes.map(box=>box.y)),maxX=Math.max(0,...boxes.map(box=>box.x+box.width)),maxY=Math.max(0,...boxes.map(box=>box.y+box.height));
+  return{minX,minY,width:maxX-minX,height:maxY-minY};
+}
+const sharedScale=(available,width)=>state.zoom==="actual"?1:Math.min(1,available/width);
+function makeWorld(scale){const world=worldDimensions(),node=document.createElement("div");node.className="world";node.style.width=`${world.width*scale}px`;node.style.height=`${world.height*scale}px`;return node}
+function makeImage(item,label,scale){
+  const world=worldDimensions(),box=imageBox(item),image=document.createElement("img");image.src=item.url;image.alt=label;image.draggable=false;
+  image.style.left=`${(box.x-world.minX)*scale}px`;image.style.top=`${(box.y-world.minY)*scale}px`;image.style.width=`${box.width*scale}px`;image.style.height=`${box.height*scale}px`;return image;
+}
+function createPane(label,item){const root=document.createElement("section");root.className="pane";root.setAttribute("aria-label",`${label} image`);const title=document.createElement("span");title.className="pane-title";title.textContent=`${label} · ${dimensions(item)} · ${item.ratio} px/CSS px`;const viewport=document.createElement("div");viewport.className="viewport";root.append(title,viewport);return{root,viewport,item,label}}
+function renderSide(){
+  const container=document.createElement("div");container.className="side-by-side";const panes=[createPane("Reference",state.reference),createPane("Build",state.build)];panes.forEach(pane=>container.append(pane.root));elements.stage.replaceChildren(container);
+  const world=worldDimensions(),scale=sharedScale(Math.min(...panes.map(pane=>pane.viewport.clientWidth)),world.width);panes.forEach(pane=>{const node=makeWorld(scale);node.append(makeImage(pane.item,pane.label,scale));pane.viewport.append(node)});updateScale(scale);
+}
+function renderCombined(){
+  const viewport=document.createElement("div");viewport.className="single-view";elements.stage.replaceChildren(viewport);const world=worldDimensions(),scale=sharedScale(viewport.clientWidth,world.width),node=makeWorld(scale);
+  if(state.mode==="overlay"){node.append(makeImage(state.reference,"Reference",scale));const clip=document.createElement("div");clip.className="build-clip";clip.id="build-clip";clip.style.width=`${elements.splitInput.value}%`;clip.append(makeImage(state.build,"Build screenshot",scale));node.append(clip)}
+  else{const canvas=renderDifference();if(!canvas){elements.scaleMeta.textContent="difference unavailable";return}canvas.className="difference-canvas";canvas.setAttribute("aria-label","CSS-pixel difference between reference and build");canvas.setAttribute("role","img");canvas.style.left="0";canvas.style.top="0";canvas.style.width=`${world.width*scale}px`;canvas.style.height=`${world.height*scale}px`;node.append(canvas)}
+  viewport.append(node);updateScale(scale);
+}
+function surface(width,height){const canvas=document.createElement("canvas");canvas.width=width;canvas.height=height;if(canvas.width!==width||canvas.height!==height)throw new Error("Canvas dimensions rejected");const context=canvas.getContext("2d",{alpha:false});if(!context)throw new Error("Canvas unavailable");context.fillStyle="#fff";context.fillRect(0,0,width,height);return{canvas,context}}
+function drawNormalized(context,item,world){const box=imageBox(item);context.drawImage(item.image,box.x-world.minX,box.y-world.minY,box.width,box.height)}
+function renderDifference(){
+  const world=worldDimensions(),width=Math.ceil(world.width),height=Math.ceil(world.height);
+  try{const reference=surface(width,height);drawNormalized(reference.context,state.reference,world);const build=surface(width,height);drawNormalized(build.context,state.build,world);reference.context.globalCompositeOperation="difference";reference.context.drawImage(build.canvas,0,0);reference.context.globalCompositeOperation="source-over";return reference.canvas}
+  catch{setMessage(`Difference view could not allocate a ${width} × ${height} CSS-pixel canvas. Use smaller images.`,"error");return null}
+}
+function updateScale(scale){elements.scaleMeta.textContent=`1 CSS px = ${scale.toFixed(3)} display px · ${state.zoom==="actual"?"100%":"fit"}`}
+function summary(item){
+  const failed=item.metadataFailures.length?` · failed metadata: ${item.metadataFailures.join(" | ")}`:"";
+  if(!item.capture)return item.metadata?`${dimensions(item)} · capture not chosen${failed}`:`${dimensions(item)} · CSS size unknown · ${item.hashStatus}`;
+  const capture=item.capture,viewport=capture.viewport,viewportText=viewport&&finite(viewport.width)&&finite(viewport.height)?`${viewport.width}×${viewport.height} CSS viewport`:"viewport unknown";
+  return`${dimensions(item)} · ${item.ratio} px/CSS px · ${viewportText} · DPR ${finite(capture.dpr)?capture.dpr:"unknown"} · capture ${capture.status||capture.state||"status unknown"} · ${item.hashStatus}${failed}`;
+}
+const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+function pageState(capture){const screenshot=capture.screenshot||{},scroll=capture.scroll,origin=screenshot.cropOrigin;const missing=[];if(!Array.isArray(capture.actions))missing.push("actions");if(!scroll||![scroll.x,scroll.y,scroll.width,scroll.height].every(finite))missing.push("scroll");if(typeof screenshot.captureKind!=="string")missing.push("capture kind");if(!origin||![origin.x,origin.y].every(finite))missing.push("crop origin");if(screenshot.captureKind==="clip"&&(!capture.clip||![capture.clip.x,capture.clip.y,capture.clip.width,capture.clip.height].every(finite)))missing.push("clip");return{missing,actions:capture.actions,scroll:scroll&&{x:scroll.x,y:scroll.y,width:scroll.width,height:scroll.height},captureKind:screenshot.captureKind,cropOrigin:origin&&{x:origin.x,y:origin.y},clip:capture.clip}}
+function mismatch(){
+  const a=state.reference.capture,b=state.build.capture;
+  if(!a&&!b)return state.reference.width===state.build.width&&state.reference.height===state.build.height?"Pixel dimensions match; CSS viewport and state are unknown.":"Pixel dimensions differ; CSS viewport and state are unknown. Images are not stretched to match.";
+  if(!a||!b)return"Only one image has capture metadata; viewport, DPR, and state equivalence cannot be verified.";
+  const differences=[],unknown=[],aStatus=a.status||a.state,bStatus=b.status||b.state;if(!aStatus||!bStatus)unknown.push("capture status");else if(aStatus!==bStatus||aStatus!=="success")differences.push(`capture status ${aStatus} vs ${bStatus}`);if(!finite(a.dpr)||!finite(b.dpr))unknown.push("DPR");else if(a.dpr!==b.dpr)differences.push(`DPR ${a.dpr} vs ${b.dpr}`);if(!a.viewport||!b.viewport||![a.viewport.width,a.viewport.height,b.viewport.width,b.viewport.height].every(finite))unknown.push("viewport");else if(a.viewport.width!==b.viewport.width||a.viewport.height!==b.viewport.height)differences.push(`viewport ${a.viewport.width}×${a.viewport.height} vs ${b.viewport.width}×${b.viewport.height}`);if(typeof a.colorScheme!=="string"||typeof b.colorScheme!=="string")unknown.push("color scheme");else if(a.colorScheme!==b.colorScheme)differences.push(`color scheme ${a.colorScheme} vs ${b.colorScheme}`);if(typeof a.reducedMotion!=="string"||typeof b.reducedMotion!=="string")unknown.push("motion");else if(a.reducedMotion!==b.reducedMotion)differences.push(`motion ${a.reducedMotion} vs ${b.reducedMotion}`);
+  const aPage=pageState(a),bPage=pageState(b);if(aPage.missing.length||bPage.missing.length)unknown.push(`page state (${[...new Set([...aPage.missing,...bPage.missing])].join(", ")||"metadata"})`);else{if(!same(aPage.actions,bPage.actions))differences.push("actions");if(!same(aPage.scroll,bPage.scroll))differences.push("scroll");if(aPage.captureKind!==bPage.captureKind)differences.push(`capture kind ${aPage.captureKind} vs ${bPage.captureKind}`);if(!same(aPage.cropOrigin,bPage.cropOrigin)||!same(aPage.clip,bPage.clip))differences.push("crop/capture bounds")}
+  if(differences.length)return`Metadata mismatch: ${differences.join("; ")}. Coordinates remain normalized without forcing equal extents.`;if(unknown.length)return`Metadata comparison unknown: insufficient ${unknown.join(" and ")}; no match is claimed.`;return"Capture viewport, DPR, capture status, color scheme, motion settings, actions, scroll, capture kind, and crop match.";
+}
+function render(){
+  elements.referenceMeta.textContent=state.reference.url?summary(state.reference):"not loaded";elements.buildMeta.textContent=state.build.url?summary(state.build):"not loaded";
+  const metadataFailures=[...state.reference.metadataFailures,...state.build.metadataFailures];if(!state.reference.url||!state.build.url){elements.scaleMeta.textContent="waiting for both images";const empty=document.createElement("p");empty.className="empty";empty.textContent="Choose both images to compare them. Any valid image already loaded remains in place.";elements.stage.replaceChildren(empty);if(metadataFailures.length)setMessage(`Metadata contains failed entries: ${metadataFailures.join(" | ")}.`);return}
+  const hashMismatch=[state.reference,state.build].find(item=>item.hashStatus==="SHA-256 MISMATCH");if(hashMismatch)setMessage("Image SHA-256 does not match its selected metadata capture.","error");else if(state.fileError)setMessage(state.fileError,"error");else{const comparison=mismatch(),failureNote=metadataFailures.length?` Metadata contains failed entries: ${metadataFailures.join(" | ")}.`:"";setMessage(`${comparison}${failureNote}`)}if(state.mode==="side")renderSide();else renderCombined();
+}
+elements.referenceInput.addEventListener("change",event=>selectFile(event.target.files[0],state.reference,"Reference image"));elements.buildInput.addEventListener("change",event=>selectFile(event.target.files[0],state.build,"Build screenshot"));elements.referenceJson.addEventListener("change",event=>loadMetadata(event.target.files[0],state.reference,"reference","Reference"));elements.buildJson.addEventListener("change",event=>loadMetadata(event.target.files[0],state.build,"build","Build"));
+[["reference",state.reference],["build",state.build]].forEach(([kind,item])=>captureUi(kind).select.addEventListener("change",async event=>{++item.associationRequestId;applyCapture(item,item.metadata.captures[Number(event.target.value)],kind);await verifyHash(item,kind);render()}));
+document.querySelectorAll("[data-kind]").forEach(input=>input.addEventListener("input",()=>{const item=state[input.dataset.kind],value=Number(input.value);if(!Number.isFinite(value)||(input.dataset.key==="ratio"&&value<=0)){setMessage("Alignment values must be finite; pixel ratio must be greater than zero.","error");return}item[input.dataset.key]=value;state.fileError=null;render()}));
+document.querySelectorAll("[data-mode]").forEach(button=>button.addEventListener("click",()=>{state.mode=button.dataset.mode;document.querySelectorAll("[data-mode]").forEach(candidate=>candidate.setAttribute("aria-pressed",String(candidate===button)));elements.splitControl.hidden=state.mode!=="overlay";render()}));
+document.querySelectorAll("[data-zoom]").forEach(button=>button.addEventListener("click",()=>{state.zoom=button.dataset.zoom;document.querySelectorAll("[data-zoom]").forEach(candidate=>candidate.setAttribute("aria-pressed",String(candidate===button)));render()}));
+elements.splitInput.addEventListener("input",()=>{elements.splitOutput.value=`${elements.splitInput.value}%`;const clip=id("build-clip");if(clip)clip.style.width=`${elements.splitInput.value}%`});
+const resizeObserver=new ResizeObserver(()=>{if(state.reference.url&&state.build.url&&state.zoom==="fit")render()});resizeObserver.observe(elements.stage);
+window.addEventListener("beforeunload",()=>{resizeObserver.disconnect();[state.reference,state.build].forEach(item=>{item.imageRequestId+=1;item.metadataRequestId+=1;item.hashRequestId+=1;if(item.url)URL.revokeObjectURL(item.url)})});
+})();
+</script>
 </body>
 </html>
