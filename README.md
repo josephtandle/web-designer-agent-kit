@@ -1,4 +1,4 @@
-# Web Designer Agent Kit 5.1.0
+# Web Designer Agent Kit 5.1.1
 
 Install Joe Che's starter context files, Web Designer agent, and original local design toolkit for Mastermind and All Sorted participants.
 
@@ -160,3 +160,7 @@ URL fetch text is not visual evidence. Follow `skills/masterminds-web-designer/r
 10. Record final assembled machine-readable acceptance evidence in `docs/verification.json`. Until that file exists and is current, do not infer every check passes.
 
 See `docs/acceptance.md` for the concise acceptance rubric and `docs/three-upgrade-loops.md` for the feature-intention record.
+
+## Release authority
+
+MyOS is the authoritative release source for this toolkit. Normal releases edit this MyOS toolkit and use the release export helper to create an outward portable copy only after its preflight passes. `sync-toolkit.mjs` remains an explicit legacy import and migration tool for reviewing an external source. It is not a normal release path and must not select the source for a MyOS release.

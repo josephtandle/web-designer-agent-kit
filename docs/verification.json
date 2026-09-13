@@ -1,11 +1,15 @@
 {
   "schemaVersion": 1,
-  "kitVersion": "5.1.0",
-  "status": "passed",
+  "kitVersion": "5.1.1",
+  "status": "source_tests_passed",
+  "verificationStatus": "5.1.1 core Node tests rerun: 62 passed, 0 failed. Browser and research workflow evidence is inherited from5.1.0; fresh archive installation is recorded separately at release time.",
+  "inheritedFromVersion": "5.1.0",
   "priorVersionEvidence": "docs/verification-v4.json",
   "coreNodeTests": {
     "passed": 62,
-    "failed": 0
+    "failed": 0,
+    "observedKitVersion": "5.1.1",
+    "runtime": "Node 24"
   },
   "research": {
     "primarySources": 40,
@@ -30,7 +34,7 @@
     "hashMismatchDominant": true
   },
   "editorImagePolicy": "Unsupported local formats rejected before writes with preservation and raster conversion guidance",
-  "scope": "62 current toolkit tests, research guidance review, reference installation preservation and bounded workflow trials; no global ranking claim",
+  "scope": "5.1.1 version authority and packaging correction; unchanged design behavior retains explicitly inherited evidence.",
   "sectionsBrowser": {
     "captures": 108,
     "viewports": [
