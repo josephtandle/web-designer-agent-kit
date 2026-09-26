@@ -1,0 +1,92 @@
+{
+  "schema": "mnstry.atelier-lock@v1",
+  "generatedAt": "2026-09-26T06:48:42.913Z",
+  "package": {
+    "name": "@mnstry/atelier",
+    "version": "0.2.0-alpha.12",
+    "source": {
+      "type": "npm",
+      "repository": "https://github.com/MNSTRY/atelier.git",
+      "gitSha": null
+    }
+  },
+  "template": {
+    "id": "adopt:single-repo",
+    "version": "0.2.0-alpha.12"
+  },
+  "runtime": {
+    "node": {
+      "range": ">=22.18.0 <23 || >=24.13.1 <25"
+    },
+    "telemetry": "none",
+    "egress": "local-only",
+    "mutation": "not-implemented",
+    "runtimeImport": false,
+    "analysisExecution": false
+  },
+  "contracts": {
+    "projectConfig": "mnstry.atelier-project-config@v1",
+    "knowledgeGraph": "mnstry.atelier-knowledge-graph@v1",
+    "boundaryPolicy": "mnstry.atelier-boundary-policy@v1",
+    "exportContract": "atelier-export@v1"
+  },
+  "extensionPacks": [
+    {
+      "id": "mnstry-readiness-pack",
+      "version": "v1",
+      "digest": "sha256:134a618e6854e2d30bd2e1439a28671cdb0df3e5ed0ac1e8689fcd989f0f8d5a"
+    }
+  ],
+  "boundaryPolicy": {
+    "path": "boundary-policy.v1.json",
+    "digest": "sha256:30fb55f41d0816a49e3904774c682e5747f331f029145975dd18be9eec14f7e0",
+    "snapshot": {
+      "schema": "mnstry.atelier-boundary-policy@v1",
+      "mode": "strict",
+      "actors": {
+        "joe": {
+          "githubLogin": "JOE_GITHUB_LOGIN_PLACEHOLDER",
+          "gitEmails": [
+            "joe@example.invalid"
+          ],
+          "privateDomainRepo": "web-designer-agent-kit"
+        }
+      },
+      "repos": {
+        "web-designer-agent-kit": {
+          "kind": "private_domain",
+          "ownerActor": "joe",
+          "readBoundary": "private",
+          "allowedAudiences": [
+            "private",
+            "sensitive",
+            "team",
+            "operator",
+            "staff",
+            "public"
+          ],
+          "forbiddenAudiences": [],
+          "autoCommit": "guarded"
+        }
+      },
+      "promotion": {
+        "requiresGitPromote": true,
+        "recordsPath": "governance/git-promote-events.jsonl"
+      },
+      "forbiddenPaths": [
+        ".atelier-local/**",
+        "atelier.local.json",
+        "atelier.workspace.local.json",
+        "atelier-attestation-key.local.json",
+        ".mnstry-local/**",
+        ".atelier-proposals/**",
+        "support-bundles/**",
+        "prompts/**",
+        "transcripts/**"
+      ],
+      "governanceLedgerPath": "governance/repo-boundary-ledger.md"
+    }
+  },
+  "lastSuccessfulUpgrade": null,
+  "appliedMigrations": []
+}

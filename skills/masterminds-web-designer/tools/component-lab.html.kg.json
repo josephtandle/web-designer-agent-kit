@@ -1,0 +1,16 @@
+{
+  "schema": "mnstry.source-sidecar@v1",
+  "asset": "component-lab.html",
+  "title": "component-lab",
+  "summary": "Enrolled at adoption; not yet described.",
+  "tags": [],
+  "kg": {
+    "id": "web-designer-agent-kit:asset:skills-masterminds-web-designer-tools-component-lab-html",
+    "type": "html",
+    "domain": "web-designer-agent-kit",
+    "lifecycle": "active",
+    "status": "active",
+    "audience": "private",
+    "relations": {}
+  }
+}
