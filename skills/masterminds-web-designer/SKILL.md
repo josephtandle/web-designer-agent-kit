@@ -1,6 +1,12 @@
 ---
 name: masterminds-web-designer
 description: Build and refine editable websites for Mastermind and All Sorted participants using original layouts, honest content, local design tools, responsive verification, and safe installation behavior.
+kg:
+  id: web-designer-agent-kit:skills-masterminds-web-designer-skill
+  type: document
+  status: active
+  audience: team
+  relations: {}
 ---
 
 # Masterminds Web Designer

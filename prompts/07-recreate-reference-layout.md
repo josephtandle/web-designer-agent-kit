@@ -1,3 +1,11 @@
+---
+kg:
+  id: web-designer-agent-kit:prompts-07-recreate-reference-layout
+  type: document
+  status: active
+  audience: team
+  relations: {}
+---
 # Prompt 7: Build from a Reference Layout
 
 Paste this into your AI assistant to run the complete Match or Adapt workflow.

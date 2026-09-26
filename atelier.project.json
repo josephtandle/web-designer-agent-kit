@@ -27,7 +27,7 @@
     {
       "name": "web-designer-agent-kit",
       "path": ".",
-      "readBoundary": "private",
+      "readBoundary": "team",
       "role": "single-repo"
     }
   ]

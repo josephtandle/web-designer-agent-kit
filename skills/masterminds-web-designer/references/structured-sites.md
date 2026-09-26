@@ -1,3 +1,11 @@
+---
+kg:
+  id: web-designer-agent-kit:skills-masterminds-web-designer-references-structured-sites
+  type: document
+  status: active
+  audience: team
+  relations: {}
+---
 # Structured sites
 
 Load this guide only when generating a content-adaptive site, using the section gallery, editing a generated structured site, reviewing revised copy, auditing a whole site, or creating state-specific captures. The participant supplies facts and choices in normal conversation. The agent creates and validates tool input. Never ask a novice to handwrite JSON.

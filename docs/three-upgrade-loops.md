@@ -1,3 +1,11 @@
+---
+kg:
+  id: web-designer-agent-kit:docs-three-upgrade-loops
+  type: document
+  status: active
+  audience: team
+  relations: {}
+---
 # Web Designer Agent Kit: Three Upgrade Loops
 
 This document records the intended functional outcomes of three upgrade rounds. It is not a publication record or a claim that main-branch checks passed. Final assembled machine-readable acceptance evidence belongs in `docs/verification.json`, which the main integration lane will generate after relevant tests and observed checks.

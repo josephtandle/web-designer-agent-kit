@@ -1,3 +1,11 @@
+---
+kg:
+  id: web-designer-agent-kit:docs-skill-audit
+  type: document
+  status: active
+  audience: team
+  relations: {}
+---
 # Skill Audit
 
 Catalog date: 2026-09-12.

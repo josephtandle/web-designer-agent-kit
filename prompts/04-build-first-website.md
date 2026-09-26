@@ -1,3 +1,11 @@
+---
+kg:
+  id: web-designer-agent-kit:prompts-04-build-first-website
+  type: document
+  status: active
+  audience: team
+  relations: {}
+---
 # Prompt 4: Build the First Website
 
 Paste this into your AI assistant from the website project folder.

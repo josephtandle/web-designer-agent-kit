@@ -1,3 +1,11 @@
+---
+kg:
+  id: web-designer-agent-kit:docs-github-design-research
+  type: document
+  status: active
+  audience: team
+  relations: {}
+---
 # GitHub design research: an original, built-in toolkit
 
 Reviewed 2026-09-12. This report records the research behind the Web Designer Agent Kit; it is not an installer or a dependency list. External projects were inspected for transferable principles, interaction coverage, and licensing boundaries. The kit’s normal build path remains offline and zero-dependency: it does not clone, import, vendor, or redistribute the repositories below. Any implementation in the kit must be independently written from the stated principle and tested against the kit’s own requirements.

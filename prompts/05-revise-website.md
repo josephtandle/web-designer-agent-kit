@@ -1,3 +1,11 @@
+---
+kg:
+  id: web-designer-agent-kit:prompts-05-revise-website
+  type: document
+  status: active
+  audience: team
+  relations: {}
+---
 # Prompt 5: Revise The Website
 
 Paste this into Claude Code to make changes to your website.

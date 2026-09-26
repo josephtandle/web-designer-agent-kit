@@ -1,3 +1,11 @@
+---
+kg:
+  id: web-designer-agent-kit:docs-acceptance
+  type: document
+  status: active
+  audience: team
+  relations: {}
+---
 # Acceptance Rubric
 
 Use this rubric for final integration review. A statement is accepted only when supported by an observed check or a clearly identified source artifact. The main integration lane will assemble final machine-readable evidence in `docs/verification.json` after tests and observed checks.

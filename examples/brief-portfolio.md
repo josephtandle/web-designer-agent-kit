@@ -1,3 +1,11 @@
+---
+kg:
+  id: web-designer-agent-kit:examples-brief-portfolio
+  type: document
+  status: active
+  audience: team
+  relations: {}
+---
 # Sample Brief: Creative Portfolio Showcase
 
 **Archetype:** Portfolio / Creative Showcase (Editorial Minimalist Studio)

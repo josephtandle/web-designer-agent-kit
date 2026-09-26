@@ -1,3 +1,11 @@
+---
+kg:
+  id: web-designer-agent-kit:skills-masterminds-web-designer-references-design-research
+  type: document
+  status: active
+  audience: team
+  relations: {}
+---
 # Design research
 
 Use this guide for a new site or substantial redesign after the brief and vital facts are sound, before choosing a direction. The goal is a small body of live evidence that improves the participant's design, not a catalog of fashionable sites.

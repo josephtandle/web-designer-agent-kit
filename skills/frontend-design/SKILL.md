@@ -1,6 +1,12 @@
 ---
 name: frontend-design
 description: Use for distinctive frontend design, visual direction, layout, typography, color harmony, sRGB contrast verification, responsive interfaces, anti-AI-slop website polish, and Speak Human copy editing.
+kg:
+  id: web-designer-agent-kit:skills-frontend-design-skill
+  type: document
+  status: active
+  audience: team
+  relations: {}
 ---
 
 # Frontend Design

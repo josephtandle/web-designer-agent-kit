@@ -1,3 +1,11 @@
+---
+kg:
+  id: web-designer-agent-kit:prompts-09-palette-studio
+  type: document
+  status: active
+  audience: team
+  relations: {}
+---
 # Prompt 9: Palette Studio and Contrast Review
 
 Paste this into your AI assistant to build and audit a website palette.

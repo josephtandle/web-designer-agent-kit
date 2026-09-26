@@ -1,3 +1,11 @@
+---
+kg:
+  id: web-designer-agent-kit:readme
+  type: document
+  status: active
+  audience: team
+  relations: {}
+---
 # Web Designer Agent Kit 5.1.1
 
 Install Joe Che's starter context files, Web Designer agent, and original local design toolkit for Mastermind and All Sorted participants.

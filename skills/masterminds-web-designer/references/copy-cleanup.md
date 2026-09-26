@@ -1,3 +1,11 @@
+---
+kg:
+  id: web-designer-agent-kit:skills-masterminds-web-designer-references-copy-cleanup
+  type: document
+  status: active
+  audience: team
+  relations: {}
+---
 # Copy Cleanup Guide
 
 Make copy cleaning a normal build step before visual QA.

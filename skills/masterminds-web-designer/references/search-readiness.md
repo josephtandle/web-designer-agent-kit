@@ -1,3 +1,11 @@
+---
+kg:
+  id: web-designer-agent-kit:skills-masterminds-web-designer-references-search-readiness
+  type: document
+  status: active
+  audience: team
+  relations: {}
+---
 # Search Readiness
 
 Use this checklist while building and before launch. It covers facts visible in one HTML file and separates them from deployment and search-platform facts that require live verification.

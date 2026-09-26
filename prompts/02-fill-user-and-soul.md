@@ -1,3 +1,11 @@
+---
+kg:
+  id: web-designer-agent-kit:prompts-02-fill-user-and-soul
+  type: document
+  status: active
+  audience: team
+  relations: {}
+---
 # Prompt 2: Fill In USER.md and SOUL.md
 
 Paste this into Claude Code after running Prompt 1.

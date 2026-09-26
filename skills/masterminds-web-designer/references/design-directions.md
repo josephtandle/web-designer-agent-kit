@@ -1,3 +1,11 @@
+---
+kg:
+  id: web-designer-agent-kit:skills-masterminds-web-designer-references-design-directions
+  type: document
+  status: active
+  audience: team
+  relations: {}
+---
 # Visual Direction Playbook
 
 Use this playbook to choose and execute visual directions for Mastermind and All Sorted participants.

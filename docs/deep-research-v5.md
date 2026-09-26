@@ -1,3 +1,11 @@
+---
+kg:
+  id: web-designer-agent-kit:docs-deep-research-v5
+  type: document
+  status: active
+  audience: team
+  relations: {}
+---
 # Web Designer v5 deep research: content-adaptive composition, safe editing, and evidence-led evaluation
 
 Reviewed 2026-09-12. This artifact extends [the earlier GitHub design research](github-design-research.md). It records the evidence and decisions for the proposed v5 capability wave. It does not claim that the proposal has been implemented, tested, installed, or released.

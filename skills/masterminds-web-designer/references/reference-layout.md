@@ -1,3 +1,11 @@
+---
+kg:
+  id: web-designer-agent-kit:skills-masterminds-web-designer-references-reference-layout
+  type: document
+  status: active
+  audience: team
+  relations: {}
+---
 # Measured Reference Layout Workflow: Match vs Adapt
 
 Choose **Match** for observed geometry with new participant content or **Adapt** for observed principles in a distinct structure. Neither mode copies source code or assets. A screenshot is visual evidence, never the page itself.

@@ -1,0 +1,6 @@
+{
+  "schema": "myos.atelier-audience-policy@v1",
+  "defaultAudience": "team",
+  "automaticPublic": false,
+  "overrides": {}
+}

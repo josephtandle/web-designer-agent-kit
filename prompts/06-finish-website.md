@@ -1,3 +1,11 @@
+---
+kg:
+  id: web-designer-agent-kit:prompts-06-finish-website
+  type: document
+  status: active
+  audience: team
+  relations: {}
+---
 # Prompt 6: Finish and Prepare for Launch
 
 Paste this into your AI assistant when the website design is ready for a final local review.

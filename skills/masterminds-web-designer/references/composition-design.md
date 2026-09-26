@@ -1,3 +1,11 @@
+---
+kg:
+  id: web-designer-agent-kit:skills-masterminds-web-designer-references-composition-design
+  type: document
+  status: active
+  audience: team
+  relations: {}
+---
 # Composition design
 
 Use composition to clarify the relationships already present in the participant's content. Do not begin with a page funnel, a favorite grid, or a component showcase. Read the facts first, identify what belongs together, then choose and order sections that make those relationships legible.

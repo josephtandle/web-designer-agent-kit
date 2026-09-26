@@ -1,3 +1,11 @@
+---
+kg:
+  id: web-designer-agent-kit:prompts-01-install-context-files
+  type: document
+  status: active
+  audience: team
+  relations: {}
+---
 # Prompt 1: Install Starter Context Files
 
 Paste this into your AI assistant from the participant's website project folder.

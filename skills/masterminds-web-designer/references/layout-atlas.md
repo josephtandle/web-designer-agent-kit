@@ -1,3 +1,11 @@
+---
+kg:
+  id: web-designer-agent-kit:skills-masterminds-web-designer-references-layout-atlas
+  type: document
+  status: active
+  audience: team
+  relations: {}
+---
 # Layout Atlas: 12 Composition Archetypes & Responsive Patterns
 
 The Layout Atlas provides 12 foundational UI composition archetypes for Mastermind and All Sorted participant websites. Each layout is designed for distinct content hierarchy, mobile responsiveness, and high conversion clarity.

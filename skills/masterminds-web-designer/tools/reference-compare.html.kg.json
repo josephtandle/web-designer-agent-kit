@@ -10,7 +10,7 @@
     "domain": "web-designer-agent-kit",
     "lifecycle": "active",
     "status": "active",
-    "audience": "private",
+    "audience": "team",
     "relations": {}
   }
 }

@@ -1,9 +1,9 @@
 {
   "schema": "mnstry.atelier-repo-access@v1",
-  "defaultReadBoundary": "private",
+  "defaultReadBoundary": "team",
   "repos": {
     "web-designer-agent-kit": {
-      "readBoundary": "private"
+      "readBoundary": "team"
     }
   }
 }

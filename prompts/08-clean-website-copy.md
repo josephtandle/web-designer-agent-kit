@@ -1,3 +1,11 @@
+---
+kg:
+  id: web-designer-agent-kit:prompts-08-clean-website-copy
+  type: document
+  status: active
+  audience: team
+  relations: {}
+---
 # Prompt 8: Clean Website Copy
 
 Paste this into your AI assistant before final visual QA.

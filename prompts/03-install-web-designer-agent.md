@@ -1,3 +1,11 @@
+---
+kg:
+  id: web-designer-agent-kit:prompts-03-install-web-designer-agent
+  type: document
+  status: active
+  audience: team
+  relations: {}
+---
 # Prompt 3: Install the Web Designer Agent Kit
 
 Paste this into your AI assistant from the participant's website project folder.

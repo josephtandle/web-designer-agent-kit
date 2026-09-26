@@ -1,3 +1,11 @@
+---
+kg:
+  id: web-designer-agent-kit:examples-brief-service
+  type: document
+  status: active
+  audience: team
+  relations: {}
+---
 # Sample Brief: Service Business
 
 **Archetype:** Service Business (Warm Professional Clarity)

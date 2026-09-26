@@ -1,3 +1,11 @@
+---
+kg:
+  id: web-designer-agent-kit:examples-brief-event
+  type: document
+  status: active
+  audience: team
+  relations: {}
+---
 # Sample Brief: Event / Workshop / Experience
 
 **Archetype:** Event / Workshop / Experience (Vibrant Energy & Direct Focus)
