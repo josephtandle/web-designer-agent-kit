@@ -1,0 +1,702 @@
+{
+  "schema": "mnstry.atelier-knowledge-graph@v1",
+  "generatedAt": "deterministic",
+  "project": "web-designer-agent-kit",
+  "counts": {
+    "nodes": 32,
+    "edges": 0,
+    "diagnostics": 0
+  },
+  "nodes": [
+    {
+      "id": "web-designer-agent-kit:agents-web-designer",
+      "title": "Web Designer",
+      "summary": "You are Joe Che's Web Designer agent for Mastermind and All Sorted participants.",
+      "repo": "web-designer-agent-kit",
+      "path": "agents/web-designer.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "agents",
+        "root",
+        "web-designer",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:docs-acceptance",
+      "title": "Acceptance Rubric",
+      "summary": "Use this rubric for final integration review. A statement is accepted only when supported by an observed check or a clearly identified source artifact. The main integration lane wi",
+      "repo": "web-designer-agent-kit",
+      "path": "docs/acceptance.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "acceptance",
+        "docs",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:docs-deep-research-v5",
+      "title": "Web Designer v5 deep research: content-adaptive composition, safe editing, and evidence-led evaluation",
+      "summary": "Reviewed 2026-09-12. This artifact extends [the earlier GitHub design research](github-design-research.md). It records the evidence and decisions for the proposed v5 capability wav",
+      "repo": "web-designer-agent-kit",
+      "path": "docs/deep-research-v5.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "deep-research-v5",
+        "docs",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:docs-github-design-research",
+      "title": "GitHub design research: an original, built-in toolkit",
+      "summary": "Reviewed 2026-09-12. This report records the research behind the Web Designer Agent Kit; it is not an installer or a dependency list. External projects were inspected for transfera",
+      "repo": "web-designer-agent-kit",
+      "path": "docs/github-design-research.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "docs",
+        "github-design-research",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:docs-skill-audit",
+      "title": "Skill Audit",
+      "summary": "Catalog date: 2026-09-12.",
+      "repo": "web-designer-agent-kit",
+      "path": "docs/skill-audit.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "docs",
+        "skill-audit",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:docs-three-upgrade-loops",
+      "title": "Web Designer Agent Kit: Three Upgrade Loops",
+      "summary": "This document records the intended functional outcomes of three upgrade rounds. It is not a publication record or a claim that main-branch checks passed. Final assembled machine-re",
+      "repo": "web-designer-agent-kit",
+      "path": "docs/three-upgrade-loops.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "docs",
+        "three-upgrade-loops",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:examples-brief-event",
+      "title": "Sample Brief: Event / Workshop / Experience",
+      "summary": "**Archetype:** Event / Workshop / Experience (Vibrant Energy & Direct Focus)",
+      "repo": "web-designer-agent-kit",
+      "path": "examples/brief-event.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "brief-event",
+        "examples",
+        "root",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:examples-brief-portfolio",
+      "title": "Sample Brief: Creative Portfolio Showcase",
+      "summary": "**Archetype:** Portfolio / Creative Showcase (Editorial Minimalist Studio)",
+      "repo": "web-designer-agent-kit",
+      "path": "examples/brief-portfolio.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "brief-portfolio",
+        "examples",
+        "root",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:examples-brief-service",
+      "title": "Sample Brief: Service Business",
+      "summary": "**Archetype:** Service Business (Warm Professional Clarity)",
+      "repo": "web-designer-agent-kit",
+      "path": "examples/brief-service.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "brief-service",
+        "examples",
+        "root",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:prompts-01-install-context-files",
+      "title": "Prompt 1: Install Starter Context Files",
+      "summary": "Paste this into your AI assistant from the participant's website project folder.",
+      "repo": "web-designer-agent-kit",
+      "path": "prompts/01-install-context-files.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "01-install-context-files",
+        "prompts",
+        "root",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:prompts-02-fill-user-and-soul",
+      "title": "Prompt 2: Fill In USER.md and SOUL.md",
+      "summary": "Paste this into Claude Code after running Prompt 1.",
+      "repo": "web-designer-agent-kit",
+      "path": "prompts/02-fill-user-and-soul.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "02-fill-user-and-soul",
+        "prompts",
+        "root",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:prompts-03-install-web-designer-agent",
+      "title": "Prompt 3: Install the Web Designer Agent Kit",
+      "summary": "Paste this into your AI assistant from the participant's website project folder.",
+      "repo": "web-designer-agent-kit",
+      "path": "prompts/03-install-web-designer-agent.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "03-install-web-designer-agent",
+        "prompts",
+        "root",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:prompts-04-build-first-website",
+      "title": "Prompt 4: Build the First Website",
+      "summary": "Paste this into your AI assistant from the website project folder.",
+      "repo": "web-designer-agent-kit",
+      "path": "prompts/04-build-first-website.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "04-build-first-website",
+        "prompts",
+        "root",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:prompts-05-revise-website",
+      "title": "Prompt 5: Revise The Website",
+      "summary": "Paste this into Claude Code to make changes to your website.",
+      "repo": "web-designer-agent-kit",
+      "path": "prompts/05-revise-website.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "05-revise-website",
+        "prompts",
+        "root",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:prompts-06-finish-website",
+      "title": "Prompt 6: Finish and Prepare for Launch",
+      "summary": "Paste this into your AI assistant when the website design is ready for a final local review.",
+      "repo": "web-designer-agent-kit",
+      "path": "prompts/06-finish-website.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "06-finish-website",
+        "prompts",
+        "root",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:prompts-07-recreate-reference-layout",
+      "title": "Prompt 7: Build from a Reference Layout",
+      "summary": "Paste this into your AI assistant to run the complete Match or Adapt workflow.",
+      "repo": "web-designer-agent-kit",
+      "path": "prompts/07-recreate-reference-layout.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "07-recreate-reference-layout",
+        "prompts",
+        "root",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:prompts-08-clean-website-copy",
+      "title": "Prompt 8: Clean Website Copy",
+      "summary": "Paste this into your AI assistant before final visual QA.",
+      "repo": "web-designer-agent-kit",
+      "path": "prompts/08-clean-website-copy.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "08-clean-website-copy",
+        "prompts",
+        "root",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:prompts-09-palette-studio",
+      "title": "Prompt 9: Palette Studio and Contrast Review",
+      "summary": "Paste this into your AI assistant to build and audit a website palette.",
+      "repo": "web-designer-agent-kit",
+      "path": "prompts/09-palette-studio.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "09-palette-studio",
+        "prompts",
+        "root",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:readme",
+      "title": "Web Designer Agent Kit 5.1.1",
+      "summary": "Install Joe Che's starter context files, Web Designer agent, and original local design toolkit for Mastermind and All Sorted participants.",
+      "repo": "web-designer-agent-kit",
+      "path": "README.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "root",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:skills-frontend-design-skill",
+      "title": "Frontend Design",
+      "summary": "Before writing code, choose a concrete design direction.",
+      "repo": "web-designer-agent-kit",
+      "path": "skills/frontend-design/SKILL.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "frontend-design",
+        "root",
+        "skill",
+        "skills",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:skills-masterminds-web-designer-references-composition-design",
+      "title": "Composition design",
+      "summary": "Use composition to clarify the relationships already present in the participant's content. Do not begin with a page funnel, a favorite grid, or a component showcase. Read the facts",
+      "repo": "web-designer-agent-kit",
+      "path": "skills/masterminds-web-designer/references/composition-design.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "composition-design",
+        "masterminds-web-designer",
+        "references",
+        "root",
+        "skills",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:skills-masterminds-web-designer-references-copy-cleanup",
+      "title": "Copy Cleanup Guide",
+      "summary": "Make copy cleaning a normal build step before visual QA.",
+      "repo": "web-designer-agent-kit",
+      "path": "skills/masterminds-web-designer/references/copy-cleanup.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "copy-cleanup",
+        "masterminds-web-designer",
+        "references",
+        "root",
+        "skills",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:skills-masterminds-web-designer-references-design-directions",
+      "title": "Visual Direction Playbook",
+      "summary": "Use this playbook to choose and execute visual directions for Mastermind and All Sorted participants.",
+      "repo": "web-designer-agent-kit",
+      "path": "skills/masterminds-web-designer/references/design-directions.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "design-directions",
+        "masterminds-web-designer",
+        "references",
+        "root",
+        "skills",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:skills-masterminds-web-designer-references-design-research",
+      "title": "Design research",
+      "summary": "Use this guide for a new site or substantial redesign after the brief and vital facts are sound, before choosing a direction. The goal is a small body of live evidence that improve",
+      "repo": "web-designer-agent-kit",
+      "path": "skills/masterminds-web-designer/references/design-research.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "design-research",
+        "masterminds-web-designer",
+        "references",
+        "root",
+        "skills",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:skills-masterminds-web-designer-references-layout-atlas",
+      "title": "Layout Atlas: 12 Composition Archetypes & Responsive Patterns",
+      "summary": "The Layout Atlas provides 12 foundational UI composition archetypes for Mastermind and All Sorted participant websites. Each layout is designed for distinct content hierarchy, mobi",
+      "repo": "web-designer-agent-kit",
+      "path": "skills/masterminds-web-designer/references/layout-atlas.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "layout-atlas",
+        "masterminds-web-designer",
+        "references",
+        "root",
+        "skills",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:skills-masterminds-web-designer-references-reference-layout",
+      "title": "Measured Reference Layout Workflow: Match vs Adapt",
+      "summary": "Choose **Match** for observed geometry with new participant content or **Adapt** for observed principles in a distinct structure. Neither mode copies source code or assets. A scree",
+      "repo": "web-designer-agent-kit",
+      "path": "skills/masterminds-web-designer/references/reference-layout.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "masterminds-web-designer",
+        "reference-layout",
+        "references",
+        "root",
+        "skills",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:skills-masterminds-web-designer-references-search-readiness",
+      "title": "Search Readiness",
+      "summary": "Use this checklist while building and before launch. It covers facts visible in one HTML file and separates them from deployment and search-platform facts that require live verific",
+      "repo": "web-designer-agent-kit",
+      "path": "skills/masterminds-web-designer/references/search-readiness.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "masterminds-web-designer",
+        "references",
+        "root",
+        "search-readiness",
+        "skills",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:skills-masterminds-web-designer-references-structured-sites",
+      "title": "Structured sites",
+      "summary": "Load this guide only when generating a content-adaptive site, using the section gallery, editing a generated structured site, reviewing revised copy, auditing a whole site, or crea",
+      "repo": "web-designer-agent-kit",
+      "path": "skills/masterminds-web-designer/references/structured-sites.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "masterminds-web-designer",
+        "references",
+        "root",
+        "skills",
+        "structured-sites",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:skills-masterminds-web-designer-skill",
+      "title": "Masterminds Web Designer",
+      "summary": "Use this skill for new websites and existing-site updates. Deliver a working editable build, not only a design description, reference image, or capture folder.",
+      "repo": "web-designer-agent-kit",
+      "path": "skills/masterminds-web-designer/SKILL.md",
+      "type": "document",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "masterminds-web-designer",
+        "root",
+        "skill",
+        "skills",
+        "web-designer-agent-kit",
+        "workstream"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:asset:skills-masterminds-web-designer-tools-component-lab-html",
+      "title": "component-lab",
+      "summary": "Enrolled at adoption; not yet described.",
+      "repo": "web-designer-agent-kit",
+      "path": "skills/masterminds-web-designer/tools/component-lab.html",
+      "type": "html",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "active",
+        "component-lab",
+        "masterminds-web-designer",
+        "skills",
+        "tools",
+        "web-designer-agent-kit"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:asset:skills-masterminds-web-designer-tools-palette-studio-html",
+      "title": "palette-studio",
+      "summary": "Enrolled at adoption; not yet described.",
+      "repo": "web-designer-agent-kit",
+      "path": "skills/masterminds-web-designer/tools/palette-studio.html",
+      "type": "html",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "active",
+        "masterminds-web-designer",
+        "palette-studio",
+        "skills",
+        "tools",
+        "web-designer-agent-kit"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    },
+    {
+      "id": "web-designer-agent-kit:asset:skills-masterminds-web-designer-tools-reference-compare-html",
+      "title": "reference-compare",
+      "summary": "Enrolled at adoption; not yet described.",
+      "repo": "web-designer-agent-kit",
+      "path": "skills/masterminds-web-designer/tools/reference-compare.html",
+      "type": "html",
+      "status": "active",
+      "audience": "team",
+      "tags": [
+        "active",
+        "masterminds-web-designer",
+        "reference-compare",
+        "skills",
+        "tools",
+        "web-designer-agent-kit"
+      ],
+      "relations": {},
+      "repoAccess": {
+        "readBoundary": "team"
+      }
+    }
+  ],
+  "edges": [],
+  "diagnostics": [],
+  "external": [],
+  "errors": []
+}
